@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080a1a">
+  <title>Relie les points — Vœux 2027</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&display=swap">
+  <link rel="stylesheet" href="dotdot.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <h1 class="neon-title"><span class="neon-cyan">Relie</span> <span class="neon-red">les points</span></h1>
+    <span id="progress" class="score" aria-live="polite">0 / 0</span>
+  </header>
+  <div class="band band-stripes" aria-hidden="true"></div>
+
+  <nav id="gallery" class="gallery" aria-label="Dessins"></nav>
+
+  <main class="stage">
+    <div id="board" class="board"></div>
+    <p id="error" class="error" hidden></p>
+    <section id="done" class="done" hidden aria-live="polite">
+      <p id="done-title" class="done-title"></p>
+      <p id="done-message" class="done-message"></p>
+      <div class="row">
+        <button id="replay" type="button">Rejouer</button>
+        <button id="next" type="button" class="primary">Dessin suivant</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="band band-checker" aria-hidden="true"></div>
+  <footer class="tools">
+    <div id="level" class="seg" role="group" aria-label="Difficulté">
+      <button type="button" data-dots="25">Facile</button>
+      <button type="button" data-dots="50">Moyen</button>
+      <button type="button" data-dots="90">Difficile</button>
+    </div>
+    <button id="undo" type="button" class="tool-cyan">↶ Annuler</button>
+    <button id="restart" type="button" class="tool-magenta">Recommencer</button>
+    <button id="solve" type="button" class="tool-lime">Solution</button>
+    <label class="button tool-yellow">Importer un SVG<input id="file" type="file" accept=".svg,image/svg+xml" hidden></label>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

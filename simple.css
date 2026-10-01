@@ -1,0 +1,67 @@
+/* Version simple : le jeu seul, sur des néons qui se tracent en arrière-plan.
+   Palette limitée : cyan, magenta et blanc. */
+
+:root {
+  --cyan: #1de3ff;
+  --magenta: #ff2fbc;
+  --font: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+
+  --dtd-dot: #fff;
+  --dtd-line: var(--cyan);
+  --dtd-label: rgb(255 255 255 / .6);
+  --dtd-accent: var(--magenta);
+  --dtd-wrong: var(--magenta);
+  --dtd-font: var(--font);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: #05060f;
+  color: #fff;
+  font-family: var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.neon {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .38;
+  pointer-events: none;
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding:
+    calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+    calc(16px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
+}
+.board { flex: 1; min-height: 0; }
+
+.message {
+  margin: 0 0 4vh;
+  text-align: center;
+  font: 900 clamp(2rem, 8vw, 4rem)/1 var(--font);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 6px var(--magenta), 0 0 22px var(--magenta), 0 0 48px var(--magenta);
+  animation: message-in 1s ease both;
+}
+.message.error {
+  font-size: 1.2rem;
+  text-shadow: none;
+  color: var(--magenta);
+}
+@keyframes message-in { from { opacity: 0; transform: translateY(12px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .message { animation: none; }
+}

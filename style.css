@@ -1,0 +1,279 @@
+/* Direction visuelle : néon de flipper et de labyrinthe lumineux, mire de test en aplats saturés,
+   bandes signalétiques (rayures, damiers, croix), typographie condensée en capitales. */
+
+:root {
+  --bg: #080a1a;
+  --panel: #0c0f2b;
+  --white: #f4f7ff;
+  --blue: #1f3bff;
+  --cyan: #1de3ff;
+  --violet: #8b4dff;
+  --indigo: #4a1fd1;
+  --magenta: #ff2fbc;
+  --red: #ff3b4e;
+  --orange: #ff7a1a;
+  --yellow: #f4f749;
+  --lime: #70ff36;
+
+  --font: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --glow: 0 0 6px currentColor, 0 0 18px currentColor;
+
+  /* Couleurs du jeu (surchargeables) */
+  --dtd-dot: #dfe4ff;
+  --dtd-line: var(--cyan);
+  --dtd-label: #a9a3ff;
+  --dtd-accent: var(--magenta);
+  --dtd-wrong: var(--red);
+  --dtd-font: var(--font);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgb(139 77 255 / .28), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 110%, rgb(31 59 255 / .35), transparent),
+    var(--bg);
+  color: var(--white);
+  font: 600 16px/1.3 var(--font);
+  letter-spacing: .04em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- En-tête : titre en tubes néon --- */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 24px 14px;
+}
+.neon-title {
+  margin: 0;
+  font: 900 clamp(1.9rem, 5.5vw, 3rem)/.95 var(--font);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.neon-title span {
+  color: transparent;
+  -webkit-text-stroke: .045em var(--tube);
+  text-shadow: 0 0 4px var(--halo), 0 0 14px var(--halo), 0 0 34px var(--halo);
+}
+.neon-cyan { --tube: #b5f6ff; --halo: var(--cyan); }
+.neon-red  { --tube: #ffc0c6; --halo: var(--red); }
+@supports not (-webkit-text-stroke: 1px black) {
+  .neon-title span { color: var(--tube); }
+}
+
+/* Compteur façon cible de flipper */
+.score {
+  flex: none;
+  padding: 4px 14px;
+  border: 2px solid var(--yellow);
+  border-radius: 999px;
+  color: var(--yellow);
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 8px rgb(244 247 73 / .8);
+  box-shadow: 0 0 12px rgb(244 247 73 / .45), inset 0 0 10px rgb(244 247 73 / .25);
+}
+
+/* --- Bandes signalétiques --- */
+
+.band { flex: none; height: 12px; }
+.band-stripes {
+  background: repeating-linear-gradient(-45deg, var(--yellow) 0 10px, var(--magenta) 10px 20px);
+}
+.band-checker {
+  background: conic-gradient(var(--indigo) 25%, var(--yellow) 0 50%, var(--indigo) 0 75%, var(--yellow) 0) 0 0 / 12px 12px;
+}
+
+/* --- Galerie : blocs de mire en aplats --- */
+
+.gallery {
+  display: flex;
+  gap: 8px;
+  padding: 14px 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.gallery::-webkit-scrollbar { display: none; }
+.gallery button {
+  --fg: var(--lime);
+  --bgc: var(--blue);
+  padding: 7px 16px;
+  border: 0;
+  border-radius: 0;
+  background: var(--bgc);
+  color: var(--fg);
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  box-shadow: none;
+}
+.gallery button:nth-child(4n + 2) { --bgc: var(--magenta); --fg: var(--yellow); }
+.gallery button:nth-child(4n + 3) { --bgc: var(--lime); --fg: var(--blue); }
+.gallery button:nth-child(4n + 4) { --bgc: var(--yellow); --fg: var(--indigo); }
+.gallery button:hover { background: var(--bgc); filter: brightness(1.12); }
+.gallery button.active {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+  box-shadow: 0 0 18px var(--bgc);
+}
+
+/* --- Plateau : caisson de flipper sur grille --- */
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 320px;
+  width: min(1100px, calc(100% - 48px));
+  margin: 0 auto 16px;
+}
+.board {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  border: 2px solid var(--violet);
+  border-radius: 48px 48px 14px 14px;
+  background:
+    linear-gradient(rgb(255 255 255 / .06) 1px, transparent 1px) 50% 50% / 36px 36px,
+    linear-gradient(90deg, rgb(255 255 255 / .06) 1px, transparent 1px) 50% 50% / 36px 36px,
+    radial-gradient(ellipse at 50% 45%, rgb(74 31 209 / .35), transparent 70%),
+    var(--panel);
+  box-shadow:
+    0 0 14px rgb(139 77 255 / .75),
+    0 0 44px rgb(139 77 255 / .3),
+    inset 0 0 0 6px var(--panel),
+    inset 0 0 0 8px rgb(29 227 255 / .75),
+    inset 0 0 26px rgb(29 227 255 / .3);
+  overflow: hidden;
+}
+
+.error {
+  margin: 0;
+  padding: 10px 14px;
+  background: var(--magenta);
+  color: var(--yellow);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* --- Fin de partie : panneau signalétique --- */
+
+.done {
+  position: relative;
+  padding: 34px 16px 36px;
+  background: var(--blue);
+  text-align: center;
+  overflow: hidden;
+  animation: slide-up .5s ease both;
+}
+.done::before, .done::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M3 3l8 8M11 3L3 11' stroke='%2370ff36' stroke-width='3'/%3E%3C/svg%3E") 0 0 / 14px 14px;
+}
+.done::after { inset: auto 0 0; }
+.done-title {
+  margin: 0;
+  color: var(--yellow);
+  font-size: .95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .25em;
+}
+.done-message {
+  margin: 4px 0 14px;
+  color: var(--lime);
+  font: 900 clamp(1.8rem, 6vw, 2.8rem)/1 var(--font);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.done button { border-color: var(--lime); color: var(--lime); background: transparent; }
+.done button.primary { border-color: var(--yellow); background: var(--yellow); color: var(--indigo); }
+.row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+@keyframes slide-up { from { opacity: 0; transform: translateY(20px); } }
+
+/* --- Commandes : boutons néon --- */
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 16px 24px calc(16px + env(safe-area-inset-bottom));
+  background: rgb(5 6 18 / .7);
+}
+.seg { display: inline-flex; }
+
+button, .button {
+  --tone: var(--cyan);
+  padding: 8px 16px;
+  border: 2px solid var(--tone);
+  border-radius: 999px;
+  background: rgb(12 15 43 / .9);
+  color: var(--white);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--tone) 55%, transparent);
+  transition: box-shadow .2s, background .2s, transform .15s;
+}
+button:hover, .button:hover {
+  background: color-mix(in srgb, var(--tone) 16%, var(--panel));
+  box-shadow: 0 0 10px var(--tone), 0 0 26px color-mix(in srgb, var(--tone) 50%, transparent);
+}
+button:active, .button:active { transform: scale(.97); }
+button:disabled { opacity: .35; cursor: default; box-shadow: none; }
+.tool-cyan { --tone: var(--cyan); }
+.tool-magenta { --tone: var(--magenta); }
+.tool-lime { --tone: var(--lime); }
+.tool-yellow { --tone: var(--yellow); }
+
+.seg button {
+  --tone: var(--violet);
+  border-radius: 0;
+  box-shadow: none;
+}
+.seg button + button { border-left: 0; }
+.seg button:first-child { border-radius: 999px 0 0 999px; }
+.seg button:last-child { border-radius: 0 999px 999px 0; }
+.seg button[aria-pressed="true"] {
+  background: var(--yellow);
+  color: var(--indigo);
+}
+button.primary { --tone: var(--yellow); background: var(--yellow); color: var(--indigo); }
+
+@media (prefers-reduced-motion: reduce) {
+  .done { animation-duration: .01s !important; }
+}
+
+@media (max-width: 620px) {
+  .bar { padding: 14px 16px 12px; }
+  .gallery { padding: 12px 16px; }
+  .stage { width: calc(100% - 32px); }
+  .board { padding: 10px; border-radius: 32px 32px 12px 12px; }
+  .tools { padding-inline: 16px; gap: 8px; }
+  .tools > button, .tools > .button { flex: 1 1 calc(50% - 8px); text-align: center; }
+  .seg { flex: 1 1 100%; }
+  .seg button { flex: 1; }
+}

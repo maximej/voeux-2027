@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <filter id="ncoeur-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g fill="#ff2fbc" fill-opacity=".12" stroke="#ff2fbc" stroke-width="6" stroke-linejoin="round" filter="url(#ncoeur-glow)">
+    <path id="ncoeur-a" d="M100 175 C40 130 10 95 10 65 C10 35 35 20 55 20 C75 20 92 32 100 50 C108 32 125 20 145 20 C165 20 190 35 190 65 C190 95 160 130 100 175 Z"/>
+  </g>
+  <g data-dots="0" fill="none" stroke-linejoin="round">
+    <use href="#ncoeur-a" fill="none" stroke="#fff" stroke-width="2"/>
+    <path transform="translate(40 38) scale(.6)" stroke="#ff3b4e" stroke-width="6" filter="url(#ncoeur-glow)"
+      d="M100 175 C40 130 10 95 10 65 C10 35 35 20 55 20 C75 20 92 32 100 50 C108 32 125 20 145 20 C165 20 190 35 190 65 C190 95 160 130 100 175 Z"/>
+    <path fill="#fff" filter="url(#ncoeur-glow)" d="M150 8 L152 16 L160 18 L152 20 L150 28 L148 20 L140 18 L148 16Z"/>
+    <rect x="22" y="160" width="7" height="7" fill="#1de3ff"/>
+    <rect x="172" y="150" width="6" height="6" fill="#70ff36"/>
+  </g>
+</svg>

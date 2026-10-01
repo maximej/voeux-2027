@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <filter id="netoile-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g fill="#f4f749" fill-opacity=".1" stroke="#f4f749" stroke-width="6" stroke-linejoin="round" filter="url(#netoile-glow)">
+    <polygon id="netoile-a"
+      points="100,20 120.6,76.7 180.8,78.7 133.3,115.8 150,173.8 100,140 50,173.8 66.7,115.8 19.2,78.7 79.4,76.7"/>
+  </g>
+  <g data-dots="0" fill="none" stroke-linejoin="round">
+    <use href="#netoile-a" fill="none" stroke="#fff" stroke-width="2"/>
+    <!-- Étoile intérieure, comme une cible de flipper -->
+    <polygon transform="translate(40 42) scale(.6)" stroke="#1de3ff" stroke-width="6" filter="url(#netoile-glow)"
+      points="100,20 120.6,76.7 180.8,78.7 133.3,115.8 150,173.8 100,140 50,173.8 66.7,115.8 19.2,78.7 79.4,76.7"/>
+    <circle cx="100" cy="105" r="9" fill="#ff2fbc" filter="url(#netoile-glow)"/>
+  </g>
+</svg>
