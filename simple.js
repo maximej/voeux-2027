@@ -15,6 +15,9 @@ function show(text, isError = false) {
   $message.hidden = false;
 }
 
+// Vibration du téléphone (Android ; non prise en charge par Safari sur iPhone)
+const vibrate = pattern => navigator.vibrate?.(pattern);
+
 startNeonBackground(document.querySelector('#neon'), { colors: COLORS });
 
 const game = new DotToDot(document.querySelector('#board'), {
@@ -22,19 +25,23 @@ const game = new DotToDot(document.querySelector('#board'), {
   fontSize: 13,
   glow: 3,
   lineColors: COLORS,
-  onComplete: () => setTimeout(() => show(message || DEFAULT_MESSAGE), 1300),
+  onConnect: (i, auto) => auto || vibrate(20),
+  onMiss: () => vibrate([30, 50, 30]),
+  onComplete: () => {
+    vibrate([40, 60, 40, 60, 160]);
+    setTimeout(() => show(message || DEFAULT_MESSAGE), 1300);
+  },
 });
 
 try {
-  const [svg, list] = await Promise.all([
-    fetch(`drawings/${name}.svg`).then(r => {
-      if (!r.ok) throw new Error(`Dessin « ${name} » introuvable.`);
-      return r.text();
-    }),
-    fetch('drawings/index.json').then(r => r.json()).catch(() => []),
-  ]);
-  const meta = game.load(svg);
-  message ||= list.find(e => e.file === `${name}.svg`)?.message || meta.message;
+  const list = await fetch('drawings/index.json').then(r => r.json()).catch(() => []);
+  const entry = list.find(e => e.file === `${name}.svg`);
+  // Écran en hauteur (téléphone) : variante « portrait » du dessin si elle existe
+  const file = (innerHeight > innerWidth && entry?.portrait) || `${name}.svg`;
+  const res = await fetch(`drawings/${file}`);
+  if (!res.ok) throw new Error(`Dessin « ${name} » introuvable.`);
+  const meta = game.load(await res.text());
+  message ||= entry?.message || meta.message;
 } catch (err) {
   show(err.message, true);
 }

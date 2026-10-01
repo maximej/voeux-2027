@@ -7,10 +7,10 @@
   </defs>
   <!-- Tubes néon : ces tracés deviennent les points du jeu -->
   <g fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#n2027-glow)">
-    <g stroke="#1de3ff"><path id="n2027-a" d="M25 55 C25 25 85 25 85 55 C85 78 60 92 25 130 L90 130"/></g>
-    <g stroke="#ff2fbc"><ellipse id="n2027-b" cx="147" cy="80" rx="33" ry="50"/></g>
-    <g stroke="#1de3ff"><path id="n2027-c" d="M205 55 C205 25 265 25 265 55 C265 78 240 92 205 130 L270 130"/></g>
-    <g stroke="#ff2fbc"><path id="n2027-d" d="M290 32 L356 32 C334 62 318 94 312 130"/></g>
+    <g stroke="#1de3ff"><path id="n2027-a" data-dots="9" d="M25 55 C25 25 85 25 85 55 C85 78 60 92 25 130 L90 130"/></g>
+    <g stroke="#ff2fbc"><ellipse id="n2027-b" data-dots="9" cx="147" cy="80" rx="33" ry="50"/></g>
+    <g stroke="#1de3ff"><path id="n2027-c" data-dots="9" d="M205 55 C205 25 265 25 265 55 C265 78 240 92 205 130 L270 130"/></g>
+    <g stroke="#ff2fbc"><path id="n2027-d" data-dots="6" d="M290 32 L356 32 C334 62 318 94 312 130"/></g>
   </g>
   <!-- Cœur blanc des tubes (<use> : ignoré par le jeu) -->
   <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9">

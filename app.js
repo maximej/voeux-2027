@@ -20,7 +20,15 @@ const game = new DotToDot($('#board'), {
     $('#progress').textContent = `${n} / ${total}`;
     $('#undo').disabled = n === 0;
   },
-  onComplete: () => setTimeout(showDone, 1300),
+  onConnect: (i, auto) => {
+    state.solved = auto;
+    if (!auto) navigator.vibrate?.(20);
+  },
+  onMiss: () => navigator.vibrate?.([30, 50, 30]),
+  onComplete: () => {
+    if (!state.solved) navigator.vibrate?.([40, 60, 40, 60, 160]);
+    setTimeout(showDone, 1300);
+  },
 });
 
 function showError(msg) {

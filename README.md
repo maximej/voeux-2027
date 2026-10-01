@@ -24,6 +24,7 @@ Les deux partagent le moteur (`dotdot.js`) et les styles du plateau (`dotdot.css
 
 1. Déposer le fichier `.svg` dans `drawings/`.
 2. L'ajouter à `drawings/index.json` : `{ "file": "mon-dessin.svg", "title": "Titre", "message": "Message final" }`.
+   Option `"portrait": "mon-dessin-portrait.svg"` : variante chargée par la page d'accueil sur écran en hauteur (téléphone), utile pour les dessins très larges comme `2027.svg`.
 
 On peut aussi importer un SVG depuis l'interface (bouton ou glisser-déposer).
 
@@ -60,6 +61,9 @@ const game = new DotToDot(document.querySelector('#board'), {
   dots: 50,
   lineColors: ['#1de3ff', '#ff2fbc', '#f4f749'], // dégradé des traits du 1er au dernier point (hex #rrggbb)
   glow: 3,                                       // halo lumineux en px (0 = aucun)
+  touchHitRadius: 40,                            // tolérance au doigt en px (souris : hitRadius, 24)
+  onConnect: (index, auto) => navigator.vibrate?.(20), // à chaque point relié
+  onMiss: () => {},                              // mauvais point touché
   onProgress: (n, total) => {},
   onComplete: () => {},
 });

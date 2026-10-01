@@ -27,8 +27,6 @@ const make = (tag, attrs = {}, parent) => {
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
-let glowId = 0;
-
 /** Couleur à la position t ∈ [0, 1] d'un dégradé de couleurs hexadécimales. */
 function gradientAt(colors, t) {
   if (colors.length === 1) return colors[0];
@@ -39,12 +37,15 @@ function gradientAt(colors, t) {
   return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * (pos - k))).join(' ')})`;
 }
 
-function distToSegment(p, a, b) {
+/** Point du segment [a, b] le plus proche de p. */
+function closestOnSegment(p, a, b) {
   const dx = b.x - a.x, dy = b.y - a.y;
   const len2 = dx * dx + dy * dy;
   const t = len2 ? Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / len2)) : 0;
-  return Math.hypot(p.x - (a.x + t * dx), p.y - (a.y + t * dy));
+  return { x: a.x + t * dx, y: a.y + t * dy };
 }
+
+const distToSegment = (p, a, b) => dist(p, closestOnSegment(p, a, b));
 
 /** Ramer–Douglas–Peucker : indices des points qui portent la forme (angles, courbures). */
 function rdp(pts, eps) {
@@ -108,10 +109,13 @@ export class DotToDot {
       dots: 50,        // nombre de points visé pour tout le dessin
       dotRadius: 6,    // px à l'écran
       fontSize: 12,    // px à l'écran
-      hitRadius: 24,   // px à l'écran : tolérance du doigt
+      hitRadius: 24,   // px à l'écran : tolérance à la souris
+      touchHitRadius: 40, // px à l'écran : tolérance au doigt / stylet
       lineColors: null, // ex. ['#1de3ff', '#ff2fbc'] : dégradé des traits du premier au dernier point
-      glow: 0,         // px à l'écran : halo lumineux autour des traits et des points (0 = aucun)
+      glow: 0,         // px à l'écran : halo lumineux autour des traits (0 = aucun)
       onProgress: () => {},
+      onConnect: () => {}, // (index, auto) : un point vient d'être relié (auto = par solve())
+      onMiss: () => {},    // un mauvais point a été touché
       onComplete: () => {},
       ...options,
     };
@@ -159,18 +163,11 @@ export class DotToDot {
 
     this.svg = svg;
     this.diag = Math.hypot(w, h);
+    // Halo : un trait large et translucide sous chaque trait (bien plus léger qu'un filtre de flou SVG)
+    this.gHalo = this.opts.glow ? make('g', { class: 'dtd-halo' }, svg) : null;
     this.gLines = make('g', { class: 'dtd-lines' }, svg);
     this.rubber = make('line', { class: 'dtd-rubber', visibility: 'hidden' }, svg);
     this.gDots = make('g', { class: 'dtd-dots' }, svg);
-    if (this.opts.glow) {
-      const id = `dtd-glow-${++glowId}`;
-      const filter = make('filter', { id, x: '-50%', y: '-50%', width: '200%', height: '200%' },
-        make('defs', {}, svg));
-      this.glowBlur = make('feGaussianBlur', { in: 'SourceGraphic', result: 'blur' }, filter);
-      const merge = make('feMerge', {}, filter);
-      ['blur', 'SourceGraphic'].forEach(n => make('feMergeNode', { in: n }, merge));
-      for (const g of [this.gLines, this.gDots]) g.setAttribute('filter', `url(#${id})`);
-    }
 
     this.dots = this._extractDots(art);
     if (!this.dots.length) throw new Error('Aucun tracé exploitable dans ce SVG (le texte doit être converti en tracés).');
@@ -187,6 +184,7 @@ export class DotToDot {
     this.done = false;
     this.lines = [];
     this.gLines.replaceChildren();
+    this.gHalo?.replaceChildren();
     this.dots.forEach(d => d.el.classList.remove('done'));
     this.svg.classList.remove('complete');
     this._updateNext();
@@ -265,6 +263,8 @@ export class DotToDot {
       group++;
     }
     temps.forEach(t => t.remove());
+    // Espacement réel (data-dots peut imposer moins de points que prévu) : sert aux tailles d'affichage
+    if (dots.length) this.spacing = totalLen / dots.length;
     this._computeLabelSides(dots);
     return dots;
   }
@@ -303,7 +303,7 @@ export class DotToDot {
     };
 
     // Les angles et points de forte courbure sont conservés, les intervalles remplis régulièrement.
-    const keep = rdp(pts, Math.max(this.diag * 0.003, sp * 0.08));
+    const keep = rdp(pts, Math.max(this.diag * 0.003, sp * 0.15));
     const raw = [];
     for (let k = 0; k < keep.length - 1; k++) {
       const a = pts[keep[k]], b = pts[keep[k + 1]];
@@ -314,7 +314,7 @@ export class DotToDot {
     if (!closed) raw.push({ x: pts.at(-1).x, y: pts.at(-1).y, corner: true, end: true });
 
     // Suppression des points trop serrés, en privilégiant les angles et l'extrémité.
-    const minD = sp * 0.45;
+    const minD = sp * 0.6;
     const out = [raw[0]];
     for (const p of raw.slice(1)) {
       const prev = out.at(-1);
@@ -385,7 +385,7 @@ export class DotToDot {
     this.gLines.setAttribute('stroke-width', 2.5 * k);
     this.rubber.setAttribute('stroke-width', 2 * k);
     this.gDots.setAttribute('stroke-width', r * 0.9); // contour éventuel des points (CSS)
-    this.glowBlur?.setAttribute('stdDeviation', this.opts.glow * k);
+    this.gHalo?.setAttribute('stroke-width', (2.5 + 2 * this.opts.glow) * k);
     for (const d of this.dots) {
       const o = r + f * 0.8;
       d.circle.setAttribute('r', r);
@@ -395,10 +395,12 @@ export class DotToDot {
     }
   }
 
+  /** Trait entre deux points (plus son halo éventuel). Renvoie les éléments créés. */
   _line(a, b, color) {
-    const line = make('path', { class: 'dtd-line', d: `M${a.x} ${a.y}L${b.x} ${b.y}`, pathLength: 1 }, this.gLines);
-    if (color) line.style.setProperty('--c', color);
-    return line;
+    const attrs = { class: 'dtd-line', d: `M${a.x} ${a.y}L${b.x} ${b.y}`, pathLength: 1 };
+    const els = [this.gHalo, this.gLines].filter(Boolean).map(g => make('path', attrs, g));
+    if (color) els.forEach(el => el.style.setProperty('--c', color));
+    return els;
   }
 
   _updateNext() {
@@ -414,11 +416,12 @@ export class DotToDot {
     if (this.count >= this.total) return this._stop();
     const i = this.count, d = this.dots[i];
     const lines = [];
-    if (i > 0 && this.dots[i - 1].group === d.group) lines.push(this._line(this.dots[i - 1], d, d.color));
-    if (d.closed && d.last) lines.push(this._line(d, this.dots[d.start], d.color));
+    if (i > 0 && this.dots[i - 1].group === d.group) lines.push(...this._line(this.dots[i - 1], d, d.color));
+    if (d.closed && d.last) lines.push(...this._line(d, this.dots[d.start], d.color));
     this.lines[i] = lines;
     d.el.classList.add('done');
     this.count++;
+    this.opts.onConnect(i, !!this.autoplay);
     this._updateNext();
     this.opts.onProgress(this.count, this.total);
     if (this.count === this.total) this._finish();
@@ -452,19 +455,22 @@ export class DotToDot {
     return new DOMPoint(e.clientX, e.clientY).matrixTransform(this.svg.getScreenCTM().inverse());
   }
 
-  _hitRadius(i) {
-    const d = this.dots[i], prev = this.dots[i - 1];
-    let r = this.opts.hitRadius * this.k;
-    if (prev && prev.group === d.group) r = Math.min(r, dist(d, prev) * 0.5);
-    return Math.max(r, this.opts.dotRadius * this.k * 1.2);
+  _hitRadius() {
+    return (this.touch ? this.opts.touchHitRadius : this.opts.hitRadius) * this.k;
   }
 
-  /** Relie le(s) point(s) suivant(s) situés sur le trajet a → b du pointeur. */
+  /**
+   * Relie le(s) point(s) suivant(s) situés sur le trajet a → b du pointeur.
+   * Le pointeur doit aussi être plus près du point suivant que du dernier point relié :
+   * la tolérance reste large sans relier d'un coup des points serrés.
+   */
   _reach(a, b, max = Infinity) {
     let n = 0;
     while (n < max && this.count < this.total) {
-      const i = this.count;
-      if (distToSegment(this.dots[i], a, b) > this._hitRadius(i)) break;
+      const i = this.count, d = this.dots[i], prev = this.dots[i - 1];
+      const q = closestOnSegment(d, a, b);
+      if (dist(q, d) > this._hitRadius()) break;
+      if (prev?.group === d.group && dist(q, prev) < dist(q, d)) break;
       this._connect();
       n++;
     }
@@ -476,6 +482,7 @@ export class DotToDot {
     e.preventDefault();
     this.svg.setPointerCapture(e.pointerId);
     this.dragging = true;
+    this.touch = e.pointerType !== 'mouse';
     const p = this._toSvg(e);
     this.lastPt = p;
     if (!this._reach(p, p, 1)) this._miss(p);
@@ -508,9 +515,10 @@ export class DotToDot {
 
   /** Mauvais point touché : il tremble, et le bon point est signalé. */
   _miss(p) {
-    const reach = this.opts.dotRadius * this.k * 3;
+    const reach = this._hitRadius() * 0.6;
     const wrong = this.dots.find((d, i) => i > this.count && dist(d, p) < reach);
     if (!wrong) return;
+    this.opts.onMiss();
     for (const el of [wrong.el, this.dots[this.count].el]) {
       el.classList.remove(el === wrong.el ? 'wrong' : 'hint');
       void el.getBBox();

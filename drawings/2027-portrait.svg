@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 290">
+  <!-- Variante pour écran en hauteur : « 20 » au-dessus de « 27 » -->
+  <defs>
+    <filter id="n2027p-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#n2027p-glow)">
+    <g stroke="#1de3ff"><path id="n2027p-a" data-dots="9" d="M25 55 C25 25 85 25 85 55 C85 78 60 92 25 130 L90 130"/></g>
+    <g stroke="#ff2fbc"><ellipse id="n2027p-b" data-dots="9" cx="147" cy="80" rx="33" ry="50"/></g>
+    <g stroke="#1de3ff"><path id="n2027p-c" data-dots="9" transform="translate(-180 130)" d="M205 55 C205 25 265 25 265 55 C265 78 240 92 205 130 L270 130"/></g>
+    <g stroke="#ff2fbc"><path id="n2027p-d" data-dots="6" transform="translate(-176 130)" d="M290 32 L356 32 C334 62 318 94 312 130"/></g>
+  </g>
+  <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+    <use href="#n2027p-a"/><use href="#n2027p-b"/><use href="#n2027p-c"/><use href="#n2027p-d"/>
+  </g>
+  <g data-dots="0">
+    <path fill="#fff" filter="url(#n2027p-glow)" d="M192 8 L195 19 L206 22 L195 25 L192 36 L189 25 L178 22 L189 19Z"/>
+    <path fill="#fff" filter="url(#n2027p-glow)" d="M196 254 L198 260 L204 262 L198 264 L196 270 L194 264 L188 262 L194 260Z"/>
+    <rect x="6" y="148" width="7" height="7" fill="#ff2fbc"/>
+    <rect x="100" y="8" width="6" height="6" fill="#1de3ff"/>
+    <rect x="150" y="276" width="7" height="7" fill="#1de3ff"/>
+    <rect x="12" y="272" width="5" height="5" fill="#ff2fbc"/>
+  </g>
+</svg>

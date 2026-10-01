@@ -13,15 +13,31 @@ export function startNeonBackground(canvas, options = {}) {
     cell: 44,          // pas de la grille (px)
     speed: 120,        // vitesse de tracé (px/s)
     turnChance: 0.35,  // probabilité de tourner à chaque nœud
-    density: 1 / 60000, // nombre de néons par px² d'écran
+    density: 1 / 80000, // nombre de néons par px² d'écran
+    fps: 30,           // cadence maximale (économise la batterie et le processeur du téléphone)
     ...options,
   };
   const ctx = canvas.getContext('2d');
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let w = 0, h = 0, tracers = [], last = 0;
+  let w = 0, h = 0, tracers = [], last = 0, lastDraw = 0;
+
+  // Têtes lumineuses pré-dessinées une fois par couleur (au lieu d'un dégradé recréé à chaque image)
+  const HEAD = 14;
+  const heads = Object.fromEntries(opts.colors.map(color => {
+    const c = document.createElement('canvas');
+    c.width = c.height = HEAD * 4;
+    const g2 = c.getContext('2d');
+    const g = g2.createRadialGradient(HEAD * 2, HEAD * 2, 0, HEAD * 2, HEAD * 2, HEAD * 2);
+    g.addColorStop(0, '#fff');
+    g.addColorStop(0.25, color);
+    g.addColorStop(1, 'transparent');
+    g2.fillStyle = g;
+    g2.fillRect(0, 0, c.width, c.height);
+    return [color, c];
+  }));
 
   function resize() {
-    const dpr = Math.min(2, devicePixelRatio || 1);
+    const dpr = Math.min(1.5, devicePixelRatio || 1);
     w = canvas.clientWidth;
     h = canvas.clientHeight;
     canvas.width = Math.round(w * dpr);
@@ -97,25 +113,16 @@ export function startNeonBackground(canvas, options = {}) {
     ctx.lineWidth = 2.5;
     ctx.stroke();
     // Tête lumineuse
-    const g = ctx.createRadialGradient(hd.x, hd.y, 0, hd.x, hd.y, 14);
-    g.addColorStop(0, '#fff');
-    g.addColorStop(0.25, t.color);
-    g.addColorStop(1, 'transparent');
     ctx.globalAlpha = t.alpha;
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(hd.x, hd.y, 14, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.drawImage(heads[t.color], hd.x - HEAD, hd.y - HEAD, HEAD * 2, HEAD * 2);
   }
 
   function draw() {
     ctx.clearRect(0, 0, w, h);
-    ctx.globalCompositeOperation = 'lighter';
     ctx.lineJoin = 'miter';
     ctx.lineCap = 'round';
     tracers.forEach(drawTracer);
     ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = 'source-over';
   }
 
   /** Mouvement réduit : quelques néons complets, sans animation. */
@@ -130,11 +137,13 @@ export function startNeonBackground(canvas, options = {}) {
   }
 
   function frame(now) {
-    const dt = Math.min(0.05, (now - last) / 1000 || 0);
+    requestAnimationFrame(frame);
+    if (now - lastDraw < 1000 / opts.fps - 2) return;
+    lastDraw = now;
+    const dt = Math.min(0.1, (now - last) / 1000 || 0);
     last = now;
     tracers.forEach(t => step(t, dt));
     draw();
-    requestAnimationFrame(frame);
   }
 
   new ResizeObserver(resize).observe(canvas);

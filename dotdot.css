@@ -10,22 +10,24 @@
   -webkit-user-select: none;
   cursor: crosshair;
 }
+/* Dessin masqué (visibility : ses filtres éventuels ne sont pas calculés pendant la partie) */
 .dtd-art {
+  visibility: hidden;
   opacity: 0;
   pointer-events: none;
   transform-box: fill-box;
   transform-origin: center;
 }
-.dtd.complete .dtd-art { animation: dtd-reveal 1.4s ease both; }
+.dtd.complete .dtd-art { visibility: visible; animation: dtd-reveal 1.4s ease both; }
 @keyframes dtd-reveal {
-  0%   { opacity: 0; transform: scale(.96); }
-  40%  { opacity: 1; filter: brightness(1.8); }
-  100% { opacity: 1; transform: none; filter: none; }
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: none; }
 }
 
-.dtd-lines, .dtd-dots { transition: opacity .8s ease; }
+.dtd-halo, .dtd-lines, .dtd-dots { transition: opacity .8s ease; }
 .dtd.complete .dtd-dots { opacity: 0; }
-.dtd.complete .dtd-lines { opacity: 0; transition: opacity 1.2s ease .6s; }
+.dtd.complete .dtd-lines, .dtd.complete .dtd-halo { opacity: 0; transition: opacity 1.2s ease .6s; }
+.dtd-halo { opacity: .28; }
 
 .dtd-line {
   fill: none;
