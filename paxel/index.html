@@ -7,15 +7,13 @@
   <title>PAXEL</title>
   <meta name="description" content="Grattez l’image pour la découvrir, pixel par pixel.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;900&display=swap">
   <link rel="preload" href="assets/paix.webp" as="image" type="image/webp">
   <link rel="stylesheet" href="src/styles/main.css">
 </head>
 <body class="is-loading">
   <header class="bar">
     <p class="hint" id="hint">Grattez l’image</p>
+    <p class="message" id="message" hidden aria-live="polite"></p>
   </header>
 
   <main class="frame">
@@ -34,6 +32,7 @@
   <footer class="bar">
     <div class="progress" id="progress" role="progressbar" aria-label="Image révélée" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
     <output class="percent" id="percent">0 %</output>
+    <button class="restart" id="restart" type="button" hidden>Regratter</button>
   </footer>
 
   <script type="module" src="src/main.js"></script>

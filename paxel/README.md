@@ -7,12 +7,12 @@ Current stage: **V8** (see the roadmap):
 - scratching cell by cell, each cell flipping over like a card;
 - revealed share and completion: at 90 %, the remaining cells flip by themselves in a wave, then the image shines once;
 - minimal poster interface: hint, colored corner brackets, pixel progress bar, loading indicator;
-- tiled surface with an invitation glint before the first scratch, irregular brush ring for the mouse;
+- tiled surface (drawn in one pass) with an invitation glint before the first scratch, irregular brush ring for the mouse;
 - the image is a WebP (372 KB instead of 2 MB for the PNG), preloaded.
 
 Decided: no persistence (every visit starts from an untouched image) and no image secrecy (the browser loads the whole image; the scratch card is a visual experience, not a protection).
 
-The font (Big Shoulders Display) comes from Google Fonts, as on the greeting card.
+Once revealed, the greeting of the card appears ("Bonne année 2027 !", or the text given with `?msg=…` in the URL) with a "Regratter" button to start again. Cells flipping make Android phones vibrate lightly. No external resources: system font, everything else in this folder.
 
 ## Run
 
@@ -25,7 +25,7 @@ python3 -m http.server 8000      # http://localhost:8000/
 
 From a phone on the same Wi-Fi: `http://<computer IP>:8000/`.
 
-All tunable values (image, tile colors, grid density, brush size, stroke interpolation, flip animation, invitation glint, completion threshold and wave, progress blocks) are in [src/config.js](src/config.js).
+All tunable values (image, tile colors, grid density, brush size, stroke interpolation, flip animation, invitation glint, completion threshold and wave, greeting, vibration, progress blocks) are in [src/config.js](src/config.js).
 
 ## Layout
 
@@ -40,7 +40,7 @@ src/
   scratch/RevealAnimation.js  cell flip animation
   scratch/ScratchProgress.js  revealed share, completion threshold
   input/PointerInput.js     mouse / touch / stylus as one input
-  ui/Interface.js           hint, pixel progress bar, brush ring, completion states
+  ui/Interface.js           hint, pixel progress bar, brush ring, greeting, restart
   image/ImageLoader.js      loads and decodes the hidden image
   styles/main.css
 assets/paix.webp            the published image

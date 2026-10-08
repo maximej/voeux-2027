@@ -43,6 +43,16 @@ export const CONFIG = {
     jitter: 120, // ms of random delay per cell, so the wave looks organic
   },
 
+  // Shown once the image is revealed (?msg=… in the URL replaces it), as on the greeting card
+  message: 'Bonne année 2027 !',
+
+  // Android only (iPhone Safari does not vibrate)
+  vibration: {
+    scratch: 8, // ms, while cells flip
+    every: 120, // ms between two scratch vibrations at most
+    complete: [40, 60, 40, 60, 160], // same pattern as the greeting card
+  },
+
   progress: {
     blocks: 20, // pixel blocks in the progress bar
   },

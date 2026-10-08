@@ -11,7 +11,12 @@ import { Interface } from './ui/Interface.js';
 const stage = document.querySelector('#stage');
 const surface = document.querySelector('#surface');
 const effects = document.querySelector('#effects');
-const ui = new Interface(CONFIG.progress);
+const params = new URLSearchParams(location.search);
+const ui = new Interface(CONFIG.progress, params.get('msg') || CONFIG.message);
+
+// Vibration (Android; iPhone Safari does not support it)
+const vibrate = pattern => navigator.vibrate?.(pattern);
+let lastVibration = 0;
 
 let image;
 try {
@@ -28,8 +33,22 @@ stage.style.setProperty('--aspect', image.naturalWidth / image.naturalHeight);
 
 const engine = new ScratchEngine(surface, effects, image, CONFIG, {
   onProgress: ratio => ui.progress(ratio),
-  onComplete: () => ui.complete(),
+  onScratch: () => {
+    const now = performance.now();
+    if (now - lastVibration < CONFIG.vibration.every) return;
+    lastVibration = now;
+    vibrate(CONFIG.vibration.scratch);
+  },
+  onComplete: () => {
+    ui.complete();
+    vibrate(CONFIG.vibration.complete);
+  },
   onRevealed: () => ui.revealed(),
+});
+
+document.querySelector('#restart').addEventListener('click', () => {
+  ui.reset();
+  engine.reset();
 });
 
 // iOS Safari: pinch zoom on the image (touch-action alone does not always prevent it)

@@ -25,7 +25,7 @@ const hash = n => {
 };
 
 export class ScratchEngine {
-  constructor(surfaceCanvas, effectsCanvas, image, config, { onProgress, onComplete, onRevealed } = {}) {
+  constructor(surfaceCanvas, effectsCanvas, image, config, { onProgress, onScratch, onComplete, onRevealed } = {}) {
     const { surface, grid, brush, reveal, invite, completion } = config;
     this.surfaceCtx = surfaceCanvas.getContext('2d');
     this.effectsCtx = effectsCanvas.getContext('2d');
@@ -40,17 +40,48 @@ export class ScratchEngine {
     this.animation = new RevealAnimation(reveal);
     this.progress = new ScratchProgress(this.mask, completion.threshold);
     this.onProgress = onProgress;
+    this.onScratch = onScratch;
     this.onComplete = onComplete;
     this.onRevealed = onRevealed;
-    this.revealedNotified = false;
     this.strokes = new Map(); // pointer id → last stamp position (CSS px)
     this.width = this.height = this.dpr = 0;
-    this.touched = false; // the invitation stops at the first scratch
-    this.completed = false;
-    this.inviteStart = performance.now() + invite.delay;
+    this.tiles = this.tileImage();
     this.inviteTimer = 0;
     this.raf = 0;
     this.frame = this.frame.bind(this);
+    this.reset(false);
+  }
+
+  /** Back to an untouched surface (`redraw`: also repaint it). */
+  reset(redraw = true) {
+    this.mask.revealed.fill(0);
+    this.mask.revealedCount = 0;
+    this.animation.flips = [];
+    this.strokes.clear();
+    this.touched = false; // the invitation stops at the first scratch
+    this.completed = false;
+    this.revealedNotified = false;
+    this.inviteStart = performance.now() + this.invite.delay;
+    if (redraw) {
+      this.drawSurface();
+      this.request();
+    }
+  }
+
+  /** One pixel per cell, in its tile color: scaled up, it paints every tile in one draw. */
+  tileImage() {
+    const { columns, rows } = this.mask;
+    const canvas = document.createElement('canvas');
+    canvas.width = columns;
+    canvas.height = rows;
+    const ctx = canvas.getContext('2d');
+    const pixels = ctx.createImageData(columns, rows);
+    for (let cell = 0; cell < columns * rows; cell++) {
+      const hex = parseInt(this.tileColor(cell).slice(1), 16);
+      pixels.data.set([hex >> 16, (hex >> 8) & 255, hex & 255, 255], cell * 4);
+    }
+    ctx.putImageData(pixels, 0, 0);
+    return canvas;
   }
 
   /** Matches the canvases to their displayed size and rebuilds the surface from the mask. */
@@ -62,10 +93,31 @@ export class ScratchEngine {
       ctx.canvas.width = Math.round(width * dpr);
       ctx.canvas.height = Math.round(height * dpr);
     }
-    for (let cell = 0; cell < this.mask.revealed.length; cell++) {
-      if (!this.mask.isRevealed(cell)) this.drawTile(cell);
-    }
+    this.drawSurface();
     this.request();
+  }
+
+  /**
+   * The whole covering layer: every tile in one scaled draw, the gaps as one line per column
+   * and row (each cell keeps its gap on its right and bottom edges), then revealed cells cleared.
+   */
+  drawSurface() {
+    const ctx = this.surfaceCtx;
+    const W = ctx.canvas.width, H = ctx.canvas.height;
+    const { columns, rows } = this.mask;
+    const gap = this.gap;
+    ctx.clearRect(0, 0, W, H);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(this.tiles, 0, 0, W, H);
+    ctx.fillStyle = this.surface.gap;
+    for (let col = 1; col <= columns; col++) ctx.fillRect(Math.round((col * W) / columns) - gap, 0, gap, H);
+    for (let row = 1; row <= rows; row++) ctx.fillRect(0, Math.round((row * H) / rows) - gap, W, gap);
+    for (let cell = 0; cell < this.mask.revealed.length; cell++) {
+      if (this.mask.isRevealed(cell)) {
+        const { x, y, w, h } = this.cellRect(cell);
+        ctx.clearRect(x, y, w, h);
+      }
+    }
   }
 
   /** A cell's rectangle in device px, snapped to whole pixels so neighbouring cells leave no seams. */
@@ -95,16 +147,6 @@ export class ScratchEngine {
     return Math.max(1, Math.round(this.dpr * 0.75));
   }
 
-  /** A covered cell: its tile inside a fine gap. */
-  drawTile(cell) {
-    const ctx = this.surfaceCtx;
-    const { x, y, w, h } = this.cellRect(cell);
-    ctx.fillStyle = this.surface.gap;
-    ctx.fillRect(x, y, w, h);
-    ctx.fillStyle = this.tileColor(cell);
-    ctx.fillRect(x, y, w - this.gap, h - this.gap);
-  }
-
   /** Brush radius in CSS px for the current display size. */
   get radius() {
     const { radius, minRadius } = this.brushConfig;
@@ -116,11 +158,14 @@ export class ScratchEngine {
     if (this.completed) return;
     this.touched = true;
     const now = performance.now();
-    for (const { cell, distance } of this.brush.covered(this.mask, x, y, this.radius, this.width, this.height)) {
+    const cells = this.brush.covered(this.mask, x, y, this.radius, this.width, this.height);
+    for (const { cell, distance } of cells) {
       this.mask.reveal(cell);
       this.animation.add(cell, now + distance * this.reveal.ripple);
     }
+    if (!cells.length) return;
     this.request();
+    this.onScratch?.(cells.length);
     this.onProgress?.(this.progress.ratio);
     if (this.progress.reachedThreshold) this.complete(x, y);
   }

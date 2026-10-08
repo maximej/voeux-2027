@@ -1,6 +1,6 @@
 /**
  * Minimal interface around the image: hint, pixel progress bar, brush ring (mouse only),
- * completion states.
+ * completion states (greeting message, restart button).
  */
 
 const PALETTE = ['var(--red)', 'var(--yellow)', 'var(--blue)', 'var(--cyan)'];
@@ -11,12 +11,15 @@ const RING_POINTS = 48;
 const roughness = Array.from({ length: RING_POINTS }, () => Math.random() - 0.5);
 
 export class Interface {
-  constructor({ blocks }) {
+  constructor({ blocks }, message) {
     this.body = document.body;
     this.stage = document.querySelector('#stage');
     this.hint = document.querySelector('#hint');
     this.bar = document.querySelector('#progress');
     this.percent = document.querySelector('#percent');
+    this.message = document.querySelector('#message');
+    this.message.textContent = message;
+    this.restart = document.querySelector('#restart');
     this.blocks = Array.from({ length: blocks }, (_, i) => {
       const block = document.createElement('i');
       block.style.setProperty('--on', PALETTE[i % PALETTE.length]);
@@ -59,11 +62,26 @@ export class Interface {
     this.brush(null);
   }
 
-  /** Every cell has flipped: the image shines once. */
+  /** Every cell has flipped: the image shines, then the greeting appears. */
   revealed() {
     this.body.classList.add('is-revealed');
-    this.hint.textContent = 'Image révélée';
+    this.hint.hidden = true;
+    this.message.hidden = false;
+    this.percent.hidden = true;
+    this.restart.hidden = false;
+  }
+
+  /** Back to the start (restart). */
+  reset() {
+    this.body.classList.remove('is-complete', 'is-revealed');
+    this.hint.hidden = false;
     this.hint.classList.remove('is-hidden');
+    this.message.hidden = true;
+    this.percent.hidden = false;
+    this.restart.hidden = true;
+    this.blocks.forEach(block => block.classList.remove('is-on'));
+    this.lit = 0;
+    this.progress(0);
   }
 
   /** Brush ring following the mouse, `radius` in CSS px; null hides it. */
