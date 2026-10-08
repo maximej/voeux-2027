@@ -2,3 +2,10 @@
 .claude/
 # Visuels de référence : non publiés
 IMG/
+# PAXEL : images de test / source secrète, jamais publiées
+paxel/drawings/
+node_modules/
+# PAXEL : base de données locale
+paxel/data/
+# Wrangler (Cloudflare) local state
+.wrangler/

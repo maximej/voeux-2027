@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080a1a">
+  <title>PAXEL</title>
+  <meta name="description" content="Grattez l’image pour la découvrir, pixel par pixel.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;900&display=swap">
+  <link rel="preload" href="assets/paix.webp" as="image" type="image/webp">
+  <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body class="is-loading">
+  <header class="bar">
+    <p class="hint" id="hint">Grattez l’image</p>
+  </header>
+
+  <main class="frame">
+    <div id="stage" class="stage">
+      <canvas id="surface" class="layer"></canvas>
+      <canvas id="effects" class="layer effects"></canvas>
+      <div class="shine" aria-hidden="true"></div>
+      <span class="corner corner--tl" aria-hidden="true"></span>
+      <span class="corner corner--tr" aria-hidden="true"></span>
+      <span class="corner corner--bl" aria-hidden="true"></span>
+      <span class="corner corner--br" aria-hidden="true"></span>
+    </div>
+    <div class="loader" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </main>
+
+  <footer class="bar">
+    <div class="progress" id="progress" role="progressbar" aria-label="Image révélée" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+    <output class="percent" id="percent">0 %</output>
+  </footer>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

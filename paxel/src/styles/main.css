@@ -1,0 +1,284 @@
+/* Minimal poster: deep navy, saturated pixel accents (red, yellow, blue, cyan),
+   condensed capitals. Same palette and type as the greeting card. */
+
+:root {
+  --bg: #080a1a;
+  --white: #f4f7ff;
+  --muted: #8a90c0;
+  --blue: #1f3bff;
+  --cyan: #1de3ff;
+  --red: #ff3b4e;
+  --yellow: #f4f749;
+  --font: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --pad: clamp(14px, 3vw, 28px);
+  --px: clamp(4px, 0.7vmin, 6px); /* pixel unit of the brackets, loader and progress blocks */
+  --corner: calc(var(--px) * 4); /* corner bracket arm length */
+  --corner-gap: calc(var(--px) * 2); /* space between the brackets and the image */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--bg);
+  color: var(--white);
+  font: 600 16px/1.2 var(--font);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Header and footer ------------------------------------------------------------------ */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--pad);
+}
+
+header.bar {
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+footer.bar {
+  padding-top: 0;
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  transition: opacity 0.4s, color 0.4s;
+}
+
+.hint.is-hidden {
+  opacity: 0;
+}
+
+.is-revealed .hint {
+  color: var(--white);
+}
+
+/* Pixel progress bar */
+.progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.progress i {
+  width: calc(var(--px) * 1.6);
+  height: calc(var(--px) * 1.6);
+  background: #1b2050;
+  transition: background-color 0.3s;
+}
+
+.progress i.is-on {
+  background: var(--on);
+}
+
+.percent {
+  min-width: 4ch;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* --- Image area ------------------------------------------------------------------------- */
+
+/* The frame is a size container: the stage is the largest box with the image's aspect ratio
+   that fits in it, leaving room for the corner brackets */
+.frame {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: calc(var(--pad) + var(--corner-gap) + var(--px));
+  container-type: size;
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: var(--aspect, 1);
+  width: min(100cqw, 100cqh * var(--aspect, 1));
+  visibility: hidden;
+}
+
+.stage.is-ready {
+  visibility: visible;
+}
+
+.hidden-image,
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Scratching must not scroll, zoom or select: only on the scratch area */
+.effects {
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: none;
+}
+
+.is-complete .effects {
+  cursor: default;
+}
+
+/* Brush ring (mouse): an irregular outline, see Interface.js */
+.brush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  filter: drop-shadow(0 0 1px rgb(8 10 26 / 0.8)) drop-shadow(0 0 6px rgb(29 227 255 / 0.4));
+}
+
+.brush path {
+  fill: none;
+  stroke: rgb(244 247 255 / 0.8);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.brush.is-visible {
+  opacity: 1;
+}
+
+/* Corner brackets: pixel L shapes, one color each, pointing at the image */
+.corner {
+  position: absolute;
+  width: var(--corner);
+  height: var(--corner);
+  border: 0 solid var(--c);
+  pointer-events: none;
+}
+
+.corner--tl { --c: var(--red); top: calc(-1 * var(--corner-gap)); left: calc(-1 * var(--corner-gap)); border-width: var(--px) 0 0 var(--px); }
+.corner--tr { --c: var(--yellow); top: calc(-1 * var(--corner-gap)); right: calc(-1 * var(--corner-gap)); border-width: var(--px) var(--px) 0 0; }
+.corner--bl { --c: var(--blue); bottom: calc(-1 * var(--corner-gap)); left: calc(-1 * var(--corner-gap)); border-width: 0 0 var(--px) var(--px); }
+.corner--br { --c: var(--cyan); bottom: calc(-1 * var(--corner-gap)); right: calc(-1 * var(--corner-gap)); border-width: 0 var(--px) var(--px) 0; }
+
+/* Revealed: the brackets close in on the image and settle back */
+.is-revealed .corner--tl { animation: snap-tl 0.7s ease-in-out; }
+.is-revealed .corner--tr { animation: snap-tr 0.7s ease-in-out; }
+.is-revealed .corner--bl { animation: snap-bl 0.7s ease-in-out; }
+.is-revealed .corner--br { animation: snap-br 0.7s ease-in-out; }
+
+@keyframes snap-tl { 50% { translate: var(--corner-gap) var(--corner-gap); } }
+@keyframes snap-tr { 50% { translate: calc(-1 * var(--corner-gap)) var(--corner-gap); } }
+@keyframes snap-bl { 50% { translate: var(--corner-gap) calc(-1 * var(--corner-gap)); } }
+@keyframes snap-br { 50% { translate: calc(-1 * var(--corner-gap)) calc(-1 * var(--corner-gap)); } }
+
+/* Revealed: a band of light sweeps across the image while a soft glow pulses around it */
+.shine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* The gradient is 3× the image wide: moving it from 100 % to 0 % carries the band
+     from just off the left edge to just off the right edge */
+  background: linear-gradient(105deg,
+    transparent 42%,
+    rgb(255 255 255 / 0.1) 46%,
+    rgb(255 255 255 / 0.55) 50%,
+    rgb(255 255 255 / 0.1) 54%,
+    transparent 58%) 100% 0 / 300% 100% no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+
+.is-revealed .shine::before {
+  animation: shine 1.8s 0.1s linear;
+}
+
+@keyframes shine {
+  from { background-position: 100% 0; opacity: 1; }
+  to { background-position: 0% 0; opacity: 1; }
+}
+
+.is-revealed .stage {
+  animation: glow 2.2s ease-out;
+}
+
+@keyframes glow {
+  30% { box-shadow: 0 0 40px 4px rgb(29 227 255 / 0.35), 0 0 90px 10px rgb(31 59 255 / 0.25); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Loading: four pixels blinking in turn, until the image is decoded */
+.loader {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: max-content;
+  height: max-content;
+  margin: auto;
+  grid-template-columns: repeat(2, var(--px));
+  gap: 3px;
+}
+
+.frame {
+  position: relative;
+}
+
+.is-loading .loader {
+  display: grid;
+}
+
+.loader i {
+  width: calc(var(--px) * 1.4);
+  height: calc(var(--px) * 1.4);
+  animation: blink 1s infinite steps(1);
+}
+
+.loader i:nth-child(1) { background: var(--red); }
+.loader i:nth-child(2) { background: var(--yellow); animation-delay: 0.25s; }
+.loader i:nth-child(4) { background: var(--cyan); animation-delay: 0.5s; }
+.loader i:nth-child(3) { background: var(--blue); animation-delay: 0.75s; }
+
+@keyframes blink {
+  50% { opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-revealed .corner,
+  .is-revealed .stage,
+  .is-revealed .shine::before,
+  .loader i {
+    animation: none !important;
+  }
+}
