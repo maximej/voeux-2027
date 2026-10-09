@@ -1,0 +1,210 @@
+/* Shared look of the greeting games: white neon with an orange halo, near-black background,
+   plain system font. */
+
+:root {
+  --bg: #08080b;
+  --white: #fffaf4;
+  --orange: #ff8a1f;
+  --orange-rgb: 255 138 31;
+  --dim: #8a8a96;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --halo-text: 0 0 4px rgb(var(--orange-rgb) / 0.9), 0 0 14px rgb(var(--orange-rgb) / 0.7), 0 0 32px rgb(var(--orange-rgb) / 0.45);
+  --message-size: clamp(1.5rem, 6.5vmin, 2.8rem);
+  --pad: clamp(12px, 3vw, 24px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--bg);
+  color: var(--white);
+  font: 500 16px/1.3 var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--pad);
+}
+
+/* Hint and greeting share the header; its height is set for the greeting */
+header.bar {
+  display: grid;
+  place-items: center;
+  justify-content: center;
+  min-height: calc(var(--pad) + var(--message-size) * 1.25);
+  padding-bottom: 0;
+}
+
+header.bar > * {
+  grid-area: 1 / 1;
+}
+
+.hint {
+  margin: 0;
+  color: var(--orange);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgb(var(--orange-rgb) / 0.6);
+  transition: opacity 0.6s;
+}
+
+.hint.is-hidden {
+  opacity: 0;
+}
+
+[data-state="ready"] .hint,
+[data-state="paused"] .hint {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% { opacity: 0.45; }
+}
+
+.message {
+  margin: 0;
+  font-size: var(--message-size);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-shadow: var(--halo-text);
+  animation: message-in 1s 0.2s ease both;
+}
+
+@keyframes message-in {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+footer.bar {
+  min-height: calc(var(--pad) + 48px);
+  padding-top: 0;
+}
+
+.next {
+  flex: none;
+  width: 64px;
+  height: 40px;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+}
+
+.info p {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.left {
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgb(var(--orange-rgb) / 0.7);
+}
+
+.stats {
+  color: var(--dim);
+  font-size: 12px;
+}
+
+.replay {
+  flex: none;
+  height: 36px;
+  padding: 0 16px;
+  border: 2px solid var(--orange);
+  border-radius: 0;
+  background: none;
+  color: var(--white);
+  font: 600 14px/1 var(--font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgb(var(--orange-rgb) / 0.5), inset 0 0 8px rgb(var(--orange-rgb) / 0.35);
+  text-shadow: 0 0 6px rgb(var(--orange-rgb) / 0.8);
+  cursor: pointer;
+  animation: message-in 0.6s 0.4s ease both;
+}
+
+.replay:hover,
+.replay:focus-visible {
+  background: var(--orange);
+  color: var(--bg);
+  text-shadow: none;
+  outline: none;
+}
+
+/* While the replay button shows, the stats make room */
+footer:has(.replay:not([hidden])) .info {
+  display: none;
+}
+
+/* --- Board -------------------------------------------------------------------------------- */
+
+.frame {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: var(--pad);
+  container-type: size;
+}
+
+.stage {
+  aspect-ratio: var(--columns, 15) / var(--rows, 20);
+  width: min(100cqw, 100cqh * var(--columns, 15) / var(--rows, 20));
+  border: 2px solid var(--white);
+  box-shadow: 0 0 3px rgb(255 255 255 / 0.6), 0 0 10px rgb(var(--orange-rgb) / 0.8), 0 0 26px rgb(var(--orange-rgb) / 0.45),
+    inset 0 0 18px rgb(var(--orange-rgb) / 0.2);
+}
+
+.is-loading .stage {
+  visibility: hidden;
+}
+
+.board {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: pointer;
+}
+
+[data-state="won"] .stage {
+  animation: glow 2.2s ease-out;
+}
+
+@keyframes glow {
+  30% { box-shadow: 0 0 12px 2px rgb(255 255 255 / 0.4), 0 0 50px 6px rgb(var(--orange-rgb) / 0.6), 0 0 110px 14px rgb(var(--orange-rgb) / 0.3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint,
+  .message,
+  .replay,
+  [data-state="won"] .stage {
+    animation: none !important;
+  }
+}

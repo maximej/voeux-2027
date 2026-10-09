@@ -1,0 +1,14 @@
+{
+  "name": "PAIX",
+  "source": "paxel/drawings/PAIX TETRIS.png",
+  "width": 15,
+  "height": 5,
+  "colors": { "B": "#0d82fe", "Y": "#fdda0f", "R": "#f71b27", "G": "#17c753" },
+  "rows": [
+    "BBB.YYY.R.G...G",
+    "B.B.Y.Y.R..G.G.",
+    "BBB.YYY.R...G..",
+    "B...Y.Y.R..G.G.",
+    "B...Y.Y.R.G...G"
+  ]
+}
