@@ -45,11 +45,10 @@ const engine = new ScratchEngine(surface, effects, image, CONFIG, {
     lastVibration = now;
     vibrate(CONFIG.vibration.scratch);
   },
-  onComplete: () => {
-    ui.complete();
-    vibrate(CONFIG.vibration.complete);
-  },
+  onComplete: () => ui.complete(),
+  // The finish vibration comes with the visible ending, not at the threshold while still scratching
   onRevealed: () => {
+    vibrate(CONFIG.vibration.complete);
     ui.revealed();
     ending.play();
   },

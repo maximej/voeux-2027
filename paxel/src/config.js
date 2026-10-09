@@ -60,7 +60,7 @@ export const CONFIG = {
   vibration: {
     scratch: 8, // ms, while cells flip
     every: 120, // ms between two scratch vibrations at most
-    complete: [40, 60, 40, 60, 160], // same pattern as the greeting card
+    complete: [40, 60, 40, 60, 160], // when the image is fully revealed, same pattern as the greeting card
   },
 
   progress: {

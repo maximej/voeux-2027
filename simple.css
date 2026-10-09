@@ -1,16 +1,18 @@
 /* Version simple : le jeu seul, sur des néons qui se tracent en arrière-plan.
-   Palette limitée : cyan, magenta et blanc. */
+   Charte de PAXEL : néon blanc (couleur principale) à halo orange (couleur secondaire),
+   fond presque noir, police du système. */
 
 :root {
-  --cyan: #1de3ff;
-  --magenta: #ff2fbc;
-  --font: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --white: #fffaf4;
+  --orange: #ff8a1f;
+  --orange-rgb: 255 138 31;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  --dtd-dot: #fff;
-  --dtd-line: var(--cyan);
-  --dtd-label: rgb(255 255 255 / .6);
-  --dtd-accent: var(--magenta);
-  --dtd-wrong: var(--magenta);
+  --dtd-dot: var(--white);
+  --dtd-line: var(--orange);
+  --dtd-label: rgb(255 250 244 / .55);
+  --dtd-accent: var(--orange);
+  --dtd-wrong: #ff4d2e;
   --dtd-font: var(--font);
 }
 
@@ -20,8 +22,8 @@ html, body { height: 100%; }
 
 body {
   margin: 0;
-  background: #05060f;
-  color: #fff;
+  background: #08080b;
+  color: var(--white);
   font-family: var(--font);
   -webkit-tap-highlight-color: transparent;
 }
@@ -49,16 +51,15 @@ body {
 .message {
   margin: 0 0 4vh;
   text-align: center;
-  font: 900 clamp(2rem, 8vw, 4rem)/1 var(--font);
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  text-shadow: 0 0 6px var(--magenta), 0 0 22px var(--magenta), 0 0 48px var(--magenta);
+  font: 800 clamp(2rem, 8vw, 4rem)/1.1 var(--font);
+  letter-spacing: .02em;
+  text-shadow: 0 0 4px rgb(var(--orange-rgb) / .9), 0 0 14px rgb(var(--orange-rgb) / .7), 0 0 32px rgb(var(--orange-rgb) / .45);
   animation: message-in 1s ease both;
 }
 .message.error {
   font-size: 1.2rem;
   text-shadow: none;
-  color: var(--magenta);
+  color: var(--orange);
 }
 @keyframes message-in { from { opacity: 0; transform: translateY(12px); } }
 

@@ -1,7 +1,9 @@
 import { DotToDot } from './dotdot.js';
 import { startNeonBackground } from './neon-bg.js';
 
-const COLORS = ['#1de3ff', '#ff2fbc'];
+// Charte de PAXEL : traits en dégradé du blanc à l'orange ; néons de fond surtout orange
+const COLORS = ['#fffaf4', '#ff8a1f'];
+const BACKGROUND = ['#ff8a1f', '#ff8a1f', '#fffaf4'];
 const DEFAULT_MESSAGE = 'Bonne année 2027 !';
 
 const params = new URLSearchParams(location.search);
@@ -18,7 +20,7 @@ function show(text, isError = false) {
 // Vibration du téléphone (Android ; non prise en charge par Safari sur iPhone)
 const vibrate = pattern => navigator.vibrate?.(pattern);
 
-startNeonBackground(document.querySelector('#neon'), { colors: COLORS });
+startNeonBackground(document.querySelector('#neon'), { colors: BACKGROUND });
 
 const game = new DotToDot(document.querySelector('#board'), {
   dots: Number(params.get('n')) || 50,

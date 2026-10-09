@@ -7,10 +7,10 @@
   </defs>
   <!-- Tubes néon : ces tracés deviennent les points du jeu -->
   <g fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#n2027-glow)">
-    <g stroke="#1de3ff"><path id="n2027-a" data-dots="9" d="M25 55 C25 25 85 25 85 55 C85 78 60 92 25 130 L90 130"/></g>
-    <g stroke="#ff2fbc"><ellipse id="n2027-b" data-dots="9" cx="147" cy="80" rx="33" ry="50"/></g>
-    <g stroke="#1de3ff"><path id="n2027-c" data-dots="9" d="M205 55 C205 25 265 25 265 55 C265 78 240 92 205 130 L270 130"/></g>
-    <g stroke="#ff2fbc"><path id="n2027-d" data-dots="6" d="M290 32 L356 32 C334 62 318 94 312 130"/></g>
+    <g stroke="#ff8a1f"><path id="n2027-a" data-dots="9" d="M25 55 C25 25 85 25 85 55 C85 78 60 92 25 130 L90 130"/></g>
+    <g stroke="#ff8a1f"><ellipse id="n2027-b" data-dots="9" cx="147" cy="80" rx="33" ry="50"/></g>
+    <g stroke="#ff8a1f"><path id="n2027-c" data-dots="9" d="M205 55 C205 25 265 25 265 55 C265 78 240 92 205 130 L270 130"/></g>
+    <g stroke="#ff8a1f"><path id="n2027-d" data-dots="6" d="M290 32 L356 32 C334 62 318 94 312 130"/></g>
   </g>
   <!-- Cœur blanc des tubes (<use> : ignoré par le jeu) -->
   <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
@@ -20,9 +20,9 @@
   <g data-dots="0">
     <path fill="#fff" filter="url(#n2027-glow)" d="M178 4 L181 16 L193 19 L181 22 L178 34 L175 22 L163 19 L175 16Z"/>
     <path fill="#fff" filter="url(#n2027-glow)" d="M366 124 L368 132 L376 134 L368 136 L366 144 L364 136 L356 134 L364 132Z"/>
-    <rect x="8" y="140" width="7" height="7" fill="#ff2fbc"/>
-    <rect x="100" y="12" width="6" height="6" fill="#1de3ff"/>
-    <rect x="280" y="146" width="7" height="7" fill="#1de3ff"/>
-    <rect x="232" y="6" width="5" height="5" fill="#ff2fbc"/>
+    <rect x="8" y="140" width="7" height="7" fill="#fffaf4"/>
+    <rect x="100" y="12" width="6" height="6" fill="#ff8a1f"/>
+    <rect x="280" y="146" width="7" height="7" fill="#ff8a1f"/>
+    <rect x="232" y="6" width="5" height="5" fill="#fffaf4"/>
   </g>
 </svg>
