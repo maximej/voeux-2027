@@ -7,6 +7,7 @@ import { loadImage } from './image/ImageLoader.js';
 import { ScratchEngine } from './scratch/ScratchEngine.js';
 import { attachPointerInput } from './input/PointerInput.js';
 import { Interface } from './ui/Interface.js';
+import { EndVideo } from './ui/EndVideo.js';
 
 const stage = document.querySelector('#stage');
 const surface = document.querySelector('#surface');
@@ -31,8 +32,13 @@ image.draggable = false;
 stage.prepend(image);
 stage.style.setProperty('--aspect', image.naturalWidth / image.naturalHeight);
 
+const ending = new EndVideo(document.querySelector('#anim'), CONFIG.ending, () => ui.showRestart());
+
 const engine = new ScratchEngine(surface, effects, image, CONFIG, {
-  onProgress: ratio => ui.progress(ratio),
+  onProgress: ratio => {
+    ui.progress(ratio);
+    if (ratio > 0) ending.warm();
+  },
   onScratch: () => {
     const now = performance.now();
     if (now - lastVibration < CONFIG.vibration.every) return;
@@ -43,10 +49,14 @@ const engine = new ScratchEngine(surface, effects, image, CONFIG, {
     ui.complete();
     vibrate(CONFIG.vibration.complete);
   },
-  onRevealed: () => ui.revealed(),
+  onRevealed: () => {
+    ui.revealed();
+    ending.play();
+  },
 });
 
 document.querySelector('#restart').addEventListener('click', () => {
+  ending.reset();
   ui.reset();
   engine.reset();
 });

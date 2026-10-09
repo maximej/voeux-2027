@@ -3,7 +3,6 @@
  * completion states (greeting message, restart button).
  */
 
-const PALETTE = ['var(--red)', 'var(--yellow)', 'var(--blue)', 'var(--cyan)'];
 const SVG = 'http://www.w3.org/2000/svg';
 
 /** Ring outline: points around a circle, the radius varying a little so it looks hand-scratched. */
@@ -20,12 +19,7 @@ export class Interface {
     this.message = document.querySelector('#message');
     this.message.textContent = message;
     this.restart = document.querySelector('#restart');
-    this.blocks = Array.from({ length: blocks }, (_, i) => {
-      const block = document.createElement('i');
-      block.style.setProperty('--on', PALETTE[i % PALETTE.length]);
-      this.bar.append(block);
-      return block;
-    });
+    this.blocks = Array.from({ length: blocks }, () => this.bar.appendChild(document.createElement('i')));
     this.lit = 0;
 
     this.ring = document.createElementNS(SVG, 'svg');
@@ -62,11 +56,15 @@ export class Interface {
     this.brush(null);
   }
 
-  /** Every cell has flipped: the image shines, then the greeting appears. */
+  /** Every cell has flipped: the image glows and the greeting appears. */
   revealed() {
     this.body.classList.add('is-revealed');
     this.hint.hidden = true;
     this.message.hidden = false;
+  }
+
+  /** End of the ending: the restart button replaces the percentage. */
+  showRestart() {
     this.percent.hidden = true;
     this.restart.hidden = false;
   }

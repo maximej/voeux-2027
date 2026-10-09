@@ -261,7 +261,7 @@ export class ScratchEngine {
    */
   drawInvite(ctx, now) {
     if (this.touched) return false;
-    const { every, duration, strength } = this.invite;
+    const { every, duration, color, strength } = this.invite;
     const elapsed = now - this.inviteStart;
     const phase = elapsed < 0 ? elapsed : elapsed % every;
     if (phase < 0 || phase > duration) {
@@ -275,7 +275,7 @@ export class ScratchEngine {
     const span = columns + rows - 2; // largest col + row
     const crest = -band + (phase / duration) * (span + 2 * band); // col + row at the band's centre
     for (let d = Math.max(0, Math.ceil(crest - band)); d <= Math.min(span, crest + band); d++) {
-      ctx.fillStyle = `rgb(255 255 255 / ${strength * (1 - Math.abs(d - crest) / band)})`;
+      ctx.fillStyle = `rgb(${color} / ${strength * (1 - Math.abs(d - crest) / band)})`;
       for (let col = Math.max(0, d - rows + 1); col <= Math.min(columns - 1, d); col++) {
         const cell = (d - col) * columns + col;
         if (this.mask.isRevealed(cell)) continue;

@@ -7,8 +7,8 @@ export const CONFIG = {
 
   // Covering layer: dark tiles, one per cell, separated by a fine gap
   surface: {
-    colors: ['#171b45', '#1b2050', '#141840', '#1e2457'], // picked per cell, so the tiles vary slightly
-    gap: '#0b0d26', // line between tiles (about 1 CSS px)
+    colors: ['#18181e', '#1c1c23', '#151519', '#202027'], // picked per cell, so the tiles vary slightly
+    gap: '#09090c', // line between tiles (about 1 CSS px)
     slot: '#000000', // what shows behind a cell while it flips
   },
 
@@ -34,13 +34,23 @@ export const CONFIG = {
     delay: 700, // ms after loading
     every: 5000, // ms between sweeps
     duration: 1100, // ms for one sweep
-    strength: 0.16, // highlight opacity at the crest
+    color: '255 138 31', // orange, as rgb channels
+    strength: 0.22, // highlight opacity at the crest
   },
 
   completion: {
     threshold: 0.9, // share of the surface revealed by scratching before the rest flips by itself
     duration: 1400, // ms for the wave of remaining cells to spread across the image
     jitter: 120, // ms of random delay per cell, so the wave looks organic
+  },
+
+  // Ending: the animated image plays over the revealed one, its last frame fades lightly,
+  // then the restart button appears
+  ending: {
+    video: 'assets/paix-anim.mp4', // 960 × 960, 5 s, from drawings/PaixAnim.mp4 (1.7 MB instead of 10.9 MB)
+    fade: 0.55, // brightness of the last frame after the fade (1 = unchanged)
+    fadeMs: 1200,
+    startTimeout: 6000, // ms: if the video has not started by then, show the button anyway
   },
 
   // Shown once the image is revealed (?msg=… in the URL replaces it), as on the greeting card
