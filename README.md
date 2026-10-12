@@ -8,8 +8,9 @@ Charte commune : néon blanc à halo orange, fond presque noir, police du systè
 | [`points/`](points/) | « Relie les points » : relier des points numérotés pour révéler un dessin | https://maximej.github.io/voeux-2027/points/ |
 | [`paxel/`](paxel/) | PAXEL : gratter une image, révélée case par case | https://maximej.github.io/voeux-2027/paxel/ |
 | [`tetris/`](tetris/) | PAIX en blocs : jeu de blocs aux règles NES, dégager le mot PAIX en complétant des lignes | https://maximej.github.io/voeux-2027/tetris/ |
+| [`boule-a-neige/`](boule-a-neige/) | Boule à neige : composer une boule avec 5 monuments du monde, la retourner pour faire neiger | https://maximej.github.io/voeux-2027/boule-a-neige/ |
 
-La racine (`index.html`) renvoie vers les jeux. Les anciens liens vers la carte avec paramètres (`?d=`, `?msg=`, `?n=`) sont redirigés vers `points/`.
+La racine (`index.html`) renvoie vers les quatre jeux. Les anciens liens vers la carte avec paramètres (`?d=`, `?msg=`, `?n=`) sont redirigés vers `points/`.
 
 ## Lancer en local
 

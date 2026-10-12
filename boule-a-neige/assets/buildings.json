@@ -1,0 +1,12 @@
+[
+  {"id": "tour-eiffel", "city": "Paris", "name": "Tour Eiffel"},
+  {"id": "maison-blanche", "city": "Washington", "name": "Maison Blanche"},
+  {"id": "tokyo-skytree", "city": "Tokyo", "name": "Tokyo Skytree"},
+  {"id": "india-gate", "city": "New Delhi", "name": "Porte de l'Inde"},
+  {"id": "perle-orient", "city": "Shanghai", "name": "Tour de la Perle de l'Orient"},
+  {"id": "atomium", "city": "Bruxelles", "name": "Atomium"},
+  {"id": "pyramides", "city": "Le Caire", "name": "Pyramides de Gizeh"},
+  {"id": "christ-redempteur", "city": "Rio de Janeiro", "name": "Christ Rédempteur"},
+  {"id": "big-ben", "city": "Londres", "name": "Big Ben"},
+  {"id": "n-seoul-tower", "city": "Séoul", "name": "N Seoul Tower"}
+]

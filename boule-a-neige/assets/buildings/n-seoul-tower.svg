@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>N Seoul Tower, Séoul</title>
+  <path fill="#e6edf5" d="M22 300 Q58 238 100 236 V300 Z"/>
+  <path fill="#c9d6e4" d="M100 236 Q142 238 178 300 H100 Z"/>
+  <rect x="80" y="228" width="40" height="12" fill="#d5dbe4"/>
+  <rect x="100" y="228" width="20" height="12" fill="#b3bdcb"/>
+  <rect x="93" y="118" width="14" height="112" fill="#e8ebf0"/>
+  <rect x="100" y="118" width="7" height="112" fill="#c4cbd6"/>
+  <rect x="76" y="90" width="48" height="30" rx="5" fill="#e8ebf0"/>
+  <path fill="#c4cbd6" d="M100 90 H119 Q124 90 124 95 V115 Q124 120 119 120 H100 Z"/>
+  <rect x="76" y="99" width="48" height="8" fill="#7d8aa3"/>
+  <rect x="82" y="84" width="36" height="7" rx="2" fill="#c4cbd6"/>
+  <rect x="96" y="40" width="8" height="44" fill="#e8ebf0"/>
+  <rect x="100" y="40" width="4" height="44" fill="#c4cbd6"/>
+  <g fill="#e05252">
+    <rect x="96" y="52" width="8" height="5"/><rect x="96" y="68" width="8" height="5"/>
+  </g>
+  <rect x="98.5" y="6" width="3" height="34" fill="#c4cbd6"/>
+</svg>
