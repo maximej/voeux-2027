@@ -5,6 +5,12 @@ Quatrième jeu des vœux 2027, à côté de « Relie les points », PAXEL et « 
 **Avancement : V0 à V7 et V9 terminées, en ligne** : https://maximej.github.io/voeux-2027/boule-a-neige/
 Reste V8 : les tests sur appareils réels (iPhone, Android, navigateurs d'ordinateur).
 
+**Ajout après la mise en ligne : parallaxe légère** (souris sur ordinateur, gyroscope sur téléphone,
+15° au plus). Profondeurs, du fond vers l'avant : halo du ciel, neige du fond, place 4, places 1
+et 5, places 2 et 3, neige du premier plan. Chaque bâtiment a, à son pied, un monticule de la
+couleur de la neige du fond qui fait partie de son niveau : le pied reste planté quel que soit le
+décalage. Les bandes de neige débordent de la sphère pour qu'aucun bord ne se découvre.
+
 ## 1. Le concept
 
 Une petite sphère de verre posée sur un socle plat. Dans la sphère, un paysage de **5 bâtiments**
@@ -43,25 +49,28 @@ Les mêmes que pour les trois autres jeux :
 
 ### Liste validée
 
-| # | Ville | Bâtiment proposé |
-|---|---|---|
-| 0 | Paris | Tour eiffel |
-| 1 | Washington | Maison Blanche |
-| 2 | Tokyo | Tokyo Skytree |
-| 3 | New Delhi | Porte de l'Inde (India Gate) |
-| 4 | Shanghai | Tour de la Perle de l'Orient |
-| 5 | Bruxelles | Atomium |
-| 6 | Le Caire | Pyramides de Gizeh |
-| 7 | Rio de Janeiro | Christ Rédempteur |
-| 8 | Londres | Big Ben |
-| 9 | Séoul | N Seoul Tower |
+La tour Eiffel et 9 lieux du [Patrimoine de la Diplomatie](https://fr.wikipedia.org/wiki/Patrimoine_de_la_Diplomatie)
+(liste remplacée après la première mise en ligne ; elle remplace les monuments des grandes villes du monde) :
+
+| # | Bâtiment | Lieu | Dessin |
+|---|---|---|---|
+| 0 | Tour Eiffel | Paris | conservé de la première version |
+| 1 | Ossuaire de Douaumont | Douaumont-Vaux | d'après une illustration fournie |
+| 2 | Habitation Maud'Huy | Saint-François, Guadeloupe | d'après une illustration fournie |
+| 3 | Couvent des Franciscains | Perpignan | d'après une illustration fournie |
+| 4 | Île des Faisans | Hendaye – Irun | d'après une illustration fournie |
+| 5 | Château de Saint-Malo | Saint-Malo | d'après une illustration fournie |
+| 6 | Quai d'Orsay | Paris | même style et même palette |
+| 7 | Château de Chambord | Chambord | même style et même palette |
+| 8 | Palais de l'Europe | Strasbourg | même style et même palette |
+| 9 | Château de Rambouillet | Rambouillet | même style et même palette |
+
+Les illustrations sources (PNG) restent sur le poste, exclues du dépôt. Les adresses `?b=…` partagées avant ce changement montrent désormais d'autres bâtiments.
 
 ### Droits
 
-Chaque visuel est redessiné pour le projet (pas de reprise d'images existantes). Deux bâtiments de la
-liste ont des droits revendiqués sur leur image : l'**Atomium** (ses ayants droit demandent une
-autorisation pour les reproductions) et le **Christ Rédempteur** (droits revendiqués par l'archidiocèse
-de Rio). À vérifier pour une publication officielle.
+Cinq dessins sont des simplifications d'illustrations fournies pour le projet ; les autres sont
+redessinés pour le projet. Pas de crédit affiché.
 
 ### Gabarit des SVG
 
@@ -72,7 +81,8 @@ Pour que les 10 bâtiments puissent occuper n'importe lequel des 5 emplacements 
 - hauteur relative respectée entre bâtiments (une tour reste plus haute qu'une porte), dans une
   hauteur maximale commune ;
 - **flat design** : aplats de couleur, sans contour ni dégradé, une ou deux nuances par bâtiment
-  pour les volumes, une palette commune ; peu de détails (la boule est petite sur un téléphone) ;
+  pour les volumes, la palette des illustrations fournies (pêche, corail, crème, ocre, bleu
+  profond) ; peu de détails (la boule est petite sur un téléphone) ;
 - un nom et un texte alternatif pour chacun (`buildings.json`).
 
 ---

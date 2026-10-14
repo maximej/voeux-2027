@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Château de Saint-Malo</title>
+  <path fill="#5c66b4" d="M74 182 L86 124 H136 V182 Z"/>
+  <path fill="#3e4590" d="M136 124 H180 L196 182 H136 Z"/>
+  <rect x="160" y="100" width="16" height="34" fill="#fad3bc"/><rect x="168" y="100" width="8" height="34" fill="#f8ad8a"/>
+  <g><rect x="104" y="142" width="8" height="8" fill="#fad3bc"/><rect x="106" y="145" width="4" height="4" fill="#2c1b25"/>
+    <rect x="130" y="142" width="8" height="8" fill="#fad3bc"/><rect x="132" y="145" width="4" height="4" fill="#2c1b25"/></g>
+  <rect x="72" y="182" width="126" height="34" fill="#fde6d4"/>
+  <rect x="136" y="182" width="62" height="34" fill="#fad3bc"/>
+  <g fill="#2c1b25">
+    <rect x="76" y="184" width="4" height="6"/><rect x="90" y="184" width="4" height="6"/><rect x="104" y="184" width="4" height="6"/><rect x="118" y="184" width="4" height="6"/>
+    <rect x="132" y="184" width="4" height="6"/><rect x="146" y="184" width="4" height="6"/><rect x="160" y="184" width="4" height="6"/><rect x="174" y="184" width="4" height="6"/><rect x="188" y="184" width="4" height="6"/>
+  </g>
+  <g fill="#ee7a55">
+    <rect x="78" y="202" width="5" height="12" rx="2"/><rect x="88" y="202" width="5" height="12" rx="2"/><rect x="98" y="202" width="5" height="12" rx="2"/><rect x="108" y="202" width="5" height="12" rx="2"/><rect x="118" y="202" width="5" height="12" rx="2"/><rect x="128" y="202" width="5" height="12" rx="2"/>
+    <rect x="138" y="202" width="5" height="12" rx="2"/><rect x="148" y="202" width="5" height="12" rx="2"/><rect x="158" y="202" width="5" height="12" rx="2"/><rect x="168" y="202" width="5" height="12" rx="2"/><rect x="178" y="202" width="5" height="12" rx="2"/><rect x="188" y="202" width="5" height="12" rx="2"/>
+  </g>
+  <rect x="62" y="216" width="138" height="84" fill="#fde6d4"/>
+  <rect x="136" y="216" width="64" height="84" fill="#fad3bc"/>
+  <rect x="62" y="236" width="138" height="2" fill="#f8ad8a"/>
+  <path fill="#fad3bc" d="M4 300 V140 H12 V128 H22 V140 H30 V128 H40 V140 H48 V128 H58 V140 H64 V300 Z"/>
+  <path fill="#f8ad8a" d="M34 140 V300 H64 V140 H58 V128 H48 V140 H40 V128 H34 Z"/>
+  <rect x="4" y="166" width="60" height="4" fill="#ee7a55"/>
+</svg>

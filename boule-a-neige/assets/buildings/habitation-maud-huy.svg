@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Habitation Maud'Huy</title>
+  <path fill="#f9b390" d="M40 208 L62 172 H138 L160 208 Z"/>
+  <path fill="#ee7a55" d="M100 172 H138 L160 208 H100 Z"/>
+  <g>
+    <rect x="66" y="180" width="18" height="22" fill="#ffffff"/><rect x="70" y="184" width="10" height="11" fill="#2c1b25"/>
+    <rect x="91" y="180" width="18" height="22" fill="#ffffff"/><rect x="95" y="184" width="10" height="11" fill="#2c1b25"/>
+    <rect x="116" y="180" width="18" height="22" fill="#ffffff"/><rect x="120" y="184" width="10" height="11" fill="#2c1b25"/>
+  </g>
+  <rect x="16" y="214" width="168" height="76" fill="#d9e3f2"/>
+  <rect x="100" y="214" width="84" height="76" fill="#c3d3ea"/>
+  <g fill="#b9cbe6"><rect x="16" y="230" width="168" height="2"/><rect x="16" y="246" width="168" height="2"/><rect x="16" y="262" width="168" height="2"/><rect x="16" y="278" width="168" height="2"/></g>
+  <g fill="#41427d">
+    <rect x="28" y="232" width="14" height="28"/><rect x="58" y="232" width="14" height="28"/>
+    <rect x="128" y="232" width="14" height="28"/><rect x="158" y="232" width="14" height="28"/>
+  </g>
+  <rect x="91" y="244" width="18" height="46" fill="#8fb0e2"/>
+  <path fill="#f9b390" d="M2 220 L18 206 H182 L198 220 Z"/>
+  <path fill="#ee7a55" d="M100 206 H182 L198 220 H100 Z"/>
+  <g fill="#ffffff">
+    <rect x="12" y="220" width="4" height="70"/><rect x="48" y="220" width="4" height="70"/><rect x="80" y="220" width="4" height="70"/>
+    <rect x="116" y="220" width="4" height="70"/><rect x="148" y="220" width="4" height="70"/><rect x="184" y="220" width="4" height="70"/>
+  </g>
+  <rect x="8" y="288" width="184" height="6" fill="#ffffff"/>
+  <rect x="86" y="294" width="28" height="6" fill="#e3ebf5"/>
+</svg>

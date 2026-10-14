@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Couvent franciscain, Perpignan</title>
+  <rect x="2" y="168" width="68" height="12" fill="#b85539"/>
+  <rect x="130" y="168" width="68" height="12" fill="#9c4630"/>
+  <rect x="4" y="180" width="64" height="120" fill="#ffd18b"/>
+  <rect x="132" y="180" width="64" height="120" fill="#f4a662"/>
+  <rect x="4" y="232" width="64" height="3" fill="#ee7a55"/><rect x="132" y="232" width="64" height="3" fill="#d9583c"/>
+  <g>
+    <rect x="12" y="196" width="12" height="16" fill="#d9583c"/><rect x="14" y="198" width="8" height="12" fill="#5063a5"/>
+    <rect x="44" y="196" width="12" height="16" fill="#d9583c"/><rect x="46" y="198" width="8" height="12" fill="#5063a5"/>
+    <rect x="12" y="250" width="12" height="16" fill="#d9583c"/><rect x="14" y="252" width="8" height="12" fill="#5063a5"/>
+    <rect x="44" y="250" width="12" height="16" fill="#d9583c"/><rect x="46" y="252" width="8" height="12" fill="#5063a5"/>
+    <rect x="144" y="196" width="12" height="16" fill="#b85539"/><rect x="146" y="198" width="8" height="12" fill="#41427d"/>
+    <rect x="176" y="196" width="12" height="16" fill="#b85539"/><rect x="178" y="198" width="8" height="12" fill="#41427d"/>
+    <rect x="144" y="250" width="12" height="16" fill="#b85539"/><rect x="146" y="252" width="8" height="12" fill="#41427d"/>
+    <rect x="176" y="250" width="12" height="16" fill="#b85539"/><rect x="178" y="252" width="8" height="12" fill="#41427d"/>
+  </g>
+  <rect x="66" y="122" width="68" height="178" fill="#ffe3b8"/>
+  <rect x="100" y="122" width="34" height="178" fill="#ffd18b"/>
+  <g fill="#d9583c">
+    <rect x="66" y="130" width="5" height="8"/><rect x="66" y="152" width="5" height="8"/><rect x="66" y="174" width="5" height="8"/><rect x="66" y="196" width="5" height="8"/><rect x="66" y="218" width="5" height="8"/>
+    <rect x="129" y="130" width="5" height="8"/><rect x="129" y="152" width="5" height="8"/><rect x="129" y="174" width="5" height="8"/><rect x="129" y="196" width="5" height="8"/><rect x="129" y="218" width="5" height="8"/>
+  </g>
+  <path fill="#ffe3b8" d="M62 124 L100 98 L138 124 Z"/>
+  <path fill="#ffd18b" d="M100 98 L138 124 H100 Z"/>
+  <rect x="62" y="121" width="76" height="4" fill="#b85539"/>
+  <circle cx="100" cy="112" r="6" fill="#d9583c"/><circle cx="100" cy="112" r="3.5" fill="#ffe3b8"/>
+  <path fill="#ffffff" d="M95 99 V86 L100 76 L105 86 V99 Z"/>
+  <rect x="98" y="86" width="4" height="7" fill="#5063a5"/>
+  <g>
+    <rect x="74" y="142" width="12" height="16" fill="#d9583c"/><rect x="76" y="144" width="8" height="12" fill="#5063a5"/>
+    <rect x="94" y="142" width="12" height="16" fill="#d9583c"/><rect x="96" y="144" width="8" height="12" fill="#5063a5"/>
+    <rect x="114" y="142" width="12" height="16" fill="#b85539"/><rect x="116" y="144" width="8" height="12" fill="#41427d"/>
+    <rect x="74" y="186" width="12" height="16" fill="#d9583c"/><rect x="76" y="188" width="8" height="12" fill="#5063a5"/>
+    <rect x="94" y="186" width="12" height="16" fill="#d9583c"/><rect x="96" y="188" width="8" height="12" fill="#5063a5"/>
+    <rect x="114" y="186" width="12" height="16" fill="#b85539"/><rect x="116" y="188" width="8" height="12" fill="#41427d"/>
+  </g>
+  <rect x="66" y="252" width="68" height="48" fill="#ee7a55"/>
+  <rect x="66" y="252" width="68" height="5" fill="#b85539"/>
+  <g fill="#2c1b25">
+    <path d="M71 300 V272 A7 7 0 0 1 85 272 V300 Z"/><path d="M93 300 V272 A7 7 0 0 1 107 272 V300 Z"/><path d="M115 300 V272 A7 7 0 0 1 129 272 V300 Z"/>
+  </g>
+</svg>

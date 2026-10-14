@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Quai d'Orsay, Paris</title>
+  <g fill="#fde6d4"><rect x="26" y="170" width="8" height="16"/><rect x="56" y="170" width="8" height="16"/><rect x="136" y="170" width="8" height="16"/><rect x="166" y="170" width="8" height="16"/></g>
+  <path fill="#5c66b4" d="M6 198 L16 182 H100 V198 Z"/>
+  <path fill="#3e4590" d="M100 182 H184 L194 198 H100 Z"/>
+  <rect x="6" y="198" width="188" height="96" fill="#fff4ea"/>
+  <rect x="100" y="198" width="94" height="96" fill="#f6dcc9"/>
+  <rect x="6" y="240" width="188" height="3" fill="#f8ad8a"/>
+  <g fill="#41427d">
+    <rect x="14" y="208" width="10" height="22"/><rect x="32" y="208" width="10" height="22"/><rect x="50" y="208" width="10" height="22"/>
+    <rect x="140" y="208" width="10" height="22"/><rect x="158" y="208" width="10" height="22"/><rect x="176" y="208" width="10" height="22"/>
+    <rect x="14" y="252" width="10" height="28"/><rect x="32" y="252" width="10" height="28"/><rect x="50" y="252" width="10" height="28"/>
+    <rect x="140" y="252" width="10" height="28"/><rect x="158" y="252" width="10" height="28"/><rect x="176" y="252" width="10" height="28"/>
+  </g>
+  <rect x="66" y="178" width="68" height="8" fill="#fad3bc"/>
+  <rect x="68" y="186" width="64" height="108" fill="#f6dcc9"/>
+  <g fill="#ffffff"><rect x="72" y="194" width="7" height="96"/><rect x="87" y="194" width="7" height="96"/><rect x="106" y="194" width="7" height="96"/><rect x="121" y="194" width="7" height="96"/></g>
+  <rect x="64" y="188" width="72" height="7" fill="#fad3bc"/>
+  <rect x="94" y="252" width="12" height="38" fill="#41427d"/>
+  <rect x="4" y="292" width="192" height="8" fill="#f8ad8a"/>
+  <rect x="99" y="140" width="2" height="40" fill="#8a8fa8"/>
+  <rect x="101" y="142" width="6" height="12" fill="#3550b8"/><rect x="107" y="142" width="6" height="12" fill="#ffffff"/><rect x="113" y="142" width="6" height="12" fill="#e3404a"/>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Ossuaire de Douaumont</title>
+  <rect x="2" y="290" width="196" height="10" fill="#f8ad8a"/>
+  <path fill="#fff4ea" d="M8 290 V250 Q8 238 22 238 H178 Q192 238 192 250 V290 Z"/>
+  <rect x="8" y="276" width="184" height="14" fill="#f6dcc9"/>
+  <g fill="#ee7a55">
+    <rect x="18" y="254" width="6" height="12"/><rect x="30" y="254" width="6" height="12"/><rect x="42" y="254" width="6" height="12"/><rect x="54" y="254" width="6" height="12"/><rect x="66" y="254" width="6" height="12"/>
+    <rect x="128" y="254" width="6" height="12"/><rect x="140" y="254" width="6" height="12"/><rect x="152" y="254" width="6" height="12"/><rect x="164" y="254" width="6" height="12"/><rect x="176" y="254" width="6" height="12"/>
+  </g>
+  <path fill="#fff4ea" d="M70 290 V262 H78 V246 H84 V230 H116 V246 H122 V262 H130 V290 Z"/>
+  <path fill="#f6dcc9" d="M100 230 H116 V246 H122 V262 H130 V290 H100 Z"/>
+  <path fill="#fff4ea" d="M88 232 V104 C88 80 95 64 100 58 C105 64 112 80 112 104 V232 Z"/>
+  <path fill="#f6dcc9" d="M100 58 C105 64 112 80 112 104 V232 H100 Z"/>
+  <g fill="#3f4078"><rect x="94.5" y="84" width="4" height="9" rx="2"/><rect x="101.5" y="84" width="4" height="9" rx="2"/></g>
+  <g fill="#f6dcc9"><rect x="97" y="120" width="6" height="56"/><rect x="90" y="134" width="20" height="6"/></g>
+  <path fill="#2c1b25" d="M92 290 V274 A8 8 0 0 1 108 274 V290 Z"/>
+</svg>

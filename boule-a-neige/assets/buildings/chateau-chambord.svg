@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Château de Chambord</title>
+  <rect x="4" y="236" width="192" height="58" fill="#fff4ea"/>
+  <rect x="100" y="236" width="96" height="58" fill="#f6dcc9"/>
+  <g fill="#41427d">
+    <rect x="12" y="246" width="6" height="12"/><rect x="26" y="246" width="6" height="12"/><rect x="168" y="246" width="6" height="12"/><rect x="182" y="246" width="6" height="12"/>
+    <rect x="12" y="270" width="6" height="12"/><rect x="26" y="270" width="6" height="12"/><rect x="168" y="270" width="6" height="12"/><rect x="182" y="270" width="6" height="12"/>
+  </g>
+  <rect x="2" y="210" width="38" height="84" fill="#fff4ea"/><rect x="21" y="210" width="19" height="84" fill="#f6dcc9"/>
+  <path fill="#5c66b4" d="M0 212 Q21 182 42 212 Z"/><path fill="#3e4590" d="M21 190 Q34 196 42 212 H21 Z"/>
+  <rect x="160" y="210" width="38" height="84" fill="#fff4ea"/><rect x="179" y="210" width="19" height="84" fill="#f6dcc9"/>
+  <path fill="#5c66b4" d="M158 212 Q179 182 200 212 Z"/><path fill="#3e4590" d="M179 190 Q192 196 200 212 H179 Z"/>
+  <g fill="#fff4ea">
+    <rect x="58" y="176" width="8" height="24"/><rect x="72" y="168" width="6" height="32"/><rect x="122" y="168" width="6" height="32"/><rect x="134" y="176" width="8" height="24"/>
+    <rect x="84" y="160" width="6" height="40"/><rect x="110" y="160" width="6" height="40"/>
+  </g>
+  <g fill="#5c66b4">
+    <path d="M56 178 L62 166 L68 178 Z"/><path d="M132 178 L138 166 L144 178 Z"/><path d="M70 170 L75 160 L80 170 Z"/><path d="M120 170 L125 160 L130 170 Z"/>
+    <path d="M82 162 L87 150 L92 162 Z"/><path d="M108 162 L113 150 L118 162 Z"/>
+  </g>
+  <rect x="50" y="198" width="100" height="96" fill="#fff4ea"/>
+  <rect x="100" y="198" width="50" height="96" fill="#f6dcc9"/>
+  <path fill="#5c66b4" d="M48 200 Q60 180 72 200 Z"/><path fill="#3e4590" d="M128 200 Q140 180 152 200 Z"/>
+  <rect x="92" y="136" width="16" height="64" fill="#fff4ea"/><rect x="100" y="136" width="8" height="64" fill="#f6dcc9"/>
+  <path fill="#5c66b4" d="M88 138 Q100 118 112 138 Z"/><path fill="#3e4590" d="M100 120 Q108 126 112 138 H100 Z"/>
+  <rect x="96" y="108" width="8" height="14" fill="#fff4ea"/><path fill="#5c66b4" d="M95 110 L100 98 L105 110 Z"/>
+  <rect x="99" y="88" width="2" height="12" fill="#3e4590"/>
+  <g fill="#41427d">
+    <rect x="58" y="210" width="7" height="13"/><rect x="74" y="210" width="7" height="13"/><rect x="119" y="210" width="7" height="13"/><rect x="135" y="210" width="7" height="13"/>
+    <rect x="58" y="238" width="7" height="13"/><rect x="74" y="238" width="7" height="13"/><rect x="119" y="238" width="7" height="13"/><rect x="135" y="238" width="7" height="13"/>
+    <rect x="58" y="266" width="7" height="13"/><rect x="74" y="266" width="7" height="13"/><rect x="119" y="266" width="7" height="13"/><rect x="135" y="266" width="7" height="13"/>
+  </g>
+  <path fill="#2c1b25" d="M92 294 V276 A8 8 0 0 1 108 276 V294 Z"/>
+  <rect x="2" y="292" width="196" height="8" fill="#f8ad8a"/>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Château de Rambouillet</title>
+  <path fill="#5c66b4" d="M20 204 L32 170 H100 V204 Z"/>
+  <path fill="#3e4590" d="M100 170 H132 V204 H100 Z"/>
+  <g><rect x="44" y="180" width="10" height="14" fill="#fff4ea"/><rect x="46" y="183" width="6" height="8" fill="#41427d"/>
+    <rect x="76" y="180" width="10" height="14" fill="#fff4ea"/><rect x="78" y="183" width="6" height="8" fill="#41427d"/>
+    <rect x="108" y="180" width="10" height="14" fill="#f6dcc9"/><rect x="110" y="183" width="6" height="8" fill="#41427d"/></g>
+  <rect x="20" y="204" width="114" height="90" fill="#d9734f"/>
+  <rect x="100" y="204" width="34" height="90" fill="#bb5a3c"/>
+  <g fill="#fff4ea"><rect x="20" y="204" width="114" height="5"/><rect x="20" y="246" width="114" height="4"/></g>
+  <g>
+    <rect x="30" y="214" width="12" height="24" fill="#fff4ea"/><rect x="32" y="216" width="8" height="20" fill="#41427d"/>
+    <rect x="58" y="214" width="12" height="24" fill="#fff4ea"/><rect x="60" y="216" width="8" height="20" fill="#41427d"/>
+    <rect x="86" y="214" width="12" height="24" fill="#fff4ea"/><rect x="88" y="216" width="8" height="20" fill="#41427d"/>
+    <rect x="112" y="214" width="12" height="24" fill="#f6dcc9"/><rect x="114" y="216" width="8" height="20" fill="#41427d"/>
+    <rect x="30" y="258" width="12" height="26" fill="#fff4ea"/><rect x="32" y="260" width="8" height="22" fill="#41427d"/>
+    <rect x="58" y="258" width="12" height="26" fill="#fff4ea"/><rect x="60" y="260" width="8" height="22" fill="#41427d"/>
+    <rect x="86" y="258" width="12" height="26" fill="#fff4ea"/><rect x="88" y="260" width="8" height="22" fill="#41427d"/>
+    <rect x="112" y="258" width="12" height="26" fill="#f6dcc9"/><rect x="114" y="260" width="8" height="22" fill="#41427d"/>
+  </g>
+  <rect x="4" y="198" width="22" height="96" fill="#d9734f"/><rect x="15" y="198" width="11" height="96" fill="#bb5a3c"/>
+  <path fill="#5c66b4" d="M2 200 L15 172 L28 200 Z"/><path fill="#3e4590" d="M15 172 L28 200 H15 Z"/>
+  <rect x="132" y="152" width="58" height="142" fill="#d9734f"/>
+  <rect x="161" y="152" width="29" height="142" fill="#bb5a3c"/>
+  <rect x="130" y="150" width="62" height="10" fill="#fff4ea"/><rect x="161" y="150" width="31" height="10" fill="#f6dcc9"/>
+  <path fill="#5c66b4" d="M128 152 L161 86 V152 Z"/><path fill="#3e4590" d="M161 86 L194 152 H161 Z"/>
+  <rect x="160" y="74" width="2" height="14" fill="#3e4590"/>
+  <g><rect x="146" y="176" width="10" height="18" fill="#fff4ea"/><rect x="148" y="178" width="6" height="14" fill="#41427d"/>
+    <rect x="166" y="176" width="10" height="18" fill="#f6dcc9"/><rect x="168" y="178" width="6" height="14" fill="#41427d"/>
+    <rect x="146" y="222" width="10" height="18" fill="#fff4ea"/><rect x="148" y="224" width="6" height="14" fill="#41427d"/>
+    <rect x="166" y="222" width="10" height="18" fill="#f6dcc9"/><rect x="168" y="224" width="6" height="14" fill="#41427d"/></g>
+  <rect x="2" y="292" width="196" height="8" fill="#f8ad8a"/>
+</svg>

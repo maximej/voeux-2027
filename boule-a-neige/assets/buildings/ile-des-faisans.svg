@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Île des Faisans</title>
+  <path fill="#f8ad8a" d="M4 300 Q14 284 46 280 L100 276 V300 Z"/>
+  <path fill="#ee7a55" d="M100 276 L150 274 Q188 278 196 300 H100 Z"/>
+  <g stroke="#2c1b25" stroke-width="2">
+    <path d="M70 280 V258 M84 279 V256 M98 278 V254 M112 278 V256 M126 277 V256 M140 276 V260"/>
+  </g>
+  <g fill="#41427d">
+    <circle cx="56" cy="264" r="18"/><circle cx="82" cy="250" r="22"/><circle cx="112" cy="244" r="26"/>
+    <circle cx="142" cy="250" r="22"/><circle cx="164" cy="264" r="16"/>
+  </g>
+  <g fill="#5063a5">
+    <circle cx="54" cy="256" r="16"/><circle cx="78" cy="234" r="22"/><circle cx="106" cy="218" r="28"/>
+    <circle cx="136" cy="232" r="22"/><circle cx="160" cy="254" r="14"/><circle cx="100" cy="190" r="15"/>
+  </g>
+  <g fill="#7f93d4">
+    <circle cx="70" cy="226" r="9"/><circle cx="96" cy="206" r="11"/><circle cx="94" cy="186" r="6"/><circle cx="128" cy="222" r="7"/><circle cx="48" cy="250" r="6"/>
+  </g>
+  <path d="M104 170 V184 M104 178 L98 172 M104 176 L110 170" stroke="#d9e3f2" stroke-width="1.5" fill="none"/>
+</svg>

@@ -9,3 +9,5 @@ node_modules/
 paxel/data/
 # Wrangler (Cloudflare) local state
 .wrangler/
+# Boule à neige : illustrations source, jamais publiées
+boule-a-neige/assets/buildings/Illustrations*

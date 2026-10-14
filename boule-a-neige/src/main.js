@@ -13,6 +13,9 @@ import { Motion } from './scene/Motion.js';
 import { attachControls } from './input/Controls.js';
 import { ShakeSensor } from './input/ShakeSensor.js';
 import { share } from './share/Share.js';
+import { Parallax } from './scene/Parallax.js';
+import { TiltInput } from './input/TiltInput.js';
+import { MessageEditor } from './ui/MessageEditor.js';
 
 const params = new URLSearchParams(location.search);
 const buildings = await fetch(CONFIG.buildings).then(r => r.json());
@@ -27,10 +30,21 @@ const picker = new Picker(document.querySelector('#picker'), buildings, (place, 
   document.querySelector(`.building[data-place="${place + 1}"]`)?.focus(); // keyboard users keep their place
 });
 const scene = new Scene(document.querySelector('#stage'), CONFIG, buildings, drawings, place => picker.open(place, combination));
-scene.setMessage(params.get('msg') || CONFIG.message);
+// Message on the base: ?msg=… in the URL, editable with a click on the plaque. The URL keeps the
+// edited text (so sharing keeps it), and drops ?msg= when the text is back to the default one.
+const editor = new MessageEditor(document.querySelector('#stage'), scene.plaque, { maxLength: CONFIG.messageMaxLength }, text => {
+  setMessage(text || CONFIG.message);
+  if (editor.text === CONFIG.message) params.delete('msg');
+  else params.set('msg', editor.text);
+  history.replaceState(null, '', `?${params}`);
+});
+function setMessage(text) {
+  editor.text = text.slice(0, CONFIG.messageMaxLength);
+  scene.setMessage(editor.text);
+}
+setMessage(params.get('msg') || CONFIG.message);
 
-/** Shows a combination and writes it in the URL (without reloading), so the address can be shared. */
-// Snow, over the scene (taps go through to the buildings)
+// Snow, over the scene (taps go through to the buildings); it is not part of the parallax
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas = document.createElement('canvas');
 canvas.className = 'snow';
@@ -48,6 +62,11 @@ const motion = new Motion(document.querySelector('#stage'), CONFIG, strength => 
   vibrate(strength >= 1 ? CONFIG.vibration.flip : CONFIG.vibration.wobble);
 });
 attachControls(document.querySelector('#stage'), motion);
+
+// Parallax: mouse on a computer, tilt on a phone (not with reduced motion)
+const parallax = new Parallax(scene.layers, CONFIG.parallax);
+const tilt = new TiltInput(CONFIG.parallax, (nx, ny) => parallax.set(nx, ny));
+if (!reduced) tilt.start();
 
 // Phone: shaking it turns the globe over (strong shake) or sways it, the snow swirling more as the
 // shake gets stronger. iPhone: a button asks the permission first. Without sensors, or if refused,
@@ -76,11 +95,15 @@ if (ShakeSensor.available) {
     button.hidden = false;
     button.addEventListener('click', async () => {
       button.hidden = true;
-      if (await sensor.enable()) confirm();
+      // Both permissions asked within the same tap (Safari requires the tap for each request)
+      const shaking = sensor.enable();
+      if (!reduced) tilt.enable();
+      if (await shaking) confirm();
     });
   }, 1000);
 }
 
+/** Shows a combination and writes it in the URL (without reloading), so the address can be shared. */
 function show(next) {
   combination = next;
   scene.setCombination(combination);

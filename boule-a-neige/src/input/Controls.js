@@ -4,7 +4,7 @@
  *   ↑ or ↓            turn the globe over
  *   ← or →            shake it sideways
  *   click / tap       on the globe, outside the buildings: turn it over
- *                     (a building opens its picker instead, see Scene.js)
+ *                     (a building opens its picker instead, and the plaque edits the message)
  *
  * Nothing happens while the building picker is open.
  */
@@ -21,7 +21,7 @@ export function attachControls(stage, motion) {
   });
 
   stage.addEventListener('click', e => {
-    if (e.target.closest('.building') || pickerOpen()) return;
+    if (e.target.closest('.building, .plaque, .message-input') || pickerOpen()) return;
     motion.flip();
   });
 }
