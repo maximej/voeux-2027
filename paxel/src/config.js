@@ -3,71 +3,70 @@
  */
 
 export const CONFIG = {
-  image: 'assets/paix.webp', // 1254 × 1254, WebP quality 90 from drawings/Paix2.png (372 KB instead of 2 MB)
-
-  // Covering layer: pastel stone tiles (Monument Valley palette), one per cell, with a fine gap
-  surface: {
-    colors: ['#c9d3ec', '#cdd8ee', '#c4cee8', '#d1daf0'], // picked per cell, so the tiles vary slightly
-    gap: '#b3bfdc', // line between tiles (about 1 CSS px)
-    slot: '#9386a7', // what shows behind a cell while it flips
+  images: {
+    top: 'assets/chaos.webp', // 1200 × 1200, from IMG/ref/Paxel2/pixelwaaaaar.jpg: the chaos, cut into pixels
+    under: 'assets/ordre.webp', // 1200 × 1200, from IMG/ref/Paxel2/ordre.jpg: the order, revealed underneath
   },
 
-  // The surface is a grid of square cells ("pixels") laid over the image, independent of the screen
   grid: {
-    columns: 66, // 1254 / 66 = 19 image px per cell
+    columns: 100, // the top image is a grid of square pixels: 100 × 100 = 10 000 (12 image px each)
+    line: 'rgb(8 8 20 / 0.1)', // faint lines between the pixels, so the grid shows
   },
 
-  brush: {
-    radius: 0.045, // fraction of the image's shorter displayed side, so it scales with the image
-    minRadius: 14, // CSS px floor: a finger always removes a visible amount on small screens
-    spacing: 0.25, // distance between brush stamps along a stroke, as a fraction of the radius
+  // Each tap lifts a cluster of pixels around it, more and more: `first` at the first tap, then
+  // a constant growth chosen so that the last tap (`taps`) takes every pixel left
+  taps: {
+    count: 10,
+    first: 10,
+    jitter: 0.35, // irregular cluster outline: noise on the distance to the tapped pixel
   },
 
-  reveal: {
-    flipMs: 260, // a cell turning over, from the surface to its part of the image
-    lift: 0.25, // how much a cell grows halfway through the flip
-    ripple: 90, // ms: cells at the edge of the brush flip this much later than at its centre
+  // A lifted pixel rises a little, glowing, and fades away
+  lift: {
+    duration: 900, // ms for one pixel (± 15 %)
+    ripple: 300, // ms: the pixels at the edge of a cluster leave this much later than its centre
+    rise: [1, 4], // in pixels (cells), random per pixel
+    drift: 1.5, // sideways, in cells
+    grow: 0.4, // extra scale at the top of the rise
+    glow: '#f9f99a', // lantern yellow halo (Monument Valley palette)
+    halos: 500, // at most this many halos per cluster (larger ones, spread out), so phones keep up
+    // The last tap: every pixel left flies away, higher and longer, in a wave from the tapped one
+    final: { duration: 1600, ripple: 1100, rise: [6, 22], drift: 5 },
   },
 
-  // Before the first scratch, a glint sweeps across the tiles to invite touching them
-  invite: {
-    delay: 700, // ms after loading
-    every: 5000, // ms between sweeps
-    duration: 1100, // ms for one sweep
-    color: '249 249 154', // lantern yellow, as rgb channels
-    strength: 0.6, // highlight opacity at the crest
+  // From the `from`-th tap on, the image trembles more and more; on a phone, shaking it then
+  // sifts the pixels like sand: they shrink into grains and fall through (the last tap, though,
+  // sends them flying, see lift.final)
+  tremble: {
+    from: 5,
+    amplitude: 0.9, // CSS px per tap past `from - 1`
+    max: 4.5, // CSS px
   },
-
-  completion: {
-    threshold: 0.9, // share of the surface revealed by scratching before the rest flips by itself
-    duration: 1400, // ms for the wave of remaining cells to spread across the image
-    jitter: 120, // ms of random delay per cell, so the wave looks organic
+  sift: {
+    perShake: [0.06, 0.22], // share of all the pixels sifted by one shake, gentle → strong
+    duration: 1300, // ms for a grain to fall
+    delay: 450, // ms of random delay per grain, so they pour rather than drop at once
+    gravity: 2.4, // in stage heights per second²
+    grain: 0.6, // size of a grain, in cells
   },
+  shake: { threshold: 9, strong: 22, interval: 200 }, // m/s², see ShakeSensor
 
-  // Ending: the animated image plays over the revealed one, its last frame fades lightly,
-  // then the restart button appears
-  ending: {
-    video: 'assets/paix-anim.mp4', // 960 × 960, 5 s, from drawings/PaixAnim.mp4 (1.7 MB instead of 10.9 MB)
-    fade: 0.55, // brightness of the last frame after the fade (1 = unchanged)
-    fadeMs: 1200,
-    startTimeout: 6000, // ms: if the video has not started by then, show the button anyway
-  },
-
-  // Shown once the image is revealed (?msg=… in the URL replaces it), as on the greeting card
-  message: 'Bonne année 2027 !',
+  // Once every pixel is gone, the image of order glows, its brightness slowly oscillating (CSS)
+  message: 'Bonne année 2027 !', // ?msg=… in the URL replaces it, as on the greeting card
 
   // Android only (iPhone Safari does not vibrate)
   vibration: {
-    scratch: 8, // ms, while cells flip
-    every: 120, // ms between two scratch vibrations at most
-    complete: [40, 60, 40, 60, 160], // when the image is fully revealed, same pattern as the greeting card
+    tap: 15,
+    sift: 12,
+    complete: [40, 60, 40, 60, 160], // same pattern as the other games
   },
 
   progress: {
-    blocks: 20, // pixel blocks in the progress bar
+    blocks: 10, // one block per tap
   },
 
   layout: {
-    maxDpr: 2, // canvas density cap: the tiles stay sharp, phones save memory
+    maxDpr: 2,
+    overflow: 0.18, // the effects layer goes beyond the image by this share of its size, for the falling sand
   },
 };

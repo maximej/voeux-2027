@@ -1,32 +1,26 @@
 # PAXEL
 
-Digital scratch card: scratch the covering layer with a finger or the mouse to discover the image underneath. The surface is a grid of cells that flip over one by one as the brush passes. See [ROADMAPv2.md](ROADMAPv2.md).
+From chaos to order. The chaotic pixel-art image (`assets/chaos.webp`) is cut into a grid of 100 × 100 pixels over the image of order (`assets/ordre.webp`):
 
-Current stage: **V8** (see the roadmap):
+- **tap a pixel**: it lifts off a little, glowing, and takes about ten pixels around it along;
+- **each tap takes more**: the cluster grows by a constant factor, chosen so that the 10th tap takes everything left;
+- **from the 5th tap**, the image trembles, more with every tap; on a phone, **shaking it** sifts the pixels like sand through a sieve: they shrink into grains and fall;
+- **the 10th tap** sends every pixel left flying, in a glowing wave from the tapped one, so the image of order is always fully revealed after 10 taps;
+- once every pixel is gone, the image of order glows, its brightness slowly oscillating, and the greeting appears ("Bonne année 2027 !", or the text given with `?msg=…` in the URL), with a "Recommencer" button.
 
-- scratching cell by cell, each cell flipping over like a card;
-- revealed share and completion: at 90 %, the remaining cells flip by themselves in a wave;
-- ending: the animated image (`assets/paix-anim.mp4`, 5 s) plays over the revealed one, its last frame fades lightly, then the "Regratter" button appears;
-- minimal neon interface in the shared charter (Monument Valley palette: violet and teal on a pastel background): hint, corner brackets, pixel progress bar, loading indicator;
-- tiled surface (drawn in one pass) with an invitation glint before the first scratch, irregular brush ring for the mouse;
-- the image is a WebP (372 KB instead of 2 MB for the PNG), preloaded; the video (1.7 MB instead of 10.9 MB) only downloads once scratching starts.
+The previous version (scratch card revealing the PAIX image) is kept, playable, in [`../paxel-v1/`](../paxel-v1/).
 
-Decided: no persistence (every visit starts from an untouched image) and no image secrecy (the browser loads the whole image; the scratch card is a visual experience, not a protection).
-
-Once revealed, the greeting of the card appears ("Bonne année 2027 !", or the text given with `?msg=…` in the URL). Cells flipping make Android phones vibrate lightly. No external resources: system font, everything else in this folder.
+No persistence, no external resources (system font, everything else in this folder). Android phones vibrate lightly on each tap and shake. iPhone: the motion sensors are asked for at the first tap (HTTPS only). Keyboard: Enter or Space on the image taps a random pixel.
 
 ## Run
 
 ES modules need a local web server (opening `index.html` directly does not work):
 
 ```sh
-cd paxel
-python3 -m http.server 8000      # http://localhost:8000/
+python3 -m http.server 8000      # from the repository root, then http://localhost:8000/paxel/
 ```
 
-From a phone on the same Wi-Fi: `http://<computer IP>:8000/`.
-
-All tunable values (image, tile colors, grid density, brush size, stroke interpolation, flip animation, invitation glint, completion threshold and wave, ending video and fade, greeting, vibration, progress blocks) are in [src/config.js](src/config.js).
+All tunable values (images, grid, taps and cluster growth, lift animation, tremble, sifting, shake thresholds, greeting, vibration) are in [src/config.js](src/config.js).
 
 ## Layout
 
@@ -34,22 +28,19 @@ All tunable values (image, tile colors, grid density, brush size, stroke interpo
 index.html
 src/
   config.js                 central configuration
-  main.js                   wiring
-  scratch/ScratchEngine.js  surface and effects canvases, strokes, resize
-  scratch/ScratchMask.js    scratched state: grid of cells, independent of the screen
-  scratch/ScratchBrush.js   circular brush: which cells a stamp removes
-  scratch/RevealAnimation.js  cell flip animation
-  scratch/ScratchProgress.js  revealed share, completion threshold
-  input/PointerInput.js     mouse / touch / stylus as one input
-  ui/Interface.js           hint, pixel progress bar, brush ring, greeting, restart
-  ui/EndVideo.js            ending: animated image, fade of its last frame
-  image/ImageLoader.js      loads and decodes the hidden image
+  main.js                   wiring: taps, shakes, restart
+  sieve/Sieve.js            the grid of pixels: clusters, lift and sand animations, tremble
+  input/ShakeSensor.js      phone shakes (same as the snow globe)
+  ui/Interface.js           hint, progress (10 empty squares, one filled per tap), greeting, restart
+  image/ImageLoader.js      loads and decodes an image
   styles/main.css
-assets/paix.webp            the published image
-assets/paix-anim.mp4        the published ending video
-drawings/                   source images (not committed)
+assets/chaos.webp           the top image, 1200 × 1200
+assets/ordre.webp           the image underneath, 1200 × 1200
 ```
 
-Image conversion (Pillow): `python3 -c "from PIL import Image; Image.open('drawings/Paix2.png').convert('RGB').save('assets/paix.webp', quality=90, method=6)"`
+Image conversion (Pillow), from the reference folder (not committed):
 
-Video conversion (ffmpeg): `ffmpeg -i drawings/PaixAnim.mp4 -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart -an assets/paix-anim.mp4`
+```sh
+python3 -c "from PIL import Image; Image.open('IMG/ref/Paxel2/pixelwaaaaar.jpg').convert('RGB').resize((1200, 1200), Image.LANCZOS).save('paxel/assets/chaos.webp', quality=86, method=6)"
+python3 -c "from PIL import Image; Image.open('IMG/ref/Paxel2/ordre.jpg').convert('RGB').resize((1200, 1200), Image.LANCZOS).save('paxel/assets/ordre.webp', quality=86, method=6)"
+```

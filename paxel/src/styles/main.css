@@ -143,21 +143,13 @@ footer.bar {
 .progress i {
   width: calc(var(--px) * 1.6);
   height: calc(var(--px) * 1.6);
-  background: var(--dim);
+  box-shadow: inset 0 0 0 1px rgb(var(--violet-rgb) / 0.6); /* an empty square until its tap */
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .progress i.is-on {
   background: var(--violet);
   box-shadow: var(--halo);
-}
-
-.percent {
-  min-width: 4ch;
-  font-size: 15px;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  text-shadow: 0 0 8px rgb(var(--violet-rgb) / 0.35);
 }
 
 /* --- Image area ------------------------------------------------------------------------- */
@@ -184,7 +176,7 @@ footer.bar {
   visibility: visible;
 }
 
-.hidden-image,
+.under,
 .layer {
   position: absolute;
   inset: 0;
@@ -195,41 +187,41 @@ footer.bar {
   -webkit-user-drag: none;
 }
 
-/* Scratching must not scroll, zoom or select: only on the scratch area */
-.effects {
-  pointer-events: auto;
-  touch-action: none;
+/* Tapping must not zoom or select: only on the image */
+.stage {
+  touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  cursor: none;
+  cursor: pointer;
+  outline: none;
 }
 
-.is-complete .effects {
+.stage:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: calc(var(--corner-gap) + var(--px) * 2);
+}
+
+.is-revealed .stage {
   cursor: default;
 }
 
-/* Brush ring (mouse): an irregular outline, see Interface.js */
-.brush {
+/* The pixels leaving are drawn beyond the image (rising, falling sand): see layout.overflow */
+.effects {
   position: absolute;
-  top: 0;
-  left: 0;
-  overflow: visible;
+  inset: -18%;
+  width: 136%;
+  height: 136%;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.15s;
-  filter: drop-shadow(0 0 2px rgb(var(--violet-rgb) / 0.8)) drop-shadow(0 0 7px rgb(var(--violet-rgb) / 0.5));
 }
 
-.brush path {
-  fill: none;
-  stroke: var(--violet);
-  stroke-width: 1.5;
-  stroke-linejoin: round;
+/* Every pixel gone: the image of order glows, its brightness slowly oscillating */
+.is-revealed .under {
+  animation: shine 3.2s ease-in-out 0.4s infinite;
 }
 
-.brush.is-visible {
-  opacity: 1;
+@keyframes shine {
+  50% { filter: brightness(1.14) saturate(1.06); }
 }
 
 /* Corner brackets: neon L shapes pointing at the image */
@@ -257,21 +249,6 @@ footer.bar {
 @keyframes snap-tr { 50% { translate: calc(-1 * var(--corner-gap)) var(--corner-gap); } }
 @keyframes snap-bl { 50% { translate: var(--corner-gap) calc(-1 * var(--corner-gap)); } }
 @keyframes snap-br { 50% { translate: calc(-1 * var(--corner-gap)) calc(-1 * var(--corner-gap)); } }
-
-/* Ending video, over the revealed image: shown once it plays, its last frame then fades lightly */
-.anim {
-  visibility: hidden;
-  object-fit: cover;
-  transition: filter var(--fade-ms, 1.2s) ease;
-}
-
-.anim.is-playing {
-  visibility: visible;
-}
-
-.anim.is-faded {
-  filter: brightness(var(--fade, 0.55));
-}
 
 /* Revealed: a soft glow pulses around the image */
 .is-revealed .stage {
@@ -324,6 +301,7 @@ footer.bar {
 @media (prefers-reduced-motion: reduce) {
   .is-revealed .corner,
   .is-revealed .stage,
+  .is-revealed .under,
   .message,
   .restart,
   .loader i {

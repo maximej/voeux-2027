@@ -1,5 +1,5 @@
 /**
- * Loads and decodes the hidden image before it is shown.
+ * Loads and decodes an image before it is shown.
  */
 
 export async function loadImage(url) {

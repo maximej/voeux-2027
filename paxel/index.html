@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ecfee4">
   <title>PAXEL</title>
-  <meta name="description" content="Grattez l’image pour la découvrir, pixel par pixel.">
+  <meta name="description" content="Du chaos à l’ordre : touchez les pixels, secouez, et l’image se transforme.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/paix.webp" as="image" type="image/webp">
+  <link rel="preload" href="assets/chaos.webp" as="image" type="image/webp">
+  <link rel="preload" href="assets/ordre.webp" as="image" type="image/webp">
   <link rel="stylesheet" href="src/styles/main.css">
 </head>
 <body class="is-loading">
   <header class="bar">
-    <p class="hint" id="hint">Grattez l’image</p>
+    <p class="hint" id="hint" aria-live="polite"></p>
     <p class="message" id="message" hidden aria-live="polite"></p>
   </header>
 
   <main class="frame">
-    <div id="stage" class="stage">
-      <canvas id="surface" class="layer"></canvas>
-      <canvas id="effects" class="layer effects"></canvas>
-      <video id="anim" class="layer anim" muted playsinline preload="none" disablepictureinpicture aria-hidden="true"></video>
+    <div id="stage" class="stage" tabindex="0" role="button" aria-label="Image : touchez pour en détacher des pixels">
+      <canvas id="surface" class="layer surface"></canvas>
+      <canvas id="effects" class="effects"></canvas>
       <span class="corner corner--tl" aria-hidden="true"></span>
       <span class="corner corner--tr" aria-hidden="true"></span>
       <span class="corner corner--bl" aria-hidden="true"></span>
@@ -30,9 +30,8 @@
   </main>
 
   <footer class="bar">
-    <div class="progress" id="progress" role="progressbar" aria-label="Image révélée" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
-    <output class="percent" id="percent">0 %</output>
-    <button class="restart" id="restart" type="button" hidden>Regratter</button>
+    <div class="progress" id="progress" role="progressbar" aria-label="Pixels détachés" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+    <button class="restart" id="restart" type="button" hidden>Recommencer</button>
   </footer>
 
   <script type="module" src="src/main.js"></script>

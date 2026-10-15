@@ -1,0 +1,332 @@
+/* Shared look of the greeting games (inspired by Monument Valley): light pastel gradient
+   background, slate ink, dusk violet and mountain teal as neon accents with a soft halo.
+   Plain system font. */
+
+:root {
+  --bg: radial-gradient(120% 90% at 50% 28%, #f4feee 0%, #ecfee4 30%, #d8ede1 62%, #dabdd0 100%);
+  --ink: #383f52;
+  --violet: #6c60a9;
+  --violet-rgb: 108 96 169;
+  --teal: #51acad;
+  --teal-rgb: 81 172 173;
+  --teal-deep: #32717b; /* MV4 mountains: hover and readable text */
+  --dim: #cbdcc9; /* unlit progress blocks */
+  /* Neon halos, for text (text-shadow) and shapes (box-shadow / drop-shadow) */
+  --halo-text: 0 0 2px rgb(var(--violet-rgb) / 0.45), 0 0 12px rgb(var(--violet-rgb) / 0.4), 0 0 30px rgb(var(--violet-rgb) / 0.25);
+  --halo: 0 0 3px rgb(var(--violet-rgb) / 0.6), 0 0 8px rgb(var(--violet-rgb) / 0.45), 0 0 18px rgb(var(--violet-rgb) / 0.25);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --message-size: clamp(1.5rem, 6.5vmin, 2.8rem);
+  --pad: clamp(14px, 3vw, 28px);
+  --px: clamp(4px, 0.7vmin, 6px); /* pixel unit of the brackets, loader and progress blocks */
+  --corner: calc(var(--px) * 4); /* corner bracket arm length */
+  --corner-gap: calc(var(--px) * 2); /* space between the brackets and the image */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  background: #d8ede1;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--bg);
+  color: var(--ink);
+  font: 500 16px/1.3 var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Header and footer ------------------------------------------------------------------ */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--pad);
+}
+
+/* Hint and greeting share the header; its height is set for the greeting,
+   so the image does not move when the greeting appears */
+header.bar {
+  display: grid;
+  place-items: center;
+  justify-content: center;
+  min-height: calc(var(--pad) + var(--message-size) * 1.25);
+  padding-bottom: 0;
+}
+
+header.bar > * {
+  grid-area: 1 / 1;
+}
+
+/* Height reserved for the restart button, so the image does not move when it appears */
+footer.bar {
+  min-height: calc(var(--pad) + 36px);
+  padding-top: 0;
+}
+
+.hint {
+  margin: 0;
+  color: var(--teal-deep);
+  text-shadow: 0 0 8px rgb(var(--teal-rgb) / 0.35);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: opacity 0.4s;
+}
+
+.hint.is-hidden {
+  opacity: 0;
+}
+
+/* Greeting: same text as the greeting card, violet neon */
+.message {
+  margin: 0;
+  color: var(--violet);
+  font-size: var(--message-size);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-shadow: var(--halo-text);
+  animation: message-in 1s 0.6s ease both;
+}
+
+@keyframes message-in {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+.restart {
+  height: 36px;
+  padding: 0 16px;
+  border: 2px solid var(--teal);
+  border-radius: 0;
+  background: rgb(244 254 238 / 0.6);
+  color: var(--ink);
+  box-shadow: 0 0 10px rgb(var(--teal-rgb) / 0.35), inset 0 0 8px rgb(var(--teal-rgb) / 0.2);
+  font: 600 14px/1 var(--font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  animation: message-in 0.6s ease both;
+}
+
+.restart:hover,
+.restart:focus-visible {
+  background: var(--teal-deep);
+  color: #f4feee;
+  box-shadow: 0 0 6px rgb(var(--teal-rgb) / 0.6), 0 0 24px rgb(var(--teal-rgb) / 0.45);
+  outline: none;
+}
+
+/* Pixel progress bar */
+.progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.progress i {
+  width: calc(var(--px) * 1.6);
+  height: calc(var(--px) * 1.6);
+  background: var(--dim);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.progress i.is-on {
+  background: var(--violet);
+  box-shadow: var(--halo);
+}
+
+.percent {
+  min-width: 4ch;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  text-shadow: 0 0 8px rgb(var(--violet-rgb) / 0.35);
+}
+
+/* --- Image area ------------------------------------------------------------------------- */
+
+/* The frame is a size container: the stage is the largest box with the image's aspect ratio
+   that fits in it, leaving room for the corner brackets */
+.frame {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: calc(var(--pad) + var(--corner-gap) + var(--px));
+  container-type: size;
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: var(--aspect, 1);
+  width: min(100cqw, 100cqh * var(--aspect, 1));
+  visibility: hidden;
+  box-shadow: 0 0 40px rgb(var(--violet-rgb) / 0.18); /* faint halo, as if lit by the brackets */
+}
+
+.stage.is-ready {
+  visibility: visible;
+}
+
+.hidden-image,
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Scratching must not scroll, zoom or select: only on the scratch area */
+.effects {
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: none;
+}
+
+.is-complete .effects {
+  cursor: default;
+}
+
+/* Brush ring (mouse): an irregular outline, see Interface.js */
+.brush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  filter: drop-shadow(0 0 2px rgb(var(--violet-rgb) / 0.8)) drop-shadow(0 0 7px rgb(var(--violet-rgb) / 0.5));
+}
+
+.brush path {
+  fill: none;
+  stroke: var(--violet);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.brush.is-visible {
+  opacity: 1;
+}
+
+/* Corner brackets: neon L shapes pointing at the image */
+.corner {
+  position: absolute;
+  width: var(--corner);
+  height: var(--corner);
+  border: 0 solid var(--violet);
+  pointer-events: none;
+  filter: drop-shadow(0 0 2px rgb(var(--violet-rgb) / 0.6)) drop-shadow(0 0 6px rgb(var(--violet-rgb) / 0.45)) drop-shadow(0 0 12px rgb(var(--violet-rgb) / 0.3));
+}
+
+.corner--tl { top: calc(-1 * var(--corner-gap)); left: calc(-1 * var(--corner-gap)); border-width: var(--px) 0 0 var(--px); }
+.corner--tr { top: calc(-1 * var(--corner-gap)); right: calc(-1 * var(--corner-gap)); border-width: var(--px) var(--px) 0 0; }
+.corner--bl { bottom: calc(-1 * var(--corner-gap)); left: calc(-1 * var(--corner-gap)); border-width: 0 0 var(--px) var(--px); }
+.corner--br { bottom: calc(-1 * var(--corner-gap)); right: calc(-1 * var(--corner-gap)); border-width: 0 var(--px) var(--px) 0; }
+
+/* Revealed: the brackets close in on the image and settle back */
+.is-revealed .corner--tl { animation: snap-tl 0.7s ease-in-out; }
+.is-revealed .corner--tr { animation: snap-tr 0.7s ease-in-out; }
+.is-revealed .corner--bl { animation: snap-bl 0.7s ease-in-out; }
+.is-revealed .corner--br { animation: snap-br 0.7s ease-in-out; }
+
+@keyframes snap-tl { 50% { translate: var(--corner-gap) var(--corner-gap); } }
+@keyframes snap-tr { 50% { translate: calc(-1 * var(--corner-gap)) var(--corner-gap); } }
+@keyframes snap-bl { 50% { translate: var(--corner-gap) calc(-1 * var(--corner-gap)); } }
+@keyframes snap-br { 50% { translate: calc(-1 * var(--corner-gap)) calc(-1 * var(--corner-gap)); } }
+
+/* Ending video, over the revealed image: shown once it plays, its last frame then fades lightly */
+.anim {
+  visibility: hidden;
+  object-fit: cover;
+  transition: filter var(--fade-ms, 1.2s) ease;
+}
+
+.anim.is-playing {
+  visibility: visible;
+}
+
+.anim.is-faded {
+  filter: brightness(var(--fade, 0.55));
+}
+
+/* Revealed: a soft glow pulses around the image */
+.is-revealed .stage {
+  animation: glow 2.2s ease-out;
+}
+
+@keyframes glow {
+  30% { box-shadow: 0 0 12px 2px rgb(249 249 154 / 0.6), 0 0 50px 6px rgb(var(--violet-rgb) / 0.4), 0 0 110px 14px rgb(var(--teal-rgb) / 0.3); }
+}
+
+/* Loading: four pixels blinking in turn, until the image is decoded */
+.loader {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: max-content;
+  height: max-content;
+  margin: auto;
+  grid-template-columns: repeat(2, var(--px));
+  gap: 3px;
+}
+
+.frame {
+  position: relative;
+}
+
+.is-loading .loader {
+  display: grid;
+}
+
+.loader i {
+  width: calc(var(--px) * 1.4);
+  height: calc(var(--px) * 1.4);
+  animation: blink 1s infinite steps(1);
+}
+
+.loader i {
+  background: var(--violet);
+  box-shadow: var(--halo);
+}
+
+.loader i:nth-child(2) { animation-delay: 0.25s; }
+.loader i:nth-child(4) { animation-delay: 0.5s; }
+.loader i:nth-child(3) { animation-delay: 0.75s; }
+
+@keyframes blink {
+  50% { opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-revealed .corner,
+  .is-revealed .stage,
+  .message,
+  .restart,
+  .loader i {
+    animation: none !important;
+  }
+}
