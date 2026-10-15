@@ -28,7 +28,7 @@ export function startNeonBackground(canvas, options = {}) {
     c.width = c.height = HEAD * 4;
     const g2 = c.getContext('2d');
     const g = g2.createRadialGradient(HEAD * 2, HEAD * 2, 0, HEAD * 2, HEAD * 2, HEAD * 2);
-    g.addColorStop(0, '#fff');
+    g.addColorStop(0, '#f4feee');
     g.addColorStop(0.25, color);
     g.addColorStop(1, 'transparent');
     g2.fillStyle = g;

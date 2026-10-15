@@ -3,12 +3,24 @@
   "source": "paxel/drawings/PAIX TETRIS.png",
   "width": 15,
   "height": 5,
-  "colors": { "B": "#0d82fe", "Y": "#fdda0f", "R": "#f71b27", "G": "#17c753" },
+  "colors": {
+    "B": "#6c60a9",
+    "Y": "#5d92ce",
+    "R": "#d58fc6",
+    "G": "#51acad"
+  },
   "rows": [
     "BBB.YYY.R.G...G",
     "B.B.Y.Y.R..G.G.",
     "BBB.YYY.R...G..",
     "B...Y.Y.R..G.G.",
     "B...Y.Y.R.G...G"
+  ],
+  "parts": [
+    "cee.jkk.m.uu.vv",
+    "c.d.j.i.m.ss.t.",
+    "bbb.hhi.l..rrt.",
+    "a...f.g.l..ppqq",
+    "a...f.g.l.nn.oo"
   ]
 }

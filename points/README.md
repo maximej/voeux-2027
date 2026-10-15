@@ -16,7 +16,7 @@ N'importe quel hébergement statique convient (GitHub Pages, Netlify, serveur in
 
 ## Deux versions
 
-- `index.html` (page d'accueil) : le jeu seul, sans boutons, sur des néons orange et blancs qui se tracent au hasard en arrière-plan (charte commune avec PAXEL : néon blanc à halo orange, fond presque noir, police du système) (`neon-bg.js`, `simple.js`, `simple.css`). Le dessin se choisit par l'URL : `?d=coeur`.
+- `index.html` (page d'accueil) : le jeu seul, sans boutons, sur des néons violets, bleu-vert et roses qui se tracent au hasard en arrière-plan (charte commune des jeux : couleurs des références Monument Valley, fond pastel clair, néons violet et bleu-vert avec halo, police du système) (`neon-bg.js`, `simple.js`, `simple.css`). Le dessin se choisit par l'URL : `?d=coeur`.
 - `complet.html` : version complète (galerie, niveaux, boutons, import de SVG ; `app.js`, `style.css`). Elle garde encore l'ancienne palette cyan et magenta et la police Big Shoulders Display (Google Fonts), comme les dessins `coeur`, `etoile` et `sapin`.
 
 Les deux partagent le moteur (`dotdot.js`) et les styles du plateau (`dotdot.css`).

@@ -7,7 +7,7 @@ Current stage: **V8** (see the roadmap):
 - scratching cell by cell, each cell flipping over like a card;
 - revealed share and completion: at 90 %, the remaining cells flip by themselves in a wave;
 - ending: the animated image (`assets/paix-anim.mp4`, 5 s) plays over the revealed one, its last frame fades lightly, then the "Regratter" button appears;
-- minimal neon interface, white and orange: hint, corner brackets, pixel progress bar, loading indicator;
+- minimal neon interface in the shared charter (Monument Valley palette: violet and teal on a pastel background): hint, corner brackets, pixel progress bar, loading indicator;
 - tiled surface (drawn in one pass) with an invitation glint before the first scratch, irregular brush ring for the mouse;
 - the image is a WebP (372 KB instead of 2 MB for the PNG), preloaded; the video (1.7 MB instead of 10.9 MB) only downloads once scratching starts.
 

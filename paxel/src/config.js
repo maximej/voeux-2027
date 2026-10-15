@@ -5,11 +5,11 @@
 export const CONFIG = {
   image: 'assets/paix.webp', // 1254 × 1254, WebP quality 90 from drawings/Paix2.png (372 KB instead of 2 MB)
 
-  // Covering layer: dark tiles, one per cell, separated by a fine gap
+  // Covering layer: pastel stone tiles (Monument Valley palette), one per cell, with a fine gap
   surface: {
-    colors: ['#18181e', '#1c1c23', '#151519', '#202027'], // picked per cell, so the tiles vary slightly
-    gap: '#09090c', // line between tiles (about 1 CSS px)
-    slot: '#000000', // what shows behind a cell while it flips
+    colors: ['#c9d3ec', '#cdd8ee', '#c4cee8', '#d1daf0'], // picked per cell, so the tiles vary slightly
+    gap: '#b3bfdc', // line between tiles (about 1 CSS px)
+    slot: '#9386a7', // what shows behind a cell while it flips
   },
 
   // The surface is a grid of square cells ("pixels") laid over the image, independent of the screen
@@ -34,8 +34,8 @@ export const CONFIG = {
     delay: 700, // ms after loading
     every: 5000, // ms between sweeps
     duration: 1100, // ms for one sweep
-    color: '255 138 31', // orange, as rgb channels
-    strength: 0.22, // highlight opacity at the crest
+    color: '249 249 154', // lantern yellow, as rgb channels
+    strength: 0.6, // highlight opacity at the crest
   },
 
   completion: {

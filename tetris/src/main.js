@@ -1,5 +1,5 @@
 /**
- * Block game with the PAIX level: clear the PAIX letters by completing lines.
+ * Block game with the PAIX level: build the word PAIX with the pieces cut from it.
  */
 
 import { CONFIG } from './config.js';
@@ -17,9 +17,8 @@ const level = await fetch(CONFIG.level).then(r => r.json());
 const params = new URLSearchParams(location.search);
 const vibrate = pattern => navigator.vibrate?.(pattern);
 
-const ui = new Interface(params.get('msg') || CONFIG.message, level.rows.join('').replace(/\./g, '').length);
+const ui = new Interface(params.get('msg') || CONFIG.message);
 const game = new Game(CONFIG, level, {
-  change: g => ui.update(g),
   clear: () => vibrate(CONFIG.vibration.clear),
   win: () => {
     vibrate(CONFIG.vibration.win);
@@ -30,7 +29,7 @@ const game = new Game(CONFIG, level, {
     ui.show('lost');
   },
 });
-const renderer = new Renderer(boardCanvas, nextCanvas, CONFIG, level.colors);
+const renderer = new Renderer(boardCanvas, nextCanvas, CONFIG, level);
 
 stage.style.setProperty('--columns', level.width);
 stage.style.setProperty('--rows', CONFIG.rows);
@@ -91,5 +90,4 @@ document.querySelector('#replay').addEventListener('click', () => {
   ui.show('ready');
 });
 
-ui.update(game);
 ui.show('ready');

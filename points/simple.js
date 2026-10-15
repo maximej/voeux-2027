@@ -1,9 +1,10 @@
 import { DotToDot } from './dotdot.js';
 import { startNeonBackground } from './neon-bg.js';
 
-// Charte de PAXEL : traits en dégradé du blanc à l'orange ; néons de fond surtout orange
-const COLORS = ['#fffaf4', '#ff8a1f'];
-const BACKGROUND = ['#ff8a1f', '#ff8a1f', '#fffaf4'];
+// Charte commune (Monument Valley) : traits en dégradé du violet au bleu-vert ; néons de fond
+// violets, bleu-vert et roses
+const COLORS = ['#6c60a9', '#51acad'];
+const BACKGROUND = ['#6c60a9', '#51acad', '#d58fc6'];
 const DEFAULT_MESSAGE = 'Bonne année 2027 !';
 
 const params = new URLSearchParams(location.search);

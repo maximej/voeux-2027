@@ -4,7 +4,7 @@
  */
 
 export const CONFIG = {
-  level: 'levels/paix.json', // grid placed at the bottom of the board at the start
+  level: 'levels/paix.json', // the word to build at the bottom of the board, and how it is cut
   rows: 20, // board height; the width is the level's (15 for PAIX)
 
   fps: 60.0988,
@@ -19,12 +19,16 @@ export const CONFIG = {
   scores: [0, 40, 100, 300, 1200], // × (level + 1), for 1 to 4 lines
 
   colors: {
-    piece: '#fffaf4', // the player's pieces: white neon with an orange halo
-    glow: '#ff8a1f',
-    grid: '#16161c', // empty cells
+    // Palette of the Monument Valley illustrations
+    piece: '#f9f99a', // rows being cleared flash like a lantern
+    glow: '#6c60a9',
+    grey: '#a9a092', // the pieces that are not part of the word: stone, no halo
+    shade: '#383f52', // the shadowed edges of the blocks
+    grid: '#dcebd8', // empty cells
   },
+  ghostOpacity: 0.3, // the word in the background, on the cells still empty
 
-  // Shown once PAIX is cleared (?msg=… in the URL replaces it), as on the other games
+  // Shown once PAIX is built (?msg=… in the URL replaces it), as on the other games
   message: 'Bonne année 2027 !',
 
   // Android only (iPhone Safari does not vibrate)

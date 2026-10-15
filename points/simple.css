@@ -1,29 +1,32 @@
 /* Version simple : le jeu seul, sur des néons qui se tracent en arrière-plan.
-   Charte de PAXEL : néon blanc (couleur principale) à halo orange (couleur secondaire),
-   fond presque noir, police du système. */
+   Charte commune (inspirée de Monument Valley) : fond pastel clair, encre ardoise,
+   violet du crépuscule et bleu-vert des montagnes en néon, avec halo ; police du système. */
 
 :root {
-  --white: #fffaf4;
-  --orange: #ff8a1f;
-  --orange-rgb: 255 138 31;
+  --ink: #383f52;
+  --violet: #6c60a9;
+  --violet-rgb: 108 96 169;
+  --teal: #51acad;
+  --teal-deep: #32717b;
   --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  --dtd-dot: var(--white);
-  --dtd-line: var(--orange);
-  --dtd-label: rgb(255 250 244 / .55);
-  --dtd-accent: var(--orange);
-  --dtd-wrong: #ff4d2e;
+  --dtd-dot: var(--ink);
+  --dtd-line: var(--violet);
+  --dtd-label: rgb(56 63 82 / .6);
+  --dtd-accent: var(--teal-deep);
+  --dtd-wrong: #f09e9d;
   --dtd-font: var(--font);
 }
 
 * { box-sizing: border-box; }
 
 html, body { height: 100%; }
+html { background: #d8ede1; }
 
 body {
   margin: 0;
-  background: #08080b;
-  color: var(--white);
+  background: radial-gradient(120% 90% at 50% 28%, #f4feee 0%, #ecfee4 30%, #d8ede1 62%, #dabdd0 100%);
+  color: var(--ink);
   font-family: var(--font);
   -webkit-tap-highlight-color: transparent;
 }
@@ -33,7 +36,7 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: .38;
+  opacity: .4;
   pointer-events: none;
 }
 
@@ -53,13 +56,17 @@ body {
   text-align: center;
   font: 800 clamp(2rem, 8vw, 4rem)/1.1 var(--font);
   letter-spacing: .02em;
-  text-shadow: 0 0 4px rgb(var(--orange-rgb) / .9), 0 0 14px rgb(var(--orange-rgb) / .7), 0 0 32px rgb(var(--orange-rgb) / .45);
+  color: var(--violet);
+  text-shadow: 0 0 2px rgb(var(--violet-rgb) / .45), 0 0 12px rgb(var(--violet-rgb) / .4), 0 0 30px rgb(var(--violet-rgb) / .25);
   animation: message-in 1s ease both;
 }
+/* Point relié : cœur clair cerclé de sa couleur */
+.dtd-dot.done circle { fill: #f4feee; }
+
 .message.error {
   font-size: 1.2rem;
   text-shadow: none;
-  color: var(--orange);
+  color: var(--teal-deep);
 }
 @keyframes message-in { from { opacity: 0; transform: translateY(12px); } }
 

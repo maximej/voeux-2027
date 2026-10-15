@@ -53,7 +53,9 @@ export class Scene {
 
     // Inside the sphere, far to near; each layer can shift (parallax)
     const inside = el('g', { 'clip-path': 'url(#inside)' }, svg);
-    el('rect', { x: -40, y: 0, width: 480, height: 480, fill: colors.sky }, inside);
+    const sky = el('linearGradient', { id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    colors.sky.forEach((color, i) => el('stop', { offset: i / (colors.sky.length - 1), 'stop-color': color }, sky));
+    el('rect', { x: -40, y: 0, width: 480, height: 480, fill: 'url(#sky)' }, inside);
     const layer = depth => {
       const g = el('g', {}, inside);
       this.layers.push({ element: g, depth });

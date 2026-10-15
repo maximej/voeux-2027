@@ -28,16 +28,17 @@ export const CONFIG = {
 
   // Flat colors of the globe
   colors: {
-    sky: '#1d3557',
-    skyBand: '#24406a',
-    ground: '#eef3f8', // near snow, in front of everything
-    groundShade: '#c7d4e3', // far snow
-    drift: '#c7d4e3', // snow at the foot of the buildings: the far snow's color, so only the sunk foot shows
-    glass: '#ffffff',
-    base: '#2b2b35',
-    baseTop: '#3a3a47',
-    plaque: '#ff8a1f',
-    plaqueText: '#fffaf4',
+    // Monument Valley palette: a dusk sky from violet to pink, pale snow, slate base, teal plaque
+    sky: ['#5956a6', '#8970ab', '#d58fc6'], // vertical gradient, top to bottom
+    skyBand: '#bd93b6',
+    ground: '#f4feee', // near snow, in front of everything
+    groundShade: '#cccae9', // far snow
+    drift: '#cccae9', // snow at the foot of the buildings: the far snow's color, so only the sunk foot shows
+    glass: '#f4feee',
+    base: '#383f52',
+    baseTop: '#535586',
+    plaque: '#51acad',
+    plaqueText: '#f4feee',
   },
 
   message: 'Bonne Année 2027', // on the base; ?msg=… replaces it, and a click on the plaque edits it
@@ -58,7 +59,7 @@ export const CONFIG = {
     drag: 1.6, // per second: the water slows the flakes down (falling speed ≈ gravity / drag)
     drift: 30, // sideways sway
     settle: { stay: 3, fade: 2 }, // seconds on the ground, then fading
-    color: '#ffffff',
+    color: '#f4feee',
   },
   reducedMotion: { count: 140, stir: 70 }, // replaces the values above when the system asks for less motion
 

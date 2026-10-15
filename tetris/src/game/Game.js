@@ -5,14 +5,19 @@
  *   playing   a piece falls: gravity by level, keyboard auto-repeat (DAS), soft drop
  *   clearing  full rows flash, then disappear
  *   entry     short delay before the next piece
- *   won       every level cell (PAIX) has been cleared
+ *   won       every cell of the word (PAIX) is covered, whatever the colors
  *   lost      a new piece cannot appear
+ *
+ * The pieces: the parts cut from the word, in a random order where a part never comes before the
+ * parts it rests on, with a grey piece after every 3 parts. Once
+ * they are used, the parts not yet in place come again, still with a grey piece every 3. Full
+ * rows disappear, as usual: that is how a misplaced piece gets removed.
  *
  * As on the NES: no wall kicks, no hold, no hard drop; a piece locks as soon as it cannot fall.
  */
 
 import { Board } from './Board.js';
-import { cellsOf, nextKind, rotated } from './Pieces.js';
+import { buildOrder, cellsOf, GREY, greyPiece, nextKind, rotated, wordParts } from './Pieces.js';
 
 export class Game {
   constructor(config, level, callbacks = {}) {
@@ -20,19 +25,23 @@ export class Game {
     this.level = level;
     this.on = callbacks;
     this.board = new Board(level.width, config.rows);
+    this.parts = wordParts(level);
+    this.total = this.parts.reduce((n, part) => n + this.wordCells(part).length, 0);
     this.held = { left: false, right: false, down: false };
     this.actions = []; // one-shot moves: rotations, touch moves
     this.reset();
   }
 
   reset() {
-    this.board.load(this.level.rows);
+    this.board.empty();
     this.state = 'ready';
     this.score = 0;
     this.lines = 0;
     this.levelNumber = this.config.startLevel;
     this.piece = null;
-    this.next = nextKind(null);
+    this.queue = [];
+    this.lastGrey = null;
+    this.next = this.draw();
     this.actions = [];
     this.clearing = [];
     this.timer = 0;
@@ -45,13 +54,41 @@ export class Game {
     this.spawn();
   }
 
-  get totalLevelCells() {
-    return this.level.rows.join('').replace(/\./g, '').length;
+  /** Word cells holding their color (the grey cells of the parts do not count). */
+  get placed() {
+    return this.parts.reduce((n, part) => n + this.wordCells(part).filter(([cell, color]) => this.board.has(cell, color)).length, 0);
+  }
+
+  inPlace(part) {
+    return this.wordCells(part).every(([cell, color]) => this.board.has(cell, color));
+  }
+
+  wordCells(part) {
+    return part.target.map((cell, i) => [cell, part.colors[i]]).filter(([, color]) => color !== GREY);
+  }
+
+  /** The next piece of the queue, refilled with the parts not yet in place (see above). */
+  draw() {
+    if (!this.queue.length) {
+      const missing = this.parts.filter(part => !this.inPlace(part));
+      buildOrder(missing).forEach((part, i) => {
+        this.queue.push(part);
+        if (i % 3 === 2) this.queue.push(this.grey());
+      });
+      if (!this.queue.length) this.queue.push(this.grey());
+    }
+    return this.queue.shift();
+  }
+
+  grey() {
+    this.lastGrey = nextKind(this.lastGrey);
+    return greyPiece(this.lastGrey);
   }
 
   spawn() {
-    this.piece = { kind: this.next, rot: 0, x: Math.floor(this.board.width / 2), y: 0 };
-    this.next = nextKind(this.piece.kind);
+    const top = Math.min(...this.next.states[0].map(([, dy]) => dy));
+    this.piece = { ...this.next, rot: 0, x: Math.floor(this.board.width / 2), y: -top };
+    this.next = this.draw();
     this.gravityCount = 0;
     this.softCount = 0;
     this.softBlocked = this.held.down; // down must be pressed again for each piece
@@ -92,12 +129,7 @@ export class Game {
         if (--this.timer > 0) return;
         this.board.clear(this.clearing);
         this.clearing = [];
-        if (this.board.levelCells === 0) {
-          this.state = 'won';
-          this.piece = null;
-          this.on.change?.(this);
-          return this.on.win?.(this);
-        }
+        if (this.checkWin()) return;
         this.state = 'entry';
         this.timer = this.config.entryDelay;
         return this.on.change?.(this);
@@ -174,11 +206,28 @@ export class Game {
       this.state = 'clearing';
       this.timer = this.config.clearFrames;
       this.on.clear?.(full.length, this);
+    } else if (this.checkWin()) {
+      return;
     } else {
       this.state = 'entry';
       this.timer = this.config.entryDelay;
     }
     this.actions = [];
     this.on.change?.(this);
+  }
+
+  /** True when every cell of the word holds a block, of any color. */
+  get covered() {
+    return this.parts.every(part => this.wordCells(part).every(([[x, y]]) => this.board.rows[this.board.height + y][x]));
+  }
+
+  checkWin() {
+    if (!this.covered) return false;
+    this.state = 'won';
+    this.piece = null;
+    this.actions = [];
+    this.on.change?.(this);
+    this.on.win?.(this);
+    return true;
   }
 }

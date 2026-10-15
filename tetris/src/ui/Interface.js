@@ -1,6 +1,5 @@
 /**
- * Minimal interface around the board: hint, greeting, PAIX cells left, level, lines, score,
- * replay button.
+ * Minimal interface around the board: hint, greeting, replay button.
  */
 
 const HINTS = {
@@ -11,22 +10,13 @@ const HINTS = {
 };
 
 export class Interface {
-  constructor(message, total) {
+  constructor(message) {
     this.body = document.body;
     this.hint = document.querySelector('#hint');
     this.message = document.querySelector('#message');
     this.message.textContent = message;
-    this.left = document.querySelector('#left');
-    this.stats = document.querySelector('#stats');
     this.replay = document.querySelector('#replay');
-    this.total = total;
     this.hintTimer = 0;
-  }
-
-  update(game) {
-    const left = game.board.levelCells;
-    this.left.textContent = left ? `PAIX : ${left} / ${this.total}` : 'PAIX dégagé';
-    this.stats.textContent = `Niveau ${game.levelNumber} · ${game.lines} ligne${game.lines > 1 ? 's' : ''} · ${game.score}`;
   }
 
   /** `state`: ready, playing, paused or lost. */

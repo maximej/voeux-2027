@@ -1,7 +1,10 @@
 # Vœux 2027
 
 Petits jeux web et mobile pour les vœux 2027, sans dépendance ni étape de compilation.
-Charte commune : néon blanc à halo orange, fond presque noir, police du système.
+Charte commune, tirée uniquement des couleurs des références Monument Valley (`IMG/ref/MonumentValley`) :
+fond pastel clair en dégradé (menthe, vert d'eau, rose lavande), encre ardoise `#383f52`, néons violet
+`#6c60a9` (titres, cadres, messages) et bleu-vert `#51acad` (boutons, indications, foncé `#32717b` au
+survol), avec halos doux ; police du système. Ni orange, ni bleu ou rouge purs.
 
 | Dossier | Jeu | En ligne |
 |---|---|---|
