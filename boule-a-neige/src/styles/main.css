@@ -121,37 +121,6 @@ footer.bar {
   letter-spacing: 0.02em;
 }
 
-/* The plaque can be clicked to edit its message */
-.plaque {
-  cursor: text;
-  outline: none;
-}
-
-.plaque:hover rect,
-.plaque:focus-visible rect {
-  filter: drop-shadow(0 0 5px rgb(var(--teal-rgb) / 0.9));
-}
-
-.plaque.is-editing .plaque-text,
-.plaque.is-editing .plaque-pencil {
-  visibility: hidden;
-}
-
-.message-input {
-  position: absolute;
-  margin: 0;
-  padding: 0 0.5em;
-  border: 0;
-  border-radius: 4px;
-  outline: 2px solid var(--violet);
-  outline-offset: 2px;
-  background: var(--teal);
-  color: #f4feee;
-  font-family: var(--font);
-  font-weight: 800;
-  text-align: center;
-}
-
 /* Buildings can be tapped (or focused with the keyboard) to change them */
 .building {
   cursor: pointer;

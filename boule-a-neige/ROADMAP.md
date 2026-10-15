@@ -6,7 +6,7 @@ Quatrième jeu des vœux 2027, à côté de « Relie les points », PAXEL et « 
 Reste V8 : les tests sur appareils réels (iPhone, Android, navigateurs d'ordinateur).
 
 **Ajout après la mise en ligne : parallaxe légère** (souris sur ordinateur, gyroscope sur téléphone,
-15° au plus). Profondeurs, du fond vers l'avant : halo du ciel, neige du fond, place 4, places 1
+33° au plus dans chaque direction ; les places 2 et 3, devant, sont à 130 % de la taille des autres). Profondeurs, du fond vers l'avant : halo du ciel, neige du fond, place 4, places 1
 et 5, places 2 et 3, neige du premier plan. Chaque bâtiment a, à son pied, un monticule de la
 couleur de la neige du fond qui fait partie de son niveau : le pied reste planté quel que soit le
 décalage. Les bandes de neige débordent de la sphère pour qu'aucun bord ne se découvre.
@@ -39,7 +39,7 @@ Les mêmes que pour les trois autres jeux :
 - **charte commune** : néon blanc à halo orange, fond presque noir, police du système ;
 - **mobile d'abord** : le geste principal est de secouer le téléphone ;
 - **aucun suivi** : pas de compte, pas de cookie, les données des capteurs restent dans le navigateur ;
-- message de vœux sur le socle : « Bonne Année 2027 » (remplaçable par `?msg=…`) ;
+- message de vœux sur le socle : « Bonne Année 2027 » (fixe : l'adresse ne permet pas de le changer) ;
 - code modulaire avec une **configuration centrale** ;
 - chaque étape produit une version qui fonctionne et que l'on teste avant de passer à la suivante.
 

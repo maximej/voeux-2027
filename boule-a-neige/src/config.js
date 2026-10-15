@@ -18,8 +18,8 @@ export const CONFIG = {
   // its foot, in its level, so it stays planted whatever the parallax.
   slots: [
     { x: 108, y: 262, width: 96, level: 2 }, // 1, back left
-    { x: 145, y: 306, width: 74, level: 3 }, // 2, front left
-    { x: 255, y: 306, width: 74, level: 3 }, // 3, front right
+    { x: 145, y: 306, width: 125, level: 3 }, // 2, front left: 130 % of the back ones
+    { x: 255, y: 306, width: 125, level: 3 }, // 3, front right
     { x: 200, y: 268, width: 96, level: 1 }, // 4, back center
     { x: 292, y: 270, width: 96, level: 2 }, // 5, back right
   ],
@@ -41,8 +41,7 @@ export const CONFIG = {
     plaqueText: '#f4feee',
   },
 
-  message: 'Bonne Année 2027', // on the base; ?msg=… replaces it, and a click on the plaque edits it
-  messageMaxLength: 48,
+  message: 'Bonne Année 2027', // on the base, fixed
 
   // Sharing (the link itself carries the globe: ?b=…)
   share: {
@@ -69,9 +68,9 @@ export const CONFIG = {
   // Parallax inside the globe (not the snow, the glass or the base). Input: the mouse position on a
   // computer, the phone's tilt on a phone (maxAngle degrees either way = the full shift).
   parallax: {
-    maxAngle: 15,
+    maxAngle: 33, // degrees, in every direction
     recenter: 0.004, // per reading: the rest position slowly follows how the phone is held
-    shift: { x: 12, y: 5 }, // scene units for the nearest layer (depth 1)
+    shift: { x: 26, y: 11 }, // scene units for the nearest layer (depth 1): same feel per degree as 12 × 5 at 15°
     easing: 140, // ms: time to cover about 63 % of the remaining distance (same on every screen rate)
     depths: { skyBand: 0.1, farSnow: 0.3, levels: [0.45, 0.65, 0.85], nearSnow: 1 },
   },

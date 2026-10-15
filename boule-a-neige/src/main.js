@@ -15,7 +15,6 @@ import { ShakeSensor } from './input/ShakeSensor.js';
 import { share } from './share/Share.js';
 import { Parallax } from './scene/Parallax.js';
 import { TiltInput } from './input/TiltInput.js';
-import { MessageEditor } from './ui/MessageEditor.js';
 
 const params = new URLSearchParams(location.search);
 const buildings = await fetch(CONFIG.buildings).then(r => r.json());
@@ -30,19 +29,9 @@ const picker = new Picker(document.querySelector('#picker'), buildings, (place, 
   document.querySelector(`.building[data-place="${place + 1}"]`)?.focus(); // keyboard users keep their place
 });
 const scene = new Scene(document.querySelector('#stage'), CONFIG, buildings, drawings, place => picker.open(place, combination));
-// Message on the base: ?msg=… in the URL, editable with a click on the plaque. The URL keeps the
-// edited text (so sharing keeps it), and drops ?msg= when the text is back to the default one.
-const editor = new MessageEditor(document.querySelector('#stage'), scene.plaque, { maxLength: CONFIG.messageMaxLength }, text => {
-  setMessage(text || CONFIG.message);
-  if (editor.text === CONFIG.message) params.delete('msg');
-  else params.set('msg', editor.text);
-  history.replaceState(null, '', `?${params}`);
-});
-function setMessage(text) {
-  editor.text = text.slice(0, CONFIG.messageMaxLength);
-  scene.setMessage(editor.text);
-}
-setMessage(params.get('msg') || CONFIG.message);
+// Message on the base: always the same, it cannot be changed from the URL (an old ?msg= is dropped)
+scene.setMessage(CONFIG.message);
+params.delete('msg');
 
 // Snow, over the scene (taps go through to the buildings); it is not part of the parallax
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -111,7 +100,7 @@ function show(next) {
   history.replaceState(null, '', `?${params}`);
 }
 
-// Share the current address (it carries the combination and any ?msg=)
+// Share the current address (it carries the combination)
 const shareButton = document.querySelector('#share');
 shareButton.addEventListener('click', async () => {
   const result = await share({ ...CONFIG.share, url: location.href });

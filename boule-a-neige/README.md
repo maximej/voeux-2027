@@ -16,8 +16,8 @@ En ligne : https://maximej.github.io/voeux-2027/boule-a-neige/
   cliquer la boule, ou ↑ ↓ au clavier ; ← → la secouent de côté.
 - **Partager** : partage du téléphone, ou copie du lien sur ordinateur.
 - **Parallaxe** : le décor suit légèrement la souris (ordinateur) ou l'inclinaison du téléphone
-  (gyroscope, 15° pour l'amplitude maximale). Trois niveaux de bâtiments : la place 4 au fond,
-  les places 1 et 5, puis les places 2 et 3 devant ; la neige qui tombe, le verre et le socle ne
+  (gyroscope, 33° dans chaque direction pour l'amplitude maximale). Trois niveaux de bâtiments : la place 4 au fond,
+  les places 1 et 5, puis les places 2 et 3 devant (130 % de la taille de celles de derrière) ; la neige qui tombe, le verre et le socle ne
   bougent pas.
 
 Sans adresse, la page s'ouvre sur une boule au hasard.
@@ -26,8 +26,6 @@ Sans adresse, la page s'ouvre sur une boule au hasard.
 
 ```text
 ?b=27049          bâtiment (0 à 9) des emplacements 1 à 5, dans l'ordre
-?msg=…            remplace « Bonne Année 2027 » sur le socle ; un clic sur la plaque modifie ce
-                  texte et met l'adresse à jour (un texte vide revient à « Bonne Année 2027 »)
 ```
 
 Les numéros des bâtiments sont leur ordre dans [`assets/buildings.json`](assets/buildings.json) :

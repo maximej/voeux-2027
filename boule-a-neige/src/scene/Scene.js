@@ -77,13 +77,11 @@ export class Scene {
     const top = s.cy + s.r - 26;
     el('path', { d: `M ${s.cx - 128} ${top} H ${s.cx + 128} L ${s.cx + 150} ${top + 92} H ${s.cx - 150} Z`, fill: colors.base }, svg);
     el('rect', { x: s.cx - 132, y: top - 6, width: 264, height: 16, rx: 3, fill: colors.baseTop }, svg);
-    // Plaque: its message can be edited with a click (see MessageEditor.js)
-    this.plaque = el('g', { class: 'plaque', tabindex: 0, role: 'button', 'aria-label': 'Modifier le message du socle' }, svg);
-    el('rect', { x: s.cx - 112, y: top + 34, width: 224, height: 40, rx: 4, fill: colors.plaque }, this.plaque);
-    this.messageText = el('text', { x: s.cx - 6, y: top + 55, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: colors.plaqueText, 'font-size': 22, 'font-weight': 800, class: 'plaque-text' }, this.plaque);
-    this.plaqueWidth = 192;
-    // Small pencil at the right end: the text can be changed
-    el('path', { d: `M ${s.cx + 96} ${top + 61} l 1.5 -5 l 7 -7 l 3.5 3.5 l -7 7 Z`, fill: colors.plaqueText, opacity: 0.85, class: 'plaque-pencil' }, this.plaque);
+    // Plaque with the greeting
+    const plaque = el('g', { class: 'plaque' }, svg);
+    el('rect', { x: s.cx - 112, y: top + 34, width: 224, height: 40, rx: 4, fill: colors.plaque }, plaque);
+    this.messageText = el('text', { x: s.cx, y: top + 55, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: colors.plaqueText, 'font-size': 22, 'font-weight': 800, class: 'plaque-text' }, plaque);
+    this.plaqueWidth = 204;
   }
 
   /** Message on the plaque: one line, shrunk to fit; a long message goes on two lines. */
