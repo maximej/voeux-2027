@@ -4,7 +4,7 @@
 
 export const CONFIG = {
   images: {
-    top: 'assets/chaos.webp', // 1200 × 1200, from IMG/ref/Paxel2/pixelwaaaaar.jpg: the chaos, cut into pixels
+    top: 'assets/chaos.webp', // 1200 × 1200, from IMG/ref/Paxel2/cahos.jpg: the chaos, cut into pixels
     under: 'assets/ordre.webp', // 1200 × 1200, from IMG/ref/Paxel2/ordre.jpg: the order, revealed underneath
   },
 

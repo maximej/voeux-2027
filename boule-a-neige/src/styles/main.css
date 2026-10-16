@@ -84,6 +84,7 @@ footer.bar {
   min-height: 0;
   padding: var(--pad);
   container-type: size;
+  perspective: 900px; /* the globe turns a little in 3D with the parallax */
 }
 
 .stage {

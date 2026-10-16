@@ -67,11 +67,14 @@ export class Scene {
     this.levels = depths.levels.map(depth => layer(depth));
     el('path', { d: `M-40 ${groundY + 38} Q 130 ${groundY + 6} 230 ${groundY + 26} T 440 ${groundY + 26} V 480 H -40 Z`, fill: colors.ground }, layer(depths.nearSnow));
 
-    // Glass: thin rim and a reflection, flat
+    // Glass: thin rim and reflections, flat; the reflections are on the front of the glass and
+    // slide a little the other way (parallax depth below 0)
     el('circle', { cx: s.cx, cy: s.cy, r: s.r - 2, fill: 'none', stroke: colors.glass, 'stroke-width': 4, opacity: 0.35 }, svg);
-    el('path', { d: `M ${s.cx - s.r * 0.72} ${s.cy - s.r * 0.2} A ${s.r * 0.78} ${s.r * 0.78} 0 0 1 ${s.cx - s.r * 0.15} ${s.cy - s.r * 0.75}`, fill: 'none', stroke: colors.glass, 'stroke-width': 10, 'stroke-linecap': 'round', opacity: 0.22 }, svg);
-    el('circle', { cx: s.cx + s.r * 0.5, cy: s.cy - s.r * 0.55, r: 7, fill: colors.glass, opacity: 0.3 }, svg);
-    el('path', { d: `M ${s.cx + s.r * 0.62} ${s.cy + s.r * 0.42} A ${s.r * 0.86} ${s.r * 0.86} 0 0 1 ${s.cx + s.r * 0.3} ${s.cy + s.r * 0.72}`, fill: 'none', stroke: colors.glass, 'stroke-width': 5, 'stroke-linecap': 'round', opacity: 0.16 }, svg);
+    const reflections = el('g', {}, svg);
+    this.layers.push({ element: reflections, depth: depths.reflections });
+    el('path', { d: `M ${s.cx - s.r * 0.72} ${s.cy - s.r * 0.2} A ${s.r * 0.78} ${s.r * 0.78} 0 0 1 ${s.cx - s.r * 0.15} ${s.cy - s.r * 0.75}`, fill: 'none', stroke: colors.glass, 'stroke-width': 10, 'stroke-linecap': 'round', opacity: 0.22 }, reflections);
+    el('circle', { cx: s.cx + s.r * 0.5, cy: s.cy - s.r * 0.55, r: 7, fill: colors.glass, opacity: 0.3 }, reflections);
+    el('path', { d: `M ${s.cx + s.r * 0.62} ${s.cy + s.r * 0.42} A ${s.r * 0.86} ${s.r * 0.86} 0 0 1 ${s.cx + s.r * 0.3} ${s.cy + s.r * 0.72}`, fill: 'none', stroke: colors.glass, 'stroke-width': 5, 'stroke-linecap': 'round', opacity: 0.16 }, reflections);
 
     // Base: a flat trapezoid with a plaque
     const top = s.cy + s.r - 26;

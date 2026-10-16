@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <title>Palais des Festivals et des Congrès, Cannes</title>
+  <!-- Upper hall: glass volume on the roof -->
+  <rect x="44" y="150" width="112" height="40" fill="#d9e3f2"/>
+  <rect x="100" y="150" width="56" height="40" fill="#b9cbe6"/>
+  <g fill="#8fb0e2"><rect x="58" y="150" width="3" height="40"/><rect x="76" y="150" width="3" height="40"/><rect x="94" y="150" width="3" height="40"/><rect x="112" y="150" width="3" height="40"/><rect x="130" y="150" width="3" height="40"/><rect x="148" y="150" width="3" height="40"/></g>
+  <rect x="40" y="144" width="120" height="7" fill="#fff4ea"/><rect x="100" y="144" width="60" height="7" fill="#f6dcc9"/>
+  <!-- Main block -->
+  <rect x="6" y="190" width="188" height="110" fill="#fff4ea"/>
+  <rect x="100" y="190" width="94" height="110" fill="#f6dcc9"/>
+  <rect x="2" y="186" width="196" height="8" fill="#fad3bc"/>
+  <!-- Long glazed band -->
+  <rect x="12" y="206" width="176" height="34" fill="#41427d"/>
+  <g fill="#5063a5"><rect x="12" y="206" width="176" height="6"/></g>
+  <g fill="#fff4ea"><rect x="40" y="206" width="3" height="34"/><rect x="70" y="206" width="3" height="34"/><rect x="128" y="206" width="3" height="34"/><rect x="158" y="206" width="3" height="34"/></g>
+  <!-- Entrance canopy and the red-carpeted steps -->
+  <rect x="74" y="244" width="52" height="6" fill="#3e4590"/>
+  <rect x="80" y="250" width="40" height="10" fill="#2c1b25"/>
+  <path fill="#d9583c" d="M84 260 H116 L132 300 H68 Z"/>
+  <path fill="#b85539" d="M100 260 H116 L132 300 H100 Z"/>
+  <g fill="#bb5a3c"><rect x="82" y="268" width="38" height="2"/><rect x="78" y="278" width="46" height="2"/><rect x="74" y="288" width="54" height="2"/></g>
+  <!-- Palm trees -->
+  <path fill="#5e4430" d="M22 300 C20 260 24 220 30 182 L34 182 C28 222 26 262 28 300 Z"/>
+  <path fill="#5e4430" d="M178 300 C180 262 176 224 170 188 L166 188 C172 224 174 262 172 300 Z"/>
+  <g fill="#51acad"><path d="M32 182 C20 168 8 170 2 180 C12 174 22 176 32 184 Z"/><path d="M32 182 C30 164 38 156 50 156 C40 162 36 170 34 184 Z"/><path d="M32 182 C44 172 56 176 60 186 C52 180 42 180 33 185 Z"/></g>
+  <g fill="#32717b"><path d="M32 182 C24 160 14 158 8 162 C18 164 26 172 31 185 Z"/></g>
+  <g fill="#51acad"><path d="M168 188 C180 174 192 176 198 186 C188 180 178 182 168 190 Z"/><path d="M168 188 C170 170 162 162 150 162 C160 168 164 176 166 190 Z"/><path d="M168 188 C156 178 144 182 140 192 C148 186 158 186 167 191 Z"/></g>
+  <g fill="#32717b"><path d="M168 188 C176 166 186 164 192 168 C182 170 174 178 169 191 Z"/></g>
+  <rect x="2" y="294" width="196" height="6" fill="#f8ad8a"/>
+</svg>

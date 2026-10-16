@@ -3,7 +3,7 @@
 Quatrième jeu des vœux 2027 : une boule à neige avec 5 bâtiments choisis parmi 10, à retourner
 pour faire neiger. Voir [ROADMAP.md](ROADMAP.md).
 
-Les bâtiments : la tour Eiffel et 9 lieux du [Patrimoine de la Diplomatie](https://fr.wikipedia.org/wiki/Patrimoine_de_la_Diplomatie),
+Les bâtiments : 10 lieux du [Patrimoine de la Diplomatie](https://fr.wikipedia.org/wiki/Patrimoine_de_la_Diplomatie),
 dessinés en flat design dans une même palette.
 
 En ligne : https://maximej.github.io/voeux-2027/boule-a-neige/
@@ -17,8 +17,9 @@ En ligne : https://maximej.github.io/voeux-2027/boule-a-neige/
 - **Partager** : partage du téléphone, ou copie du lien sur ordinateur.
 - **Parallaxe** : le décor suit légèrement la souris (ordinateur) ou l'inclinaison du téléphone
   (gyroscope, 33° dans chaque direction pour l'amplitude maximale). Trois niveaux de bâtiments : la place 4 au fond,
-  les places 1 et 5, puis les places 2 et 3 devant (130 % de la taille de celles de derrière) ; la neige qui tombe, le verre et le socle ne
-  bougent pas.
+  les places 1 et 5, puis les places 2 et 3 devant (130 % de la taille de celles de derrière). Les reflets
+  du verre glissent légèrement en sens inverse, et toute la boule (sphère, socle, neige) pivote un peu
+  en 3D (9° au plus), comme un objet vu de côté.
 
 Sans adresse, la page s'ouvre sur une boule au hasard.
 

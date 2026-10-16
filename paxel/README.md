@@ -41,6 +41,6 @@ assets/ordre.webp           the image underneath, 1200 × 1200
 Image conversion (Pillow), from the reference folder (not committed):
 
 ```sh
-python3 -c "from PIL import Image; Image.open('IMG/ref/Paxel2/pixelwaaaaar.jpg').convert('RGB').resize((1200, 1200), Image.LANCZOS).save('paxel/assets/chaos.webp', quality=86, method=6)"
+python3 -c "from PIL import Image; Image.open('IMG/ref/Paxel2/cahos.jpg').convert('RGB').resize((1200, 1200), Image.LANCZOS).save('paxel/assets/chaos.webp', quality=86, method=6)"
 python3 -c "from PIL import Image; Image.open('IMG/ref/Paxel2/ordre.jpg').convert('RGB').resize((1200, 1200), Image.LANCZOS).save('paxel/assets/ordre.webp', quality=86, method=6)"
 ```

@@ -176,11 +176,12 @@ footer.bar {
 }
 
 [data-state="won"] .stage {
-  animation: glow 2.2s ease-out;
+  animation: glow 0.28s ease-in-out 8 alternate, glow 1.8s ease-in-out 2.24s infinite alternate;
 }
 
+/* Word built: the frame flashes, then keeps glowing, lantern yellow and violet */
 @keyframes glow {
-  30% { box-shadow: 0 0 12px 2px rgb(var(--violet-rgb) / 0.4), 0 0 50px 6px rgb(var(--teal-rgb) / 0.35), 0 0 110px 14px rgb(var(--violet-rgb) / 0.25); }
+  to { box-shadow: 0 0 14px 3px rgb(var(--glow-rgb) / 0.9), 0 0 50px 8px rgb(var(--violet-rgb) / 0.45), 0 0 110px 16px rgb(var(--teal-rgb) / 0.3); }
 }
 
 @media (prefers-reduced-motion: reduce) {

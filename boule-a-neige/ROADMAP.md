@@ -9,7 +9,9 @@ Reste V8 : les tests sur appareils réels (iPhone, Android, navigateurs d'ordina
 33° au plus dans chaque direction ; les places 2 et 3, devant, sont à 130 % de la taille des autres). Profondeurs, du fond vers l'avant : halo du ciel, neige du fond, place 4, places 1
 et 5, places 2 et 3, neige du premier plan. Chaque bâtiment a, à son pied, un monticule de la
 couleur de la neige du fond qui fait partie de son niveau : le pied reste planté quel que soit le
-décalage. Les bandes de neige débordent de la sphère pour qu'aucun bord ne se découvre.
+décalage. Les bandes de neige débordent de la sphère pour qu'aucun bord ne se découvre. Ensuite :
+les reflets du verre glissent en sens inverse et toute la boule (sphère et socle) pivote un peu en
+3D ; les bâtiments sont réduits de 15 %.
 
 ## 1. Le concept
 

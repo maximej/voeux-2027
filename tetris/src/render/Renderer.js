@@ -8,7 +8,9 @@
 import { cellsOf, GREY } from '../game/Pieces.js';
 
 export class Renderer {
-  constructor(canvas, nextCanvas, { colors, ghostOpacity }, level) {
+  constructor(canvas, nextCanvas, { colors, ghostOpacity, win }, level) {
+    this.win = win;
+    this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.nextCanvas = nextCanvas;
@@ -70,6 +72,23 @@ export class Renderer {
     return sprite;
   }
 
+  /**
+   * Brightness added to every block once the word is built (0 otherwise): fast blinking for
+   * `win.blink` ms, then a slow shine that keeps pulsing.
+   */
+  shine(game, now) {
+    if (game.state !== 'won') {
+      this.wonAt = 0;
+      return 0;
+    }
+    this.wonAt ||= now;
+    const t = now - this.wonAt;
+    const { blink, period, shine } = this.win;
+    if (this.reduced) return shine[1] * 0.6;
+    if (t < blink) return Math.floor(t / period) % 2 ? 0 : 0.9;
+    return shine[0] + (shine[1] - shine[0]) * (0.5 - 0.5 * Math.cos(((t - blink) / shine[2]) * Math.PI * 2));
+  }
+
   drawCell(ctx, color, x, y, size) {
     const sprite = this.sprite(color, Math.round(size));
     ctx.drawImage(sprite, x - sprite.pad, y - sprite.pad);
@@ -87,13 +106,21 @@ export class Renderer {
       for (let x = 0; x < this.columns; x++) ctx.fillRect(x * cell + inset, y * cell + inset, cell - inset * 2, cell - inset * 2);
     }
 
-    // Settled cells; rows being cleared blink
+    // Settled cells; rows being cleared blink; once the word is built, every block blinks, then shines
     const blink = game.state === 'clearing' && Math.floor(now / 70) % 2 === 0;
+    const shine = this.shine(game, now);
     game.board.rows.forEach((row, y) => {
       const clearing = game.clearing.includes(y);
       row.forEach((value, x) => {
         if (!value) return;
-        this.drawCell(ctx, clearing && blink ? this.colors.piece : this.palette[value], x * cell, y * cell, cell);
+        const color = clearing && blink ? this.colors.piece : this.palette[value];
+        this.drawCell(ctx, color, x * cell, y * cell, cell);
+        if (!shine) return;
+        ctx.globalCompositeOperation = 'lighter'; // the same block again, added: brighter, wider halo
+        ctx.globalAlpha = shine;
+        this.drawCell(ctx, color, x * cell, y * cell, cell);
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 1;
       });
     });
 

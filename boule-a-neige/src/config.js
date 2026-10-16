@@ -17,11 +17,11 @@ export const CONFIG = {
   // smaller and lower. Levels are drawn far to near; each building has its own drift of snow at
   // its foot, in its level, so it stays planted whatever the parallax.
   slots: [
-    { x: 108, y: 262, width: 96, level: 2 }, // 1, back left
-    { x: 145, y: 306, width: 125, level: 3 }, // 2, front left: 130 % of the back ones
-    { x: 255, y: 306, width: 125, level: 3 }, // 3, front right
-    { x: 200, y: 268, width: 96, level: 1 }, // 4, back center
-    { x: 292, y: 270, width: 96, level: 2 }, // 5, back right
+    { x: 108, y: 262, width: 82, level: 2 }, // 1, back left
+    { x: 145, y: 306, width: 106, level: 3 }, // 2, front left: 130 % of the back ones
+    { x: 255, y: 306, width: 106, level: 3 }, // 3, front right
+    { x: 200, y: 268, width: 82, level: 1 }, // 4, back center
+    { x: 292, y: 270, width: 82, level: 2 }, // 5, back right
   ],
 
   defaultCombination: [0, 1, 2, 3, 4], // building index for places 1 to 5
@@ -65,14 +65,17 @@ export const CONFIG = {
   // Arrival: the globe fades in (not with reduced motion)
   intro: { duration: 700 },
 
-  // Parallax inside the globe (not the snow, the glass or the base). Input: the mouse position on a
-  // computer, the phone's tilt on a phone (maxAngle degrees either way = the full shift).
+  // Parallax: the layers inside the globe shift by depth, the reflections slide the other way, and
+  // the whole globe turns a little in 3D. Input: the mouse position on a computer, the phone's
+  // tilt on a phone (maxAngle degrees either way = the full shift).
   parallax: {
     maxAngle: 33, // degrees, in every direction
     recenter: 0.004, // per reading: the rest position slowly follows how the phone is held
     shift: { x: 26, y: 11 }, // scene units for the nearest layer (depth 1): same feel per degree as 12 × 5 at 15°
     easing: 140, // ms: time to cover about 63 % of the remaining distance (same on every screen rate)
-    depths: { skyBand: 0.1, farSnow: 0.3, levels: [0.45, 0.65, 0.85], nearSnow: 1 },
+    depths: { skyBand: 0.1, farSnow: 0.3, levels: [0.45, 0.65, 0.85], nearSnow: 1, reflections: -0.25 },
+    // The whole globe (sphere, base, snow) turns a little in 3D, as an object seen from the side
+    tilt: 9, // degrees at the full input (perspective: see .frame in main.css)
   },
 
   // Moving the globe

@@ -26,7 +26,10 @@ export const CONFIG = {
     shade: '#383f52', // the shadowed edges of the blocks
     grid: '#dcebd8', // empty cells
   },
-  ghostOpacity: 0.3, // the word in the background, on the cells still empty
+  ghostOpacity: 0.3,
+  // Word built: every block blinks (ms, ms per flash), then shines (min and max added brightness,
+  // ms per pulse)
+  win: { blink: 2200, period: 140, shine: [0.15, 0.6, 1800] }, // the word in the background, on the cells still empty
 
   // Shown once PAIX is built (?msg=… in the URL replaces it), as on the other games
   message: 'Bonne année 2027 !',

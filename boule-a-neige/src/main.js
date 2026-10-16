@@ -53,7 +53,7 @@ const motion = new Motion(document.querySelector('#stage'), CONFIG, strength => 
 attachControls(document.querySelector('#stage'), motion);
 
 // Parallax: mouse on a computer, tilt on a phone (not with reduced motion)
-const parallax = new Parallax(scene.layers, CONFIG.parallax);
+const parallax = new Parallax(scene.layers, CONFIG.parallax, document.querySelector('#stage'));
 const tilt = new TiltInput(CONFIG.parallax, (nx, ny) => parallax.set(nx, ny));
 if (!reduced) tilt.start();
 

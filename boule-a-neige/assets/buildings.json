@@ -1,9 +1,9 @@
 [
-  {"id": "tour-eiffel", "city": "Paris", "name": "Tour Eiffel"},
+  {"id": "chateau-pau", "city": "Pau", "name": "Château de Pau"},
   {"id": "ossuaire-douaumont", "city": "Douaumont-Vaux", "name": "Ossuaire de Douaumont"},
   {"id": "habitation-maud-huy", "city": "Saint-François, Guadeloupe", "name": "Habitation Maud'Huy"},
   {"id": "couvent-franciscain", "city": "Perpignan", "name": "Couvent des Franciscains"},
-  {"id": "ile-des-faisans", "city": "Hendaye – Irun", "name": "Île des Faisans"},
+  {"id": "palais-festivals", "city": "Cannes", "name": "Palais des Festivals"},
   {"id": "chateau-saint-malo", "city": "Saint-Malo", "name": "Château de Saint-Malo"},
   {"id": "quai-d-orsay", "city": "Paris", "name": "Quai d'Orsay"},
   {"id": "chateau-chambord", "city": "Chambord", "name": "Château de Chambord"},
