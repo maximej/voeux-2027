@@ -11,6 +11,7 @@
  */
 
 const easeOut = t => 1 - (1 - t) ** 3;
+const easeInOut = t => 0.5 - 0.5 * Math.cos(Math.PI * t);
 
 export class Sieve {
   constructor(surface, effects, image, config, on = {}) {
@@ -121,10 +122,11 @@ export class Sieve {
       this.particles.push({
         kind: 'lift',
         i,
-        start: now + (d / far) * lift.ripple,
+        start: now + ((d / far) * 0.6 + Math.random() * 0.4) * lift.ripple, // peeling off, not a shock wave
         duration: lift.duration * (0.85 + Math.random() * 0.3),
         rise: this.reduced ? 0 : lift.rise[0] + Math.random() * (lift.rise[1] - lift.rise[0]),
         drift: this.reduced ? 0 : (Math.random() * 2 - 1) * lift.drift,
+        phase: Math.random() * Math.PI * 2, // of the sideways sway
         halo: n % stride === 0 ? Math.sqrt(stride) : 0,
       });
     });
@@ -200,10 +202,13 @@ export class Sieve {
     this.ectx.drawImage(this.image, (i % this.columns) * sw, Math.floor(i / this.columns) * sh, sw, sh, x, y, w, h);
   }
 
-  /** A lifted pixel: rises a little, grows, glows, fades. Returns false once gone. */
+  /**
+   * A lifted pixel: floats up slowly like a feather, swaying, getting smaller and fainter, with a
+   * soft glow. Returns false once gone.
+   */
   drawLift(p, now) {
     const ctx = this.ectx;
-    const { grow } = this.config.lift;
+    const { shrink, sway, halo, flash } = this.config.lift;
     const t = (now - p.start) / p.duration;
     const { x, y } = this.origin(p.i);
     const { cw, ch } = this;
@@ -212,23 +217,24 @@ export class Sieve {
       return true;
     }
     if (t >= 1) return false;
-    const e = easeOut(t);
-    const scale = 1 + grow * Math.sin(Math.PI * Math.min(1, t * 1.4));
+    const e = easeInOut(t); // starts gently, keeps drifting
+    const scale = 1 - shrink * t;
     const w = cw * scale, h = ch * scale;
-    const cx = x + cw / 2 + p.drift * cw * e, cy = y + ch / 2 - p.rise * ch * e;
-    const fade = 1 - t * t;
-    // Glow behind, then the pixel itself, brightened at the start
+    const swing = this.reduced ? 0 : Math.sin(p.phase + t * Math.PI * 2) * sway * Math.min(1, t * 3);
+    const cx = x + cw / 2 + (p.drift * e + swing) * cw, cy = y + ch / 2 - p.rise * ch * e;
+    const fade = (1 - t) ** 1.6;
+    // Soft glow behind, then the pixel itself, faintly lit at the start
     ctx.globalCompositeOperation = 'lighter';
     if (p.halo) {
-      ctx.globalAlpha = fade * 0.85;
-      const g = Math.max(cw, ch) * 3.2 * scale * p.halo;
+      ctx.globalAlpha = fade * halo;
+      const g = Math.max(cw, ch) * 2.4 * p.halo;
       ctx.drawImage(this.glow, cx - g / 2, cy - g / 2, g, g);
     }
     ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = fade;
     this.piece(p.i, cx - w / 2, cy - h / 2, w, h);
     ctx.globalCompositeOperation = 'lighter';
-    ctx.globalAlpha = fade * 0.45 * (1 - e);
+    ctx.globalAlpha = fade * flash * (1 - t);
     ctx.fillStyle = this.config.lift.glow;
     ctx.fillRect(cx - w / 2, cy - h / 2, w, h);
     ctx.globalCompositeOperation = 'source-over';

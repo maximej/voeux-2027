@@ -21,17 +21,20 @@ export const CONFIG = {
     jitter: 0.35, // irregular cluster outline: noise on the distance to the tapped pixel
   },
 
-  // A lifted pixel rises a little, glowing, and fades away
+  // A lifted pixel floats away like a feather: it rises slowly, sways, gets smaller and fainter
   lift: {
-    duration: 900, // ms for one pixel (± 15 %)
-    ripple: 300, // ms: the pixels at the edge of a cluster leave this much later than its centre
-    rise: [1, 4], // in pixels (cells), random per pixel
+    duration: 1700, // ms for one pixel (± 15 %)
+    ripple: 700, // ms: the pixels peel off over this time, the cluster's centre first (with some randomness)
+    rise: [3, 8], // in pixels (cells), random per pixel
     drift: 1.5, // sideways, in cells
-    grow: 0.4, // extra scale at the top of the rise
+    sway: 0.8, // sideways swaying, in cells
+    shrink: 0.45, // the pixel is this much smaller when it vanishes
     glow: '#f9f99a', // lantern yellow halo (Monument Valley palette)
+    halo: 0.3, // halo opacity: a soft glow, not a flash
+    flash: 0.12, // the pixel faintly lit when it leaves
     halos: 500, // at most this many halos per cluster (larger ones, spread out), so phones keep up
-    // The last tap: every pixel left flies away, higher and longer, in a wave from the tapped one
-    final: { duration: 1600, ripple: 1100, rise: [6, 22], drift: 5 },
+    // The last tap: every pixel left floats away, higher and longer, from the tapped one outwards
+    final: { duration: 2600, ripple: 2000, rise: [10, 26], drift: 3 },
   },
 
   // From the `from`-th tap on, the image trembles more and more; on a phone, shaking it then

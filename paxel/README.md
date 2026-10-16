@@ -2,10 +2,10 @@
 
 From chaos to order. The chaotic pixel-art image (`assets/chaos.webp`) is cut into a grid of 100 × 100 pixels over the image of order (`assets/ordre.webp`):
 
-- **tap a pixel**: it lifts off a little, glowing, and takes about ten pixels around it along;
+- **tap a pixel**: it floats away like a feather, softly glowing, and takes about ten pixels around it along;
 - **each tap takes more**: the cluster grows by a constant factor, chosen so that the 10th tap takes everything left;
 - **from the 5th tap**, the image trembles, more with every tap; on a phone, **shaking it** sifts the pixels like sand through a sieve: they shrink into grains and fall;
-- **the 10th tap** sends every pixel left flying, in a glowing wave from the tapped one, so the image of order is always fully revealed after 10 taps;
+- **the 10th tap** sends every pixel left floating away, from the tapped one outwards, so the image of order is always fully revealed after 10 taps;
 - once every pixel is gone, the image of order glows, its brightness slowly oscillating, and the greeting appears ("Bonne année 2027 !", or the text given with `?msg=…` in the URL), with a "Recommencer" button.
 
 The previous version (scratch card revealing the PAIX image) is kept, playable, in [`../paxel-v1/`](../paxel-v1/).
