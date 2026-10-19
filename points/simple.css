@@ -51,14 +51,21 @@ body {
 }
 .board { flex: 1; min-height: 0; }
 
+/* Message superposé en bas de l'écran : son apparition ne redimensionne pas le dessin */
 .message {
-  margin: 0 0 4vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(4vh + env(safe-area-inset-bottom));
+  margin: 0;
+  padding: 0 16px;
   text-align: center;
+  pointer-events: none;
   font: 800 clamp(2rem, 8vw, 4rem)/1.1 var(--font);
   letter-spacing: .02em;
   color: var(--violet);
   text-shadow: 0 0 2px rgb(var(--violet-rgb) / .45), 0 0 12px rgb(var(--violet-rgb) / .4), 0 0 30px rgb(var(--violet-rgb) / .25);
-  animation: message-in 1s ease both;
+  animation: message-in 2.2s cubic-bezier(.22, .61, .36, 1) both;
 }
 /* Point relié : cœur clair cerclé de sa couleur */
 .dtd-dot.done circle { fill: #f4feee; }
@@ -68,7 +75,11 @@ body {
   text-shadow: none;
   color: var(--teal-deep);
 }
-@keyframes message-in { from { opacity: 0; transform: translateY(12px); } }
+@keyframes message-in {
+  from { opacity: 0; transform: translateY(10px) scale(.98); filter: blur(6px); }
+  60%  { filter: blur(0); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .message { animation: none; }

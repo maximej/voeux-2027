@@ -16,10 +16,20 @@ N'importe quel hébergement statique convient (GitHub Pages, Netlify, serveur in
 
 ## Deux versions
 
-- `index.html` (page d'accueil) : le jeu seul, sans boutons, sur des néons violets, bleu-vert et roses qui se tracent au hasard en arrière-plan (charte commune des jeux : couleurs des références Monument Valley, fond pastel clair, néons violet et bleu-vert avec halo, police du système) (`neon-bg.js`, `simple.js`, `simple.css`). Le dessin se choisit par l'URL : `?d=coeur`.
+- `index.html` (page d'accueil) : le jeu seul, sans boutons, sur une carte du monde en filigrane dont les côtes sont parcourues par des néons violets, bleu-vert et roses (charte commune des jeux : couleurs des références Monument Valley, fond pastel clair, néons violet et bleu-vert avec halo, police du système) (`neon-bg.js`, `simple.js`, `simple.css`). Le dessin se choisit par l'URL : `?d=coeur`.
 - `complet.html` : version complète (galerie, niveaux, boutons, import de SVG ; `app.js`, `style.css`). Elle garde encore l'ancienne palette cyan et magenta et la police Big Shoulders Display (Google Fonts), comme les dessins `coeur`, `etoile` et `sapin`.
 
 Les deux partagent le moteur (`dotdot.js`) et les styles du plateau (`dotdot.css`).
+
+## Carte de l'arrière-plan
+
+`assets/world.json` est une version très allégée de `IMG/ref/EckertIV.svg` : seules les grandes terres sont gardées (petites îles et lacs retirés) et leurs contours sont simplifiés. Pour la régénérer ou la régler :
+
+```sh
+python3 points/tools/simplify-map.py --min-area 90 --tolerance 2 --min-angle 35
+```
+
+`--min-area` : surface minimale d'une terre gardée ; `--tolerance` : plus grand = contours plus simples ; `--min-angle` : les pointes plus aiguës sont retirées. `--stats` liste les plus grands tracés.
 
 ## Ajouter un dessin
 
