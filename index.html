@@ -7,10 +7,7 @@
   <title>Vœux 2027</title>
   <meta name="description" content="Quatre petits jeux pour les vœux 2027.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <script>
-    // Anciens liens vers la carte « Relie les points » (?d=, ?msg=, ?n=) : on les envoie vers /points/
-    if (/[?&](d|msg|n)=/.test(location.search)) location.replace('points/' + location.search);
-  </script>
+  <script src="redirect.js"></script>
   <style>
     /* Charte commune (inspirée de Monument Valley) : fond clair en dégradé pastel, encre indigo,
        violet du crépuscule et bleu-vert des montagnes en néon, avec halo ; police du système */
@@ -75,7 +72,7 @@
   <ul>
     <li><a href="points/">Relie les points</a></li>
     <li><a href="paxel/">Grattez l’image</a></li>
-    <li><a href="tetris/">PAIX en blocs</a></li>
+    <li><a href="blocs/">PAIX en blocs</a></li>
     <li><a href="boule-a-neige/">Boule à neige</a></li>
   </ul>
 </body>

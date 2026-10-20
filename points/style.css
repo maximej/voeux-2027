@@ -15,7 +15,7 @@
   --yellow: #f4f749;
   --lime: #70ff36;
 
-  --font: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --font: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Impact, sans-serif; /* polices de l'appareil : aucune police externe */
   --glow: 0 0 6px currentColor, 0 0 18px currentColor;
 
   /* Couleurs du jeu (surchargeables) */

@@ -11,7 +11,7 @@ survol), avec halos doux ; police du système. Ni orange, ni bleu ou rouge purs.
 | [`points/`](points/) | « Relie les points » : relier des points numérotés pour révéler un dessin | https://maximej.github.io/voeux-2027/points/ |
 | [`paxel/`](paxel/) | PAXEL : du chaos à l’ordre, toucher les pixels puis secouer comme un tamis | https://maximej.github.io/voeux-2027/paxel/ |
 | [`paxel-v1/`](paxel-v1/) | PAXEL v1 : gratter une image, révélée case par case (première version) | https://maximej.github.io/voeux-2027/paxel-v1/ |
-| [`tetris/`](tetris/) | PAIX en blocs : jeu de blocs aux règles NES, dégager le mot PAIX en complétant des lignes | https://maximej.github.io/voeux-2027/tetris/ |
+| [`blocs/`](blocs/) | PAIX en blocs : jeu de blocs aux règles NES, construire le mot PAIX avec les pièces (l’ancienne adresse `tetris/` y renvoie) | https://maximej.github.io/voeux-2027/blocs/ |
 | [`boule-a-neige/`](boule-a-neige/) | Boule à neige : composer une boule avec 5 monuments du monde, la retourner pour faire neiger | https://maximej.github.io/voeux-2027/boule-a-neige/ |
 
 La racine (`index.html`) renvoie vers les quatre jeux. Les anciens liens vers la carte avec paramètres (`?d=`, `?msg=`, `?n=`) sont redirigés vers `points/`.
