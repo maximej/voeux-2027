@@ -29,12 +29,13 @@ un dépôt Git imbriqué ici sans décision explicite.
 - Barre de commandes responsive : sur une ligne en grand écran ; les deux boutons passent sous la glissière
   quand la place manque (tablette, téléphone à l'horizontale) ; en grille sous 640 px, où les libellés
   peuvent passer sur deux lignes. Panneau large de 960 px au plus.
-- Fond de ciel étoilé génératif (`src/sky.js`), d'après `IMG/Sky constellations/ISS_Constellations_Sky_PolarStar_centered.pdf` :
-  dégradé de nuit en CSS (`.sky`), du bleu nuit `#020a2a` au bleu-gris `#757d9f` vers l'horizon,
-  étoiles tirées avec une graine fixe (même ciel à chaque
-  redimensionnement), éclats à quatre branches sur les plus brillantes, 18 qui scintillent, et rotation
-  lente autour du centre de l'écran (un tour en 15 min). Étoiles dessinées une seule fois, rotation et
-  scintillement en animations CSS : aucun coût par image ; arrêtés si « réduire les animations ».
+- Fond : une sphère céleste (`drawSky` dans `app.js`, sur le canevas `#sky` derrière la carte ; étoiles et
+  sprites dans `src/sky.js`, d'après `IMG/Sky constellations/ISS_Constellations_Sky_PolarStar_centered.pdf`).
+  Rayon `CELESTIAL` (1,15) fois la demi-diagonale de l'écran, donc plus large que l'écran ; même centre et
+  même rotation que le globe ; dégradé bleu radial ; 420 étoiles réparties sur la sphère, réduites
+  (sprites à 70 %), seules celles de la face avant, atténuées vers le bord. Elle tourne avec le globe
+  (glisser, inertie, enroulement). En mode planisphère la rotation est nulle : le ciel est une image fixe,
+  redessinée seulement quand sa clé (taille, centre, rotation) change. Plus de ciel CSS ni de scintillement.
   La carte garde son fond beige : `drawLayer` remplit l'intérieur du contour (`Sphere`) en `PAPER`, les
   tampons sont transparents autour, et le canevas principal est effacé à chaque image. Pendant
   l'enroulement, le contour de la projection intermédiaire se replie : le beige de la carte plane s'efface
@@ -43,7 +44,12 @@ un dépôt Git imbriqué ici sans décision explicite.
   commune des vœux, d'après `IMG/ref/MonumentValley` : encre `#383f52`, panneaux menthe pâle `#f4feee`
   cadrés de bleu-vert `#51acad` avec halo, boutons bleu-vert foncé `#32717b`, bouton actif, curseur,
   chiffres et étiquette violet `#6c60a9`. La carte garde ses couleurs (beige, continents bleus) et le ciel
-  reste bleu nuit, comme la référence.
+  reste bleu nuit.
+- Cartouche « Bonne année 2027 » (`h1.greeting`) en haut, aussi large que le panneau du bas, texte sur
+  la moitié de sa largeur (taille en `cqi`) ; la légende des postes s'affiche dessous (`header.top`).
+  La carte plane se centre dans la bande libre entre les deux (`band`, mesurée dans `resize`, place
+  de la légende comprise) ; le globe revient au centre de l'écran. En téléphone à l'horizontale, le
+  cartouche passe en haut à droite, au-dessus des commandes, et la carte garde l'ancien placement.
 - Interface en français (« afficher / cacher les postes », « enrouler le globe / dérouler la carte »,
   légende « ambassades / consulats ») ; seul le titre « Correct the map » reste en anglais.
 - Transition Mercator → Eckert IV calculée géométriquement, sans fondu d'images de référence.

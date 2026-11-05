@@ -10,7 +10,7 @@
 </head>
 <body>
   <main class="stage" id="stageShell">
-    <div class="sky" id="sky" aria-hidden="true"></div>
+    <canvas class="sky" id="sky" aria-hidden="true"></canvas>
     <canvas id="map" aria-label="Carte interactive : projection Mercator vers Eckert IV"></canvas>
     <section class="controls" aria-label="Commandes cartographiques">
       <div class="message" aria-live="polite"><span>correct</span><span>the map</span></div>
@@ -33,10 +33,13 @@
       </div>
     </section>
     <p class="poste-label" id="posteLabel" hidden aria-live="polite"><strong class="label-name"></strong><span class="label-meta"></span></p>
-    <p class="legend" id="legend" hidden>
-      <span><i class="pin pin-ambassade" aria-hidden="true"></i>ambassades <b id="countAmbassade"></b></span>
-      <span><i class="pin pin-consulat" aria-hidden="true"></i>consulats <b id="countConsulat"></b></span>
-    </p>
+    <header class="top">
+      <h1 class="greeting"><span class="greeting-text">Bonne année <span>2027</span></span></h1>
+      <p class="legend" id="legend" hidden>
+        <span><i class="pin pin-ambassade" aria-hidden="true"></i>ambassades <b id="countAmbassade"></b></span>
+        <span><i class="pin pin-consulat" aria-hidden="true"></i>consulats <b id="countConsulat"></b></span>
+      </p>
+    </header>
   </main>
   <script src="map.js"></script>
 </body>

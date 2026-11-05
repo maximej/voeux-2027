@@ -2,7 +2,7 @@ import { geoDistance, geoGraticule10, geoOrthographic, geoOrthographicRaw, geoPa
 import { easeBackOut, easeCubicInOut } from "d3-ease";
 import { feature } from "topojson-client";
 import { interpolateRaw, planarRaw } from "./projection-math.js";
-import { startSky } from "./sky.js";
+import { celestialStars, STAR_LEVELS, starSprites } from "./sky.js";
 
 const canvas = document.querySelector("#map");
 const stage = document.querySelector("#stageShell");
@@ -12,6 +12,9 @@ const wrapButton = document.querySelector("#wrap");
 const postesButton = document.querySelector("#postes");
 const legend = document.querySelector("#legend");
 const label = document.querySelector("#posteLabel");
+const header = document.querySelector(".greeting");
+const controls = document.querySelector(".controls");
+const sideLayout = matchMedia("(max-height: 560px) and (orientation: landscape)");
 const context = canvas.getContext("2d");
 const flatBuffer = document.createElement("canvas");
 const globeBuffer = document.createElement("canvas");
@@ -19,6 +22,13 @@ const flatContext = flatBuffer.getContext("2d");
 const globeContext = globeBuffer.getContext("2d");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const PAPER = "#f3efe5";
+
+// Sphère céleste en fond : même centre et même rotation que le globe, plus large que l'écran
+const CELESTIAL = 1.15;                   // rayon de la sphère céleste / demi-diagonale de l'écran
+const STARS = celestialStars(420);
+const skyCanvas = document.querySelector("#sky");
+const skyContext = skyCanvas.getContext("2d");
+let starSprite = [];
 
 // Épingles des postes (ambassades et consulats), dessinées en pixels écran quelle que soit l'échelle
 const PIN = {
@@ -48,10 +58,16 @@ let pinsFrame;
 let selected = null;                     // poste dont le nom est affiché (un seul à la fois)
 const pinHits = { flat: [], globe: [] }; // épingles dessinées à la dernière image, pour le clic
 let tapStart;
+let band = null;                         // bande libre entre le cartouche (et la légende) et les commandes
 
 function resize() {
   const ratio = Math.min(devicePixelRatio || 1, 2);
   const rect = stage.getBoundingClientRect();
+  // La carte plane se centre entre le cartouche du haut (place gardée pour la légende) et les commandes
+  band = sideLayout.matches ? null : {
+    top: header.getBoundingClientRect().bottom - rect.top + 46,
+    bottom: controls.getBoundingClientRect().top - rect.top - 12
+  };
   canvas.width = Math.round(rect.width * ratio);
   canvas.height = Math.round(rect.height * ratio);
   flatBuffer.width = canvas.width;
@@ -61,6 +77,12 @@ function resize() {
   context.setTransform(ratio, 0, 0, ratio, 0, 0);
   flatContext.setTransform(ratio, 0, 0, ratio, 0, 0);
   globeContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+  const skyRatio = Math.min(ratio, 1.5);
+  skyCanvas.width = Math.round(rect.width * skyRatio);
+  skyCanvas.height = Math.round(rect.height * skyRatio);
+  skyContext.setTransform(skyRatio, 0, 0, skyRatio, 0, 0);
+  starSprite = starSprites(skyRatio, .7);
+  skyKey = "";
   draw();
 }
 
@@ -74,13 +96,15 @@ function projectionLayout() {
   const height = canvas.clientHeight;
   const planarWidth = 2 * Math.PI + (5.306001713 - 2 * Math.PI) * flatT;
   const planarHeight = 2 * Math.PI + (2.652999475 - 2 * Math.PI) * flatT;
-  const planeScale = Math.min(width * .86 / planarWidth, height * .70 / planarHeight);
-  const globeScale = Math.min(width, height) * .39 * zoom;
   const restingOffset = Math.min(28, height * .035);
+  const flatHeight = band ? Math.min(height * .70, (band.bottom - band.top) * .96) : height * .70;
+  const flatY = band ? (band.top + band.bottom) / 2 : height / 2 - restingOffset;
+  const planeScale = Math.min(width * .86 / planarWidth, flatHeight / planarHeight);
+  const globeScale = Math.min(width, height) * .39 * zoom;
   const poseT = easeCubicInOut(smoothstep(0, 1, wrapT));
   return {
     scale: planeScale + (globeScale - planeScale) * poseT,
-    translate: [width / 2, height / 2 - restingOffset * (1 - centerT)],
+    translate: [width / 2, flatY + (height / 2 - flatY) * centerT],
     rotate: rotation.map(component => component * poseT)
   };
 }
@@ -308,8 +332,45 @@ function clearBuffer(target) {
   target.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 }
 
+/**
+ * The celestial sphere, on its own canvas behind the map: wider than the screen, same centre and same
+ * rotation as the globe. Blue radial gradient, stars of its front hemisphere faded towards the limb.
+ * On the flat map the rotation is zero, so the sky is a still image: it is only redrawn when it moves.
+ */
+let skyKey = "";
+function drawSky() {
+  const layout = projectionLayout();
+  const width = skyCanvas.clientWidth, height = skyCanvas.clientHeight;
+  const [x, y] = layout.translate;
+  const radius = Math.hypot(width, height) / 2 * CELESTIAL;
+  const key = [width, height, x, y, ...layout.rotate].map(n => n.toFixed(2)).join();
+  if (key === skyKey) return;
+  skyKey = key;
+  const center = layout.rotate.slice(0, 2).map(component => -component);
+  const sky = geoOrthographic().scale(radius).translate(layout.translate).rotate(layout.rotate);
+  const fill = skyContext.createRadialGradient(x, y, 0, x, y, radius);
+  fill.addColorStop(0, "#2c4384");
+  fill.addColorStop(.45, "#172d66");
+  fill.addColorStop(1, "#040d30");
+  skyContext.globalCompositeOperation = "source-over";
+  skyContext.globalAlpha = 1;
+  skyContext.fillStyle = fill;
+  skyContext.fillRect(0, 0, width, height);
+  skyContext.globalCompositeOperation = "lighter";
+  for (const star of STARS) {
+    const facing = Math.cos(geoDistance(star.coordinates, center));
+    if (facing <= 0) continue;
+    const [sx, sy] = sky(star.coordinates);
+    if (sx < -20 || sy < -20 || sx > width + 20 || sy > height + 20) continue;
+    const { canvas: sprite, box } = starSprite[Math.min(STAR_LEVELS - 1, Math.floor(star.m * STAR_LEVELS))];
+    skyContext.globalAlpha = smoothstep(0, .3, facing);
+    skyContext.drawImage(sprite, sx - box / 2, sy - box / 2, box, box);
+  }
+}
+
 function draw() {
   if (!land) return;
+  drawSky();
   const flatOutline = 1 - smoothstep(0, .22, wrapT);
   const globeReveal = smoothstep(.55, .70, wrapT);
   const globeOutline = globeReveal;
@@ -532,4 +593,3 @@ fetch("assets/postes.json")
   .catch(() => postesButton.remove());
 
 new ResizeObserver(resize).observe(stage);
-startSky(document.querySelector("#sky"));
