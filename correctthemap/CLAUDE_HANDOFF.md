@@ -45,8 +45,9 @@ un dépôt Git imbriqué ici sans décision explicite.
   cadrés de bleu-vert `#51acad` avec halo, boutons bleu-vert foncé `#32717b`, bouton actif, curseur,
   chiffres et étiquette violet `#6c60a9`. La carte garde ses couleurs (beige, continents bleus) et le ciel
   reste bleu nuit.
-- Cartouche « Bonne année 2027 » (`h1.greeting`) en haut, aussi large que le panneau du bas, texte sur
-  la moitié de sa largeur (taille en `cqi`) ; la légende des postes s'affiche dessous (`header.top`).
+- Cartouche « Bonne année 2027 » (`h1.greeting`) en haut, aussi large que le panneau du bas, hauteur
+  fixe de 84 px, texte centré (46 px, réduit en `cqi` seulement si la largeur manque), lueur rose
+  lavande qui pulse doucement (`greeting-glow`, 5 s, arrêtée si « réduire les animations ») ; la légende des postes s'affiche dessous (`header.top`).
   La carte plane se centre dans la bande libre entre les deux (`band`, mesurée dans `resize`, place
   de la légende comprise) ; le globe revient au centre de l'écran. En téléphone à l'horizontale, le
   cartouche passe en haut à droite, au-dessus des commandes, et la carte garde l'ancien placement.
