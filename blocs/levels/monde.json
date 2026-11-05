@@ -1,0 +1,29 @@
+{
+  "name": "Monde",
+  "width": 15,
+  "height": 7,
+  "colors": {
+    "A": "#6c60a9",
+    "E": "#5d92ce",
+    "F": "#51acad",
+    "O": "#d58fc6"
+  },
+  "rows": [
+    ".AAAAAAA.EEEEEE",
+    "..AAAA..EEEEEEE",
+    "..AAA...E.EEEEE",
+    "...AA...FFFEEE.",
+    "....AA...FFF.E.",
+    ".....AA..FF..OO",
+    ".....A....F..OO"
+  ],
+  "parts": [
+    ".fffgggg.tttuuu",
+    "..ddee..pprrrss",
+    "..dcc...p.ooqqq",
+    "...cb...jjjomm.",
+    "....bb...iii.m.",
+    ".....aa..hh..kk",
+    ".....a....h..kk"
+  ]
+}

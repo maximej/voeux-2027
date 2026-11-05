@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#020a2a">
+  <meta name="description" content="Transformez une carte Mercator en Eckert IV, puis enroulez-la sur un globe interactif.">
+  <title>Correct the map</title>
+  <link rel="stylesheet" href="map.css">
+</head>
+<body>
+  <main class="stage" id="stageShell">
+    <div class="sky" id="sky" aria-hidden="true"></div>
+    <canvas id="map" aria-label="Carte interactive : projection Mercator vers Eckert IV"></canvas>
+    <section class="controls" aria-label="Commandes cartographiques">
+      <div class="message" aria-live="polite"><span>correct</span><span>the map</span></div>
+      <div class="slider-row">
+        <span aria-hidden="true">Mercator</span>
+        <label class="sr-only" for="morph">Transition Mercator vers Eckert IV</label>
+        <input id="morph" type="range" min="0" max="100" value="0">
+        <span aria-hidden="true">Eckert IV</span>
+        <output id="morphValue" for="morph">0 %</output>
+      </div>
+      <div class="buttons">
+        <button id="postes" type="button" aria-pressed="false" disabled>
+          <svg class="pin-icon" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 15.5C6 15.5 1 9.6 1 6a5 5 0 0 1 10 0c0 3.6-5 9.5-5 9.5Z"/><circle cx="6" cy="6" r="1.9"/></svg>
+          <span class="button-label">afficher les postes</span>
+        </button>
+        <button id="wrap" type="button" aria-pressed="false">
+          <span class="globe-icon" aria-hidden="true">◉</span>
+          <span class="button-label">enrouler le globe</span>
+        </button>
+      </div>
+    </section>
+    <p class="poste-label" id="posteLabel" hidden aria-live="polite"><strong class="label-name"></strong><span class="label-meta"></span></p>
+    <p class="legend" id="legend" hidden>
+      <span><i class="pin pin-ambassade" aria-hidden="true"></i>ambassades <b id="countAmbassade"></b></span>
+      <span><i class="pin pin-consulat" aria-hidden="true"></i>consulats <b id="countConsulat"></b></span>
+    </p>
+  </main>
+  <script src="map.js"></script>
+</body>
+</html>

@@ -11,3 +11,6 @@ paxel/data/
 .wrangler/
 # Boule à neige : illustrations source, jamais publiées
 boule-a-neige/assets/buildings/Illustrations*
+# Correct the map : fichier source des postes (seul docs/assets/postes.json, réduit, est publié) et build intermédiaire
+correctthemap/dataSource/
+correctthemap/dist/

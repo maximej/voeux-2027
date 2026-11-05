@@ -11,10 +11,11 @@ survol), avec halos doux ; police du système. Ni orange, ni bleu ou rouge purs.
 | [`points/`](points/) | « Relie les points » : relier des points numérotés pour révéler un dessin | https://maximej.github.io/voeux-2027/points/ |
 | [`paxel/`](paxel/) | PAXEL : du chaos à l’ordre, toucher les pixels puis secouer comme un tamis | https://maximej.github.io/voeux-2027/paxel/ |
 | [`paxel-v1/`](paxel-v1/) | PAXEL v1 : gratter une image, révélée case par case (première version) | https://maximej.github.io/voeux-2027/paxel-v1/ |
-| [`blocs/`](blocs/) | PAIX en blocs : jeu de blocs aux règles NES, construire le mot PAIX avec les pièces (l’ancienne adresse `tetris/` y renvoie) | https://maximej.github.io/voeux-2027/blocs/ |
+| [`blocs/`](blocs/) | Le monde en blocs : jeu de blocs aux règles NES, construire une carte du monde en pixel art avec les pièces (l’ancienne adresse `tetris/` y renvoie) | https://maximej.github.io/voeux-2027/blocs/ |
 | [`boule-a-neige/`](boule-a-neige/) | Boule à neige : composer une boule avec 5 monuments du monde, la retourner pour faire neiger | https://maximej.github.io/voeux-2027/boule-a-neige/ |
+| [`correctthemap/`](correctthemap/) | Correct the map : passer de Mercator à Eckert IV, enrouler la carte en globe, afficher les ambassades et consulats (source dans `src/`, version publiée dans `docs/`, à reconstruire avec `npm run build`) | https://maximej.github.io/voeux-2027/correctthemap/docs/ |
 
-La racine (`index.html`) renvoie vers les quatre jeux. Les anciens liens vers la carte avec paramètres (`?d=`, `?msg=`, `?n=`) sont redirigés vers `points/`.
+La racine (`index.html`) renvoie vers les cinq jeux. Les anciens liens vers la carte avec paramètres (`?d=`, `?msg=`, `?n=`) sont redirigés vers `points/`.
 
 ## Lancer en local
 

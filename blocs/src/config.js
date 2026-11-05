@@ -4,8 +4,8 @@
  */
 
 export const CONFIG = {
-  level: 'levels/paix.json', // the word to build at the bottom of the board, and how it is cut
-  rows: 20, // board height; the width is the level's (15 for PAIX)
+  level: 'levels/monde.json', // the world map to build at the bottom of the board, and how it is cut (levels/paix.json: the word PAIX)
+  rows: 20, // board height; the width is the level's (15 for the map)
 
   fps: 60.0988,
   startLevel: 3,
@@ -31,7 +31,7 @@ export const CONFIG = {
   // ms per pulse)
   win: { blink: 2200, period: 140, shine: [0.15, 0.6, 1800] }, // the word in the background, on the cells still empty
 
-  // Shown once PAIX is built (?msg=… in the URL replaces it), as on the other games
+  // Shown once the map is built (?msg=… in the URL replaces it), as on the other games
   message: 'Bonne année 2027 !',
 
   // Android only (iPhone Safari does not vibrate)

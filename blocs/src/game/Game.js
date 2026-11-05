@@ -5,7 +5,7 @@
  *   playing   a piece falls: gravity by level, keyboard auto-repeat (DAS), soft drop
  *   clearing  full rows flash, then disappear
  *   entry     short delay before the next piece
- *   won       every cell of the word (PAIX) is covered, whatever the colors
+ *   won       every cell of the word (the map) is covered, whatever the colors
  *   lost      a new piece cannot appear
  *
  * The pieces: the parts cut from the word, in a random order where a part never comes before the

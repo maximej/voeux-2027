@@ -1,5 +1,5 @@
 /**
- * Block game with the PAIX level: build the word PAIX with the pieces cut from it.
+ * Block game with the world map level: build the map with the pieces cut from it.
  */
 
 import { CONFIG } from './config.js';
